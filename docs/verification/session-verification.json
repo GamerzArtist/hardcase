@@ -1,0 +1,201 @@
+{
+  "at": "2026-10-22T12:50:45.368Z",
+  "aiEnabled": false,
+  "faulty": {
+    "id": "8920abf6-24c4-40c1-9c8e-d85921645c70",
+    "state": "completed",
+    "scenarios": [
+      {
+        "id": "normal.workflow",
+        "outcome": "passed",
+        "classification": "passed",
+        "attempts": 1
+      },
+      {
+        "id": "normal.persistence",
+        "outcome": "failed",
+        "classification": "confirmed",
+        "attempts": 2
+      },
+      {
+        "id": "chaos.duplicates",
+        "outcome": "failed",
+        "classification": "confirmed",
+        "attempts": 2
+      },
+      {
+        "id": "chaos.boundaries",
+        "outcome": "failed",
+        "classification": "confirmed",
+        "attempts": 2
+      },
+      {
+        "id": "hostile.authorization",
+        "outcome": "failed",
+        "classification": "confirmed",
+        "attempts": 2
+      },
+      {
+        "id": "hostile.cost",
+        "outcome": "failed",
+        "classification": "confirmed",
+        "attempts": 2
+      },
+      {
+        "id": "siege.bounded",
+        "outcome": "failed",
+        "classification": "confirmed",
+        "attempts": 2
+      },
+      {
+        "id": "breakpoint.recovery",
+        "outcome": "failed",
+        "classification": "confirmed",
+        "attempts": 2
+      }
+    ],
+    "evidenceCount": 51,
+    "actualNetworkRequests": 138,
+    "simulatedEvents": 162,
+    "progressEvents": 89,
+    "directory": ".engine/verified/artifacts/8920abf6-24c4-40c1-9c8e-d85921645c70"
+  },
+  "clean": {
+    "id": "84ffd651-0d9e-4f1c-934e-dc6ac8a131d4",
+    "state": "completed",
+    "scenarios": [
+      {
+        "id": "normal.workflow",
+        "outcome": "passed",
+        "classification": "passed",
+        "attempts": 1
+      },
+      {
+        "id": "normal.persistence",
+        "outcome": "passed",
+        "classification": "passed",
+        "attempts": 1
+      },
+      {
+        "id": "chaos.duplicates",
+        "outcome": "passed",
+        "classification": "passed",
+        "attempts": 1
+      },
+      {
+        "id": "chaos.boundaries",
+        "outcome": "passed",
+        "classification": "passed",
+        "attempts": 1
+      },
+      {
+        "id": "hostile.authorization",
+        "outcome": "passed",
+        "classification": "passed",
+        "attempts": 1
+      },
+      {
+        "id": "hostile.cost",
+        "outcome": "passed",
+        "classification": "passed",
+        "attempts": 1
+      },
+      {
+        "id": "siege.bounded",
+        "outcome": "passed",
+        "classification": "passed",
+        "attempts": 1
+      },
+      {
+        "id": "breakpoint.recovery",
+        "outcome": "passed",
+        "classification": "passed",
+        "attempts": 1
+      }
+    ],
+    "evidenceCount": 28,
+    "actualNetworkRequests": 77,
+    "simulatedEvents": 81,
+    "progressEvents": 59,
+    "directory": ".engine/verified/artifacts/84ffd651-0d9e-4f1c-934e-dc6ac8a131d4"
+  },
+  "comparison": {
+    "before": "8920abf6-24c4-40c1-9c8e-d85921645c70",
+    "after": "84ffd651-0d9e-4f1c-934e-dc6ac8a131d4",
+    "changes": [
+      {
+        "scenarioId": "normal.workflow",
+        "before": "passed",
+        "after": "passed",
+        "change": "unchanged"
+      },
+      {
+        "scenarioId": "normal.persistence",
+        "before": "confirmed",
+        "after": "passed",
+        "change": "resolved_in_this_run"
+      },
+      {
+        "scenarioId": "chaos.duplicates",
+        "before": "confirmed",
+        "after": "passed",
+        "change": "resolved_in_this_run"
+      },
+      {
+        "scenarioId": "chaos.boundaries",
+        "before": "confirmed",
+        "after": "passed",
+        "change": "resolved_in_this_run"
+      },
+      {
+        "scenarioId": "hostile.authorization",
+        "before": "confirmed",
+        "after": "passed",
+        "change": "resolved_in_this_run"
+      },
+      {
+        "scenarioId": "hostile.cost",
+        "before": "confirmed",
+        "after": "passed",
+        "change": "resolved_in_this_run"
+      },
+      {
+        "scenarioId": "siege.bounded",
+        "before": "confirmed",
+        "after": "passed",
+        "change": "resolved_in_this_run"
+      },
+      {
+        "scenarioId": "breakpoint.recovery",
+        "before": "confirmed",
+        "after": "passed",
+        "change": "resolved_in_this_run"
+      }
+    ]
+  },
+  "replay": {
+    "id": "b675bfb8-bd49-410a-a64a-d95860124d7c",
+    "state": "completed",
+    "reproduced": true
+  },
+  "cancellation": {
+    "id": "c9a051e0-4bbe-4876-9d46-05dcdaf7292a",
+    "state": "cancelled",
+    "activeWorkers": 0
+  },
+  "restart": {
+    "persisted": true,
+    "savedReportReadable": true
+  },
+  "passed": true,
+  "implementationCommit": "a8dc32b3ddbad2e5919471c18d20a75a2114c777",
+  "validation": {
+    "testFilesPassed": 8,
+    "testsPassed": 49,
+    "testsFailed": 0,
+    "fullSuiteDurationSeconds": 61.25,
+    "nodeVersion": "v24.11.1",
+    "platform": "win32"
+  },
+  "demoImplementationCommit": "7c3d47483b742a53db66acb90fc55e52db9917e6"
+}

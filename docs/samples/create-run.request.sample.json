@@ -1,0 +1,28 @@
+{
+  "sample": true,
+  "description": "Illustrative payload, not an executed run. Send the request member as the POST body.",
+  "request": {
+    "target": {
+      "kind": "fixture",
+      "variant": "faulty"
+    },
+    "levels": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "allowFixtureFaults": true,
+    "scenarios": [],
+    "budget": {
+      "maxDurationMs": 120000,
+      "maxRequests": 300,
+      "maxConcurrency": 2,
+      "requestsPerSecond": 10,
+      "maxArtifactBytes": 33554432,
+      "maxResponseBytes": 1048576
+    },
+    "useAi": false
+  }
+}

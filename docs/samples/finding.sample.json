@@ -1,0 +1,91 @@
+{
+  "sample": true,
+  "description": "Contract illustration only; IDs and timings are placeholders, not runtime data.",
+  "finding": {
+    "id": "00000000-0000-4000-8000-000000000002",
+    "runId": "00000000-0000-4000-8000-000000000001",
+    "firstObservedAt": "2026-01-01T00:00:00.000Z",
+    "scenarioId": "chaos.duplicates",
+    "version": 1,
+    "title": "Repeated submission creates duplicates",
+    "level": 2,
+    "category": "idempotency",
+    "outcome": "failed",
+    "classification": "confirmed",
+    "origin": "application",
+    "severity": "medium",
+    "severityRationale": "Illustrative data-integrity failure within the fixture contract.",
+    "reproductionSteps": [
+      "Open notes",
+      "Enter one title",
+      "Double click save",
+      "Inspect authoritative record count"
+    ],
+    "verification": {
+      "retested": true,
+      "reproduced": true,
+      "matchingAssertionIds": [
+        "one-record"
+      ]
+    },
+    "attempts": [
+      {
+        "index": 1,
+        "startedAt": "2026-01-01T00:00:00.000Z",
+        "durationMs": 0,
+        "outcome": "failed",
+        "assertions": [
+          {
+            "id": "one-record",
+            "description": "One operation creates one note",
+            "passed": false,
+            "expected": 1,
+            "observed": 2
+          }
+        ],
+        "actions": [
+          {
+            "at": "2026-01-01T00:00:00.000Z",
+            "action": "double-click",
+            "details": {
+              "selector": "#save-note"
+            }
+          }
+        ],
+        "evidenceIds": []
+      },
+      {
+        "index": 2,
+        "startedAt": "2026-01-01T00:00:00.000Z",
+        "durationMs": 0,
+        "outcome": "failed",
+        "assertions": [
+          {
+            "id": "one-record",
+            "description": "One operation creates one note",
+            "passed": false,
+            "expected": 1,
+            "observed": 2
+          }
+        ],
+        "actions": [
+          {
+            "at": "2026-01-01T00:00:00.000Z",
+            "action": "double-click",
+            "details": {
+              "selector": "#save-note"
+            }
+          }
+        ],
+        "evidenceIds": []
+      }
+    ],
+    "evidenceIds": [],
+    "expectedBehavior": "One record for one logical operation",
+    "observedBehavior": "Illustrative count: two records",
+    "limitations": [
+      "SAMPLE ONLY. No actual run or evidence is represented by these placeholder values."
+    ],
+    "replayable": true
+  }
+}
