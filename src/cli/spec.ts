@@ -1,0 +1,12 @@
+import { mkdir, writeFile } from 'node:fs/promises';
+import { openApiDocument } from '../api/contracts.js';
+import { CreateRunSchema, ScenarioResultSchema, type Attempt } from '../domain/models.js';
+await mkdir('docs', { recursive: true });
+await writeFile('docs/openapi.json', JSON.stringify(openApiDocument(), null, 2));
+await mkdir('docs/samples', { recursive: true });
+const request = CreateRunSchema.parse({ target: { kind: 'fixture', variant: 'faulty' }, levels: [1, 2, 3, 4, 5], allowFixtureFaults: true, useAi: false });
+await writeFile('docs/samples/create-run.request.sample.json', JSON.stringify({ sample: true, description: 'Illustrative payload, not an executed run. Send the request member as the POST body.', request }, null, 2));
+const attempt = (index: number): Attempt => ({ index, startedAt: '2026-01-01T00:00:00.000Z', durationMs: 0, outcome: 'failed', assertions: [{ id: 'one-record', description: 'One operation creates one note', expected: 1, observed: 2, passed: false }], actions: [{ at: '2026-01-01T00:00:00.000Z', action: 'double-click', details: { selector: '#save-note' } }], evidenceIds: [] });
+const finding = ScenarioResultSchema.parse({ id: '00000000-0000-4000-8000-000000000002', runId: '00000000-0000-4000-8000-000000000001', firstObservedAt: '2026-01-01T00:00:00.000Z', scenarioId: 'chaos.duplicates', version: 1, title: 'Repeated submission creates duplicates', level: 2, category: 'idempotency', outcome: 'failed', classification: 'confirmed', origin: 'application', severity: 'medium', severityRationale: 'Illustrative data-integrity failure within the fixture contract.', reproductionSteps: ['Open notes', 'Enter one title', 'Double click save', 'Inspect authoritative record count'], verification: { retested: true, reproduced: true, matchingAssertionIds: ['one-record'] }, attempts: [attempt(1), attempt(2)], evidenceIds: [], expectedBehavior: 'One record for one logical operation', observedBehavior: 'Illustrative count: two records', limitations: ['SAMPLE ONLY. No actual run or evidence is represented by these placeholder values.'], replayable: true });
+await writeFile('docs/samples/finding.sample.json', JSON.stringify({ sample: true, description: 'Contract illustration only; IDs and timings are placeholders, not runtime data.', finding }, null, 2));
+console.log('Generated docs/openapi.json and docs/samples/*.json');
