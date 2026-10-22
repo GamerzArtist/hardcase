@@ -1,11 +1,31 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { resolve } from 'node:path';
+import { readFile } from 'node:fs/promises';
 import { createEngine } from '../../src/api/server.js';
 import { CreateRunSchema, RunSchema } from '../../src/domain/models.js';
 import { isProcessAlive } from '../../src/workers/processes.js';
 import { tempDirectory, removeTestDirectory, token, waitFor } from '../helpers.js';
+import * as reports from '../../src/reporting/reports.js';
 
 describe('authenticated API and durable worker lifecycle', () => {
+  it('lets cancellation win while final report files are being written', async () => {
+    const dir = await tempDirectory('cancel-finalization');
+    const original = reports.saveReports; let resume!: () => void; let reached!: () => void;
+    const entered = new Promise<void>(resolve => { reached = resolve; });
+    const gate = new Promise<void>(resolve => { resume = resolve; });
+    const spy = vi.spyOn(reports, 'saveReports').mockImplementation(async (run, directory, baseline) => {
+      if (run.state === 'completed') { reached(); await gate; }
+      return original(run, directory, baseline);
+    });
+    const engine = await createEngine({ dataDir: dir, port: 0, logger: false }, { workerPath: resolve('tests/support/controlled-worker.mjs') }); await engine.listen();
+    try {
+      const run = engine.manager.create(CreateRunSchema.parse({ target: { kind: 'fixture' }, goals: 'complete' }));
+      await entered; engine.manager.cancel(run.id); resume();
+      const cancelled = await waitFor(engine, run.id); expect(cancelled.state).toBe('cancelled');
+      const report = JSON.parse(await readFile(resolve(engine.config.artifactDir, run.id, 'report.json'), 'utf8')) as { run: { state: string } };
+      expect(report.run.state).toBe('cancelled');
+    } finally { resume(); await engine.close(); spy.mockRestore(); await removeTestDirectory(dir); }
+  });
   it('validates input, local authentication, host, CORS, and generated contracts', async () => {
     const dir = await tempDirectory('api'); const engine = await createEngine({ dataDir: dir, token, port: 0, logger: false, allowedOrigins: ['http://127.0.0.1:5173'] }); const origin = await engine.listen();
     const headers = { authorization: `Bearer ${token}`, host: new URL(origin).host };

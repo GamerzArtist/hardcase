@@ -120,18 +120,23 @@ export class RunManager {
         this.store.mutate(id, run => { run.ai = ai; }, 'progress', { message: `AI analysis ${ai.status}` });
         terminal = job.stopState ?? terminal;
       }
-      const error = job.reason ?? (terminal === 'failed' ? job.error ?? `Worker exited unexpectedly (${exitCode})` : null);
+      let error = job.reason ?? (terminal === 'failed' ? job.error ?? `Worker exited unexpectedly (${exitCode})` : null);
       // Publish a terminal state only after its report artifacts have been written successfully.
       const snapshot = this.store.get(id)!;
       const now = new Date().toISOString();
       const baseline = this.store.list(100).find(prior => prior.id !== id && prior.state === 'completed' && comparisonKey(prior) === comparisonKey(snapshot));
       await saveReports({ ...snapshot, progress: { ...snapshot.progress, currentScenarioId: null }, state: terminal, error, finishedAt: now, updatedAt: now, revision: snapshot.revision + 1 }, directory, baseline);
+      // Cancellation may arrive during asynchronous report I/O. It still wins before the terminal commit.
+      if (job.stopState && job.stopState !== terminal) {
+        terminal = job.stopState; error = job.reason ?? null;
+        await saveReports({ ...snapshot, progress: { ...snapshot.progress, currentScenarioId: null }, state: terminal, error, finishedAt: new Date().toISOString(), updatedAt: new Date().toISOString(), revision: snapshot.revision + 1 }, directory, baseline);
+      }
       this.store.transition(id, terminal, error);
     } catch (error) {
       const message = `Finalization failed: ${redactText(String(error))}`; this.failures.push(message);
       const current = this.store.get(id);
       if (current && !isTerminal(current.state)) this.store.transition(id, 'failed', message);
-    } finally { this.jobs.delete(id); job.resolveClosed(); this.schedule(); }
+    } finally { if (job.forceTimer) clearTimeout(job.forceTimer); this.jobs.delete(id); job.resolveClosed(); this.schedule(); }
   }
   async shutdown(): Promise<void> {
     if (this.closing) return; this.closing = true; clearInterval(this.monitor);
