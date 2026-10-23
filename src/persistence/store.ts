@@ -4,6 +4,8 @@ import { EventEmitter } from 'node:events';
 import { ENGINE_VERSION, TRANSITIONS, emptyMetrics, isTerminal, type CreateRun, type Run, type RunEvent, type RunState } from '../domain/models.js';
 import { disabledAi } from '../ai/provider.js';
 import { RECIPES } from '../strategies/catalog.js';
+import { IdempotencyConflict, type IdempotencyRecord } from '../api/idempotency.js';
+import { failureCode } from '../domain/failures.js';
 
 export class RunStore {
   readonly events = new EventEmitter();
@@ -14,7 +16,8 @@ export class RunStore {
       CREATE TABLE IF NOT EXISTS runs(seq INTEGER PRIMARY KEY AUTOINCREMENT,id TEXT UNIQUE NOT NULL,state TEXT NOT NULL,data TEXT NOT NULL);
       CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY AUTOINCREMENT,run_id TEXT NOT NULL,data TEXT NOT NULL);
       CREATE INDEX IF NOT EXISTS events_by_run ON events(run_id,id);
-      PRAGMA user_version=1;`);
+      CREATE TABLE IF NOT EXISTS idempotency(key TEXT PRIMARY KEY,request_hash TEXT NOT NULL,run_id TEXT NOT NULL REFERENCES runs(id));
+      PRAGMA user_version=2;`);
     this.events.setMaxListeners(50);
     // Additive snapshot migration preserves previously observed results from pre-handoff local runs.
     const legacyRows = this.db.prepare('SELECT id,data FROM runs').all() as Array<{ id: string; data: string }>;
@@ -32,7 +35,16 @@ export class RunStore {
       this.db.prepare('UPDATE runs SET data=? WHERE id=?').run(JSON.stringify(run), run.id);
     }
   }
-  create(request: CreateRun, replayOf: string | null = null): Run {
+  findIdempotent(record: IdempotencyRecord): Run | undefined {
+    const row = this.db.prepare('SELECT request_hash,run_id FROM idempotency WHERE key=?').get(record.key) as { request_hash: string; run_id: string } | undefined;
+    if (!row) return undefined;
+    if (row.request_hash !== record.requestHash) throw new IdempotencyConflict();
+    const run = this.get(row.run_id);
+    if (!run) throw new Error('Idempotency record references an unavailable run');
+    return run;
+  }
+  ready(): boolean { return (this.db.prepare('SELECT 1 AS ready').get() as { ready: number }).ready === 1; }
+  create(request: CreateRun, replayOf: string | null = null, idempotency?: IdempotencyRecord): Run {
     const now = new Date().toISOString();
     const run: Run = { id: randomUUID(), state: 'queued', createdAt: now, updatedAt: now, startedAt: null, finishedAt: null,
       request, results: [], evidence: [], metrics: emptyMetrics(), environment: { engineVersion: ENGINE_VERSION, nodeVersion: process.version, platform: process.platform, targetKind: request.target.kind, isolated: request.target.kind === 'fixture' },
@@ -40,7 +52,10 @@ export class RunStore {
     this.db.exec('BEGIN IMMEDIATE');
     let event: RunEvent;
     try {
+      const existing = idempotency && this.findIdempotent(idempotency);
+      if (existing) { this.db.exec('COMMIT'); return existing; }
       this.db.prepare('INSERT INTO runs(id,state,data) VALUES (?,?,?)').run(run.id, run.state, JSON.stringify(run));
+      if (idempotency) this.db.prepare('INSERT INTO idempotency(key,request_hash,run_id) VALUES (?,?,?)').run(idempotency.key, idempotency.requestHash, run.id);
       event = this.insertEvent(run.id, 'state', { state: 'queued' }); this.db.exec('COMMIT');
     } catch (error) { this.db.exec('ROLLBACK'); throw error; }
     this.publish(event!); return run;
@@ -74,7 +89,7 @@ export class RunStore {
     if (current.state === state || isTerminal(current.state)) return current;
     return this.mutate(id, run => {
       if (!TRANSITIONS[run.state].includes(state)) throw new Error(`Invalid transition ${run.state} -> ${state}`);
-      run.state = state; run.error = error;
+      run.state = state; run.error = error; run.errorCode = error ? failureCode(error) : undefined;
       if (state === 'preparing') run.startedAt = new Date().toISOString();
       if (isTerminal(state)) run.finishedAt = new Date().toISOString();
       if (isTerminal(state)) run.progress.currentScenarioId = null;

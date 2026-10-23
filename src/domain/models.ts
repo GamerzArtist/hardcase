@@ -98,7 +98,7 @@ export const AttemptSchema = z.strictObject({
   outcome: z.enum(['passed', 'failed', 'inconclusive', 'infrastructure_error']),
   assertions: z.array(AssertionOutcomeSchema),
   actions: z.array(z.strictObject({ at: z.string(), action: z.string(), details: z.unknown() })),
-  evidenceIds: z.array(z.string()), error: z.string().optional(),
+  evidenceIds: z.array(z.string()), error: z.string().optional(), errorCode: z.string().optional(),
 });
 export type Attempt = z.infer<typeof AttemptSchema>;
 export const ScenarioResultSchema = z.strictObject({
@@ -142,7 +142,7 @@ export const RunSchema = z.strictObject({
   startedAt: z.string().nullable(), finishedAt: z.string().nullable(),
   request: CreateRunSchema, results: z.array(ScenarioResultSchema), evidence: z.array(EvidenceSchema),
   metrics: MetricsSchema, environment: EnvironmentSchema.nullable(),
-  error: z.string().nullable(), replayOf: z.string().nullable(),
+  error: z.string().nullable(), errorCode: z.string().optional(), replayOf: z.string().nullable(),
   ai: AiAnalysisSchema, revision: z.number().int().nonnegative(),
   progress: z.strictObject({ totalScenarios: z.number().int().nonnegative(), completedScenarios: z.number().int().nonnegative(), currentScenarioId: z.string().nullable(), percent: z.number().min(0).max(100) }),
 });
@@ -154,7 +154,7 @@ export const EventSchema = z.strictObject({
 });
 export type RunEvent = z.infer<typeof EventSchema>;
 export interface Recipe {
-  id: string; version: 1; title: string; level: Level; category: string;
+  id: string; version: 1 | 2; title: string; level: Level; category: string;
   targetKinds: Array<Target['kind']>; prerequisites: string[]; requiredFixtures: string[];
   steps: string[]; expectedBehavior: string; assertions: string[];
   safetyPermissions: string[]; budget: Partial<Budget>; cleanup: string[];

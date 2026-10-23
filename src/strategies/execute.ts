@@ -13,6 +13,7 @@ import { SafeHttp, type HttpObservation } from '../security/http.js';
 import { validateScenario, validateTarget } from '../security/targets.js';
 import { redactText } from '../security/redact.js';
 import { RECIPES } from './catalog.js';
+import { failureCode } from '../domain/failures.js';
 
 interface AttemptContext {
   page?: Page; fixture?: FixtureHandle; baseUrl: string; guard: BudgetGuard; http: SafeHttp;
@@ -99,12 +100,15 @@ async function runBuiltin(id: string, c: AttemptContext): Promise<void> {
     case 'hostile.authorization': {
       const policy = await c.http.request(`${c.baseUrl}/api/policy`); c.record('permission-policy', policy.body);
       c.assert('declared-policy', 'A verifiable permission policy is present', FIXTURE_POLICY.permission, recordObject(policy.body).permission);
-      c.record('unauthorized-action', { identity: 'viewer', operation: 'admin/reset' });
-      const denied = await c.http.request(`${c.baseUrl}/api/admin/reset`, { method: 'POST', headers: { 'x-test-role': 'viewer' }, body: {} });
-      c.assert('viewer-denied', 'Viewer must be denied server-side', 403, denied.status);
+      c.record('fixture-source', { file: 'src/fixtures/app.ts', handler: 'POST /api/admin/reset', policy: 'FIXTURE_POLICY.permission', driver: 'src/strategies/execute.ts#hostile.authorization' });
+      await navigate(c, '/permissions'); await page!.locator('main[data-ready="true"]').waitFor();
+      c.record('click', { selector: '#viewer-reset', identity: 'viewer', operation: 'POST /api/admin/reset' });
+      await page!.locator('#viewer-reset').click(); await page!.locator('#viewer-status[data-status]').waitFor();
+      c.assert('viewer-denied', 'Viewer must be denied server-side', 403, Number(await page!.locator('#viewer-status').getAttribute('data-status')));
       c.assert('no-unauthorized-effect', 'Denied identity must not mutate protected state', 0, (await expectedState(c)).adminActions);
-      c.record('authorized-action', { identity: 'admin' }); const allowed = await c.http.request(`${c.baseUrl}/api/admin/reset`, { method: 'POST', headers: { 'x-test-role': 'admin' }, body: {} });
-      c.assert('admin-allowed', 'Admin operation is permitted', 200, allowed.status); break;
+      c.record('click', { selector: '#admin-reset', identity: 'admin', operation: 'POST /api/admin/reset' });
+      await page!.locator('#admin-reset').click(); await page!.locator('#admin-status[data-status]').waitFor();
+      c.assert('admin-allowed', 'Admin operation is permitted', 200, Number(await page!.locator('#admin-status').getAttribute('data-status'))); break;
     }
     case 'hostile.cost': {
       const policy = recordObject((await c.http.request(`${c.baseUrl}/api/policy`)).body); c.record('simulated-cost-policy', { ceiling: policy.costCeiling, realProviderCalls: 0 });
@@ -208,7 +212,8 @@ export async function executeRun(input: WorkerInput, signal: AbortSignal, emit: 
     browser = new BrowserSession(guard, metrics, origins, input.forbiddenPorts, onBrowserPid);
     const selected = target.kind === 'fixture' ? RECIPES.filter(recipe => request.levels.includes(recipe.level) && (!request.recipeIds || request.recipeIds.includes(recipe.id))) : [];
     const scenarios: Array<Recipe | ScenarioDefinition> = [...selected, ...request.scenarios].sort((a, b) => a.level - b.level);
-    const browserVersion = scenarios.some(s => s.level <= 2) ? await browser.start() : undefined;
+    const needsBrowser = (scenario: Recipe | ScenarioDefinition): boolean => scenario.level <= 2 || scenario.id === 'hostile.authorization';
+    const browserVersion = scenarios.some(needsBrowser) ? await browser.start() : undefined;
     emit({ type: 'ready', environment: { engineVersion: ENGINE_VERSION, nodeVersion: process.version, platform: process.platform, targetKind: target.kind, fixtureVariant: target.kind === 'fixture' ? target.variant : undefined, targetOrigin: new URL(baseUrl).origin, isolated: target.kind === 'fixture', browserVersion } });
     for (const scenario of scenarios) {
       guard.check(); emit({ type: 'progress', message: `Executing ${scenario.id}`, scenarioId: scenario.id });
@@ -224,7 +229,7 @@ export async function executeRun(input: WorkerInput, signal: AbortSignal, emit: 
         let outcome: Attempt['outcome'] = 'passed'; let error: string | undefined;
         try {
           const contextGuard = custom ? new BudgetGuard((scenario as ScenarioDefinition).budget, signal) : undefined;
-          if (scenario.level <= 2) ({ context, page, observations } = await browser.context(contextGuard, scenario.evidenceRequirements.includes('trace')));
+          if (needsBrowser(scenario)) ({ context, page, observations } = await browser.context(contextGuard, scenario.evidenceRequirements.includes('trace')));
           const http = new SafeHttp(origins, guard, metrics, httpObservations, input.forbiddenPorts);
           const c: AttemptContext = { page, fixture, baseUrl, guard, http, actions, assertions, observations,
             record(action, details = {}) { actions.push({ at: new Date().toISOString(), action, details }); },
@@ -237,8 +242,8 @@ export async function executeRun(input: WorkerInput, signal: AbortSignal, emit: 
           if (scenario.level === 4) metrics.simulatedEvents += httpObservations.filter(n => n.method === 'POST' && n.path === '/api/events').length * 10 - 9;
         } catch (caught) {
           signal.throwIfAborted();
-          error = redactText(caught instanceof Error ? caught.message : String(caught));
-          outcome = caught instanceof BudgetError ? 'inconclusive' : 'infrastructure_error'; partial = true;
+          error = redactText([...(observations?.blocked ?? []), caught instanceof Error ? caught.message : String(caught)].join('; '));
+          outcome = caught instanceof BudgetError || ['SCOPE_BLOCKED', 'BUDGET_EXHAUSTED'].includes(failureCode(error)) ? 'inconclusive' : 'infrastructure_error'; partial = true;
         } finally {
           try {
             if (page && !page.isClosed() && !signal.aborted && scenario.evidenceRequirements.includes('screenshot')) {
@@ -256,7 +261,7 @@ export async function executeRun(input: WorkerInput, signal: AbortSignal, emit: 
             if (!signal.aborted) { partial = true; outcome = 'infrastructure_error'; error = `Evidence capture failed: ${captureError instanceof Error ? captureError.message : String(captureError)}`; }
           } finally { if (context) await context.close().catch(() => undefined); }
         }
-        attempts.push({ index, startedAt, durationMs: performance.now() - started, outcome, assertions, actions, evidenceIds: attemptEvidence, error });
+        attempts.push({ index, startedAt, durationMs: performance.now() - started, outcome, assertions, actions, evidenceIds: attemptEvidence, error, ...(error ? { errorCode: failureCode(error) } : {}) });
         evidenceIds.push(...attemptEvidence); emit({ type: 'metrics', metrics });
       }
       const first = attempts[0]!; const second = attempts[1];

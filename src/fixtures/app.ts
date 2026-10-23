@@ -31,6 +31,19 @@ document.querySelector('#save-draft').addEventListener('click',async()=>{const r
 Promise.all([load(),fetch('/api/draft').then(r=>r.json()).then(v=>draft.value=v.text)]).then(()=>document.querySelector('main').setAttribute('data-ready','true'));
 </script></html>`;
 
+const permissionHtml = `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Controlled permission check</title><style>body{font:18px system-ui;margin:32px;max-width:760px;color:#172520;background:#f6f8f5}button{font:inherit;padding:12px;margin:8px 0}section{border:1px solid #bdc9bf;padding:20px;margin:20px 0}output{font-weight:700;display:block;margin-top:12px}code{overflow-wrap:anywhere}</style>
+<main><h1>Controlled permission check</h1><p>Engine-owned disposable fixture. Synthetic viewer/admin identities; no production account or data.</p>
+<p><strong>Policy:</strong> A viewer must receive HTTP 403 and leave the protected action count unchanged. An administrator may perform the action.</p>
+<section><h2>Viewer attempt</h2><button id="viewer-reset">Attempt protected action as viewer</button><output id="viewer-status" aria-live="polite">Not attempted</output></section>
+<section><h2>Administrator control</h2><button id="admin-reset">Perform allowed admin action</button><output id="admin-status" aria-live="polite">Not attempted</output></section>
+<p>Protected action count: <strong id="protected-count">0</strong></p><p>Endpoint: <code>POST /api/admin/reset</code></p><p id="fixture-variant"></p></main>
+<script>
+async function state(){const r=await fetch('/api/state');const s=await r.json();document.querySelector('#protected-count').textContent=String(s.adminActions);}
+for(const role of ['viewer','admin'])document.querySelector('#'+role+'-reset').addEventListener('click',async()=>{const out=document.querySelector('#'+role+'-status');out.textContent='Pending';try{const r=await fetch('/api/admin/reset',{method:'POST',headers:{'Content-Type':'application/json','x-test-role':role},body:'{}'});await state();out.textContent='HTTP '+r.status+(r.ok?' — protected action performed':' — action denied');out.setAttribute('data-status',String(r.status));}catch{out.textContent='Connection failed';out.setAttribute('data-status','error');}});
+Promise.all([state(),fetch('/health').then(r=>r.json()).then(h=>document.querySelector('#fixture-variant').textContent='Fixture variant: '+h.variant)]).then(()=>document.querySelector('main').setAttribute('data-ready','true'));
+</script></html>`;
+
 export async function startFixture(options: { variant: 'clean' | 'faulty'; directory: string; port?: number }): Promise<FixtureHandle> {
   await mkdir(options.directory, { recursive: true });
   const db = new DatabaseSync(join(options.directory, 'fixture.sqlite'));
@@ -45,6 +58,7 @@ export async function startFixture(options: { variant: 'clean' | 'faulty'; direc
   const setValue = (key: string, value: string): void => { db.prepare('INSERT INTO state(key,value) VALUES (?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value').run(key, value); };
   if (!getValue('balance')) { setValue('balance', '100'); setValue('ledger', '0'); setValue('draft', ''); }
   app.get('/', async (_request, reply) => reply.type('text/html').send(html));
+  app.get('/permissions', async (_request, reply) => reply.type('text/html').send(permissionHtml));
   app.get('/about', async (_request, reply) => reply.type('text/html').send('<!doctype html><html lang="en"><meta name="viewport" content="width=device-width"><title>Fixture about</title><h1>About this fixture</h1><a href="/">Notes</a></html>'));
   app.get('/health', async () => ({ ok: true, variant: options.variant }));
   app.get('/api/policy', async () => FIXTURE_POLICY);

@@ -1,15 +1,15 @@
 # hardcase frontend integration handoff
 
-This document describes the implemented backend in `hackathon-project-02`. The separate frontend directory has not been modified or integrated during this session. Backend/API/browser verification is distinct from frontend acceptance.
+This document describes the backend in the canonical `hackathon-project-02` repository. The release now integrates the frontend under `apps/web`; current additions are in [API_CONTRACT.md](API_CONTRACT.md). Backend/API/browser verification remains distinct from frontend and native acceptance; see the current release verification documents.
 
 ## Start and connect
 
 ```powershell
 npm ci
 npx playwright install chromium
-npm run build
+npm run build:api
 $env:ENGINE_ALLOWED_ORIGINS = 'http://127.0.0.1:5173'
-npm start
+npm run start:api
 ```
 
 The default API is `http://127.0.0.1:4318`; standalone fixture is `http://127.0.0.1:4319`. Fixture runs allocate their own ephemeral origins. Health is `GET /v1/health` and returns `{ "ok": true, "version": "0.1.0" }`.
@@ -32,6 +32,7 @@ All paths below are relative to the local API origin. Except health, all require
 | Method | Path | Request / response |
 |---|---|---|
 | GET | `/v1/health` | `Health`; no auth |
+| GET | `/v1/ready` | authenticated dependency readiness; `Readiness`,200 or503 |
 | GET | `/v1/capabilities` | `Capabilities`; tiers, safety restrictions and hard caps |
 | POST | `/v1/targets/validate` | `Target` → canonical `Target`; no execution |
 | GET | `/v1/recipes` | `Recipe[]`; versioned executable fixture scenarios |
@@ -41,6 +42,7 @@ All paths below are relative to the local API origin. Except health, all require
 | GET | `/v1/runs?limit=50&offset=0` | newest-first `Run[]`; limit 1–100, offset 0–1,000,000 |
 | GET | `/v1/runs/{id}` | `Run`, including progress, results, metrics and evidence |
 | GET | `/v1/runs/{id}/events?after=0` | authenticated SSE; `Event` payloads |
+| GET | `/v1/runs/{id}/events/poll?after=0&limit=100` | bounded `EventPage`; resume with nextCursor |
 | POST | `/v1/runs/{id}/cancel` | empty body or `{}` → `Run`, HTTP 202; idempotent |
 | GET | `/v1/runs/{id}/findings` | `ScenarioResult[]`, including passed/inconclusive cases |
 | GET | `/v1/runs/{id}/evidence` | `Evidence[]` metadata |

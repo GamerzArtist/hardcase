@@ -65,7 +65,8 @@ export class BrowserSession {
         await route.fulfill({ status: response.status, headers: responseHeaders, body: Buffer.concat(chunks) });
       } catch (error) {
         this.metrics.blockedRequests++;
-        const message = redactText(error instanceof Error ? error.message : String(error));
+        const cause = error instanceof Error ? (error.cause as { code?: string } | undefined)?.code : undefined;
+        const message = redactText(`${cause ? `${cause}: ` : ''}${error instanceof Error && error.name === 'TimeoutError' ? 'TARGET_TIMEOUT: ' : ''}${error instanceof Error ? error.message : String(error)}`);
         observations.blocked.push(message);
         observations.network.push({ method: request.method(), path: '/', error: message });
         try { await route.abort('blockedbyclient'); } catch { /* Context may have closed during cancellation. */ }

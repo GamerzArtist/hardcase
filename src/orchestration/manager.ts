@@ -10,6 +10,8 @@ import { comparisonKey, saveReports } from '../reporting/reports.js';
 import { killOwnedProcessTree } from '../workers/processes.js';
 import { redactText } from '../security/redact.js';
 import { cleanupDisposable } from '../workers/cleanup.js';
+import type { IdempotencyRecord } from '../api/idempotency.js';
+import { failureCode } from '../domain/failures.js';
 
 interface Job {
   child: ChildProcess; browserPid?: number; heartbeatAt: number; startedAt: number;
@@ -27,10 +29,12 @@ export class RunManager {
   constructor(readonly store: RunStore, readonly config: EngineConfig, private readonly workerPath = fileURLToPath(new URL('../workers/entry.js', import.meta.url))) {
     this.monitor = setInterval(() => this.tick(), 250); this.monitor.unref();
   }
-  create(request: CreateRun, replayOf: string | null = null): Run {
+  create(request: CreateRun, replayOf: string | null = null, idempotency?: IdempotencyRecord): Run {
     if (this.closing) throw new Error('Engine is shutting down');
+    const existing = idempotency && this.store.findIdempotent(idempotency);
+    if (existing) return existing;
     if (this.store.queued().length >= this.config.maxQueuedJobs) throw new Error('Run queue is full');
-    const run = this.store.create(request, replayOf); this.schedule(); return run;
+    const run = this.store.create(request, replayOf, idempotency); this.schedule(); return run;
   }
   get activeCount(): number { return this.jobs.size; }
   processIds(id: string): { worker?: number; browser?: number } { const job = this.jobs.get(id); return { worker: job?.child.pid, browser: job?.browserPid }; }
@@ -125,11 +129,11 @@ export class RunManager {
       const snapshot = this.store.get(id)!;
       const now = new Date().toISOString();
       const baseline = this.store.list(100).find(prior => prior.id !== id && prior.state === 'completed' && comparisonKey(prior) === comparisonKey(snapshot));
-      await saveReports({ ...snapshot, progress: { ...snapshot.progress, currentScenarioId: null }, state: terminal, error, finishedAt: now, updatedAt: now, revision: snapshot.revision + 1 }, directory, baseline);
+      await saveReports({ ...snapshot, progress: { ...snapshot.progress, currentScenarioId: null }, state: terminal, error, errorCode: error ? failureCode(error) : undefined, finishedAt: now, updatedAt: now, revision: snapshot.revision + 1 }, directory, baseline);
       // Cancellation may arrive during asynchronous report I/O. It still wins before the terminal commit.
       if (job.stopState && job.stopState !== terminal) {
         terminal = job.stopState; error = job.reason ?? null;
-        await saveReports({ ...snapshot, progress: { ...snapshot.progress, currentScenarioId: null }, state: terminal, error, finishedAt: new Date().toISOString(), updatedAt: new Date().toISOString(), revision: snapshot.revision + 1 }, directory, baseline);
+        await saveReports({ ...snapshot, progress: { ...snapshot.progress, currentScenarioId: null }, state: terminal, error, errorCode: error ? failureCode(error) : undefined, finishedAt: new Date().toISOString(), updatedAt: new Date().toISOString(), revision: snapshot.revision + 1 }, directory, baseline);
       }
       this.store.transition(id, terminal, error);
     } catch (error) {

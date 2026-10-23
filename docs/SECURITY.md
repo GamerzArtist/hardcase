@@ -24,6 +24,7 @@ All five tiers enforce budgets. Levels 3–5 additionally require `allowFixtureF
 | Custom scenarios / steps | 10 / 40 | 10 / 40 |
 | API body / browser mutation body | 128 KiB / 16 KiB | same |
 | Concurrent SSE subscribers | 20 | 20 |
+| Event polling page | 100 events | 200 events |
 | Worker V8 heap | 256 MiB | 256 MiB |
 
 Global and custom-scenario request guards enforce count/rate/concurrency before target I/O. Service workers, downloads and WebSockets are blocked. Chromium traffic is fulfilled from a bounded manual HTTP fetch; redirects are refused before Chromium can follow them. The internal HTTP client validates each redirect and never automatically redirects a mutation. Browser DNS aliases do not resolve freely. API credentials and AI secrets are omitted from worker environments.
@@ -39,3 +40,5 @@ The data directory contains the session token, original local scenario values, d
 ## Cleanup and failure handling
 
 Normal completion, cancellation, worker crash and timeout close owned listeners, browser processes and disposable databases. Tests include an uncooperative worker with a live browser and cancellation during actual queue load. Abrupt OS/API termination can leave disk remnants; startup deletes engine-owned disposable files and marks interrupted runs failed while preserving evidence/history. If both supervisor and worker are forcibly killed, no immediate application-level finalizer can run. Disk permission failures are reported as failures rather than silently claiming successful cleanup.
+
+Run creation/replay accepts an `Idempotency-Key` and binds it transactionally to the validated request hash and run. Identical retries reuse the run across restarts; conflicting requests receive409. Keys and run history are retained together. A client omitting the header uses legacy create-every-call behavior. `/v1/ready` requires authentication and coalesces/cache-bounds its browser startup probes. SSE disconnects clients whose send backlog exceeds64KiB; reconnect using the last received event ID or drain bounded JSON cursor pages.

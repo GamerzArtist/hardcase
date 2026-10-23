@@ -1,0 +1,56 @@
+[
+  {
+    "method": "GET",
+    "path": "/permissions",
+    "status": 200,
+    "durationMs": 95.98489999999947
+  },
+  {
+    "method": "GET",
+    "path": "/api/state",
+    "status": 200,
+    "durationMs": 98.53929999999946
+  },
+  {
+    "method": "GET",
+    "path": "/health",
+    "status": 200,
+    "durationMs": 192.01310000000012
+  },
+  {
+    "method": "POST",
+    "path": "/api/admin/reset",
+    "status": 403,
+    "durationMs": 18.682700000000295
+  },
+  {
+    "method": "GET",
+    "path": "/api/state",
+    "status": 200,
+    "durationMs": 104.5617999999995
+  },
+  {
+    "method": "POST",
+    "path": "/api/admin/reset",
+    "status": 200,
+    "durationMs": 98.42010000000028
+  },
+  {
+    "method": "GET",
+    "path": "/api/state",
+    "status": 200,
+    "durationMs": 91.1900999999998
+  },
+  {
+    "method": "GET",
+    "path": "/api/policy",
+    "status": 200,
+    "durationMs": 1.6981000000005224
+  },
+  {
+    "method": "GET",
+    "path": "/api/state",
+    "status": 200,
+    "durationMs": 0.9562999999998283
+  }
+]

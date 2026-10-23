@@ -1,0 +1,2838 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-23T02:46:30.478Z",
+  "disclaimer": "This report covers only the executed scenarios and declared assertions. Passing does not establish that the application is safe, secure, or bug-free.",
+  "run": {
+    "id": "754b4e25-30bc-4002-a243-8a917a863f55",
+    "state": "completed",
+    "createdAt": "2026-10-23T02:46:08.715Z",
+    "updatedAt": "2026-10-23T02:46:30.477Z",
+    "startedAt": "2026-10-23T02:46:08.718Z",
+    "finishedAt": "2026-10-23T02:46:30.477Z",
+    "request": {
+      "target": {
+        "kind": "fixture",
+        "variant": "faulty"
+      },
+      "levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "allowFixtureFaults": true,
+      "scenarios": [],
+      "budget": {
+        "maxDurationMs": 120000,
+        "maxRequests": 300,
+        "maxConcurrency": 2,
+        "requestsPerSecond": 10,
+        "maxArtifactBytes": 33554432,
+        "maxResponseBytes": 1048576
+      },
+      "useAi": false
+    },
+    "results": [
+      {
+        "id": "7b0e5c1a-8194-42af-b85b-fb7fbca5030c",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "firstObservedAt": "2026-10-23T02:46:09.756Z",
+        "scenarioId": "normal.workflow",
+        "version": 1,
+        "title": "Save, reload, navigate, keyboard and narrow viewport",
+        "level": 1,
+        "category": "functional",
+        "outcome": "passed",
+        "classification": "passed",
+        "origin": "application",
+        "severity": "unassigned",
+        "severityRationale": "No application defect is established by this result.",
+        "reproductionSteps": [
+          "Navigate",
+          "Save a note",
+          "Reload",
+          "Back/forward",
+          "Tab navigation",
+          "Narrow viewport"
+        ],
+        "verification": {
+          "retested": false,
+          "reproduced": false,
+          "matchingAssertionIds": []
+        },
+        "attempts": [
+          {
+            "index": 1,
+            "startedAt": "2026-10-23T02:46:09.756Z",
+            "durationMs": 1887.3125,
+            "outcome": "passed",
+            "assertions": [
+              {
+                "id": "saved",
+                "description": "A valid note is rendered",
+                "expected": "Ordinary note",
+                "observed": "Ordinary note",
+                "passed": true
+              },
+              {
+                "id": "reload",
+                "description": "Saved note persists after reload",
+                "expected": 1,
+                "observed": 1,
+                "passed": true
+              },
+              {
+                "id": "link",
+                "description": "About link navigates",
+                "expected": "/about",
+                "observed": "/about",
+                "passed": true
+              },
+              {
+                "id": "back",
+                "description": "Back returns to notes",
+                "expected": "/",
+                "observed": "/",
+                "passed": true
+              },
+              {
+                "id": "forward",
+                "description": "Forward returns to about",
+                "expected": "/about",
+                "observed": "/about",
+                "passed": true
+              },
+              {
+                "id": "keyboard",
+                "description": "Tab reaches a focusable element",
+                "expected": true,
+                "observed": true,
+                "passed": true
+              },
+              {
+                "id": "responsive",
+                "description": "Narrow page has no horizontal overflow",
+                "expected": true,
+                "observed": true,
+                "passed": true
+              },
+              {
+                "id": "browser-errors",
+                "description": "No uncaught page errors",
+                "expected": 0,
+                "observed": 0,
+                "passed": true
+              },
+              {
+                "id": "failed-http",
+                "description": "No unexpected HTTP errors in ordinary workflow",
+                "expected": 0,
+                "observed": 0,
+                "passed": true
+              }
+            ],
+            "actions": [
+              {
+                "at": "2026-10-23T02:46:09.908Z",
+                "action": "navigate",
+                "details": {
+                  "path": "/"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:10.189Z",
+                "action": "fill",
+                "details": {
+                  "selector": "#note-title",
+                  "value": "Ordinary note"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:10.198Z",
+                "action": "click",
+                "details": {
+                  "selector": "#save-note"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:10.460Z",
+                "action": "reload",
+                "details": {}
+              },
+              {
+                "at": "2026-10-23T02:46:10.695Z",
+                "action": "click",
+                "details": {
+                  "selector": "a[href=\"/about\"]"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:10.789Z",
+                "action": "back",
+                "details": {}
+              },
+              {
+                "at": "2026-10-23T02:46:11.125Z",
+                "action": "forward",
+                "details": {}
+              },
+              {
+                "at": "2026-10-23T02:46:11.180Z",
+                "action": "navigate",
+                "details": {
+                  "path": "/"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:11.494Z",
+                "action": "keyboard",
+                "details": {
+                  "key": "Tab"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:11.502Z",
+                "action": "viewport",
+                "details": {
+                  "width": 360,
+                  "height": 740
+                }
+              }
+            ],
+            "evidenceIds": [
+              "e8e6766b-b9a4-4f06-90fe-4e9889bbb993",
+              "fca28e03-a055-409e-89ef-d4751b0f7b11",
+              "25b20e08-9bea-40e1-b31d-ad3a1193c83d",
+              "d58e31a8-d05c-4791-9fc0-03c6bd18b907",
+              "aa6696fa-62ce-4014-a4dc-d3d9aac00e99"
+            ]
+          }
+        ],
+        "evidenceIds": [
+          "e8e6766b-b9a4-4f06-90fe-4e9889bbb993",
+          "fca28e03-a055-409e-89ef-d4751b0f7b11",
+          "25b20e08-9bea-40e1-b31d-ad3a1193c83d",
+          "d58e31a8-d05c-4791-9fc0-03c6bd18b907",
+          "aa6696fa-62ce-4014-a4dc-d3d9aac00e99"
+        ],
+        "expectedBehavior": "A valid note survives refresh and basic navigation remains usable.",
+        "observedBehavior": "9 explicit assertions passed.",
+        "limitations": [
+          "Assertions apply to the declared fixture contract, not arbitrary application semantics."
+        ],
+        "replayable": true
+      },
+      {
+        "id": "05bb0fd9-de32-4b31-9d04-e3a0ee02a8be",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "firstObservedAt": "2026-10-23T02:46:11.647Z",
+        "scenarioId": "normal.persistence",
+        "version": 1,
+        "title": "Acknowledged draft survives reload",
+        "level": 1,
+        "category": "persistence",
+        "outcome": "failed",
+        "classification": "confirmed",
+        "origin": "application",
+        "severity": "medium",
+        "severityRationale": "A declared data-integrity, idempotency, or bounded-resilience invariant failed in the disposable fixture. Impact is scoped to that demonstrated contract.",
+        "reproductionSteps": [
+          "Enter a draft",
+          "Save",
+          "Reload",
+          "Read persisted draft"
+        ],
+        "verification": {
+          "retested": true,
+          "reproduced": true,
+          "matchingAssertionIds": [
+            "durable-draft"
+          ]
+        },
+        "attempts": [
+          {
+            "index": 1,
+            "startedAt": "2026-10-23T02:46:11.647Z",
+            "durationMs": 810.9064000000003,
+            "outcome": "failed",
+            "assertions": [
+              {
+                "id": "acknowledged",
+                "description": "The app acknowledges the write",
+                "expected": "Saved",
+                "observed": "Saved",
+                "passed": true
+              },
+              {
+                "id": "durable-draft",
+                "description": "Acknowledged draft survives refresh",
+                "expected": "Durable synthetic draft",
+                "observed": "",
+                "passed": false
+              }
+            ],
+            "actions": [
+              {
+                "at": "2026-10-23T02:46:11.728Z",
+                "action": "navigate",
+                "details": {
+                  "path": "/"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:11.964Z",
+                "action": "fill",
+                "details": {
+                  "selector": "#draft",
+                  "value": "Durable synthetic draft"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:11.973Z",
+                "action": "click",
+                "details": {
+                  "selector": "#save-draft"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:12.097Z",
+                "action": "reload",
+                "details": {}
+              }
+            ],
+            "evidenceIds": [
+              "ae7720f2-eb44-4775-902f-c078c6ebcdcf",
+              "f2acd14d-9904-4b54-b495-156b29be456a",
+              "d7f6aaa2-66c3-427d-a2ca-0d9e4fcb64cc",
+              "8c4f9f68-9947-4b33-9de7-177e3787f450",
+              "66c94ecc-cc66-495c-b6e8-aa6318a75b56"
+            ]
+          },
+          {
+            "index": 2,
+            "startedAt": "2026-10-23T02:46:12.461Z",
+            "durationMs": 836.9587999999999,
+            "outcome": "failed",
+            "assertions": [
+              {
+                "id": "acknowledged",
+                "description": "The app acknowledges the write",
+                "expected": "Saved",
+                "observed": "Saved",
+                "passed": true
+              },
+              {
+                "id": "durable-draft",
+                "description": "Acknowledged draft survives refresh",
+                "expected": "Durable synthetic draft",
+                "observed": "",
+                "passed": false
+              }
+            ],
+            "actions": [
+              {
+                "at": "2026-10-23T02:46:12.572Z",
+                "action": "navigate",
+                "details": {
+                  "path": "/"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:12.813Z",
+                "action": "fill",
+                "details": {
+                  "selector": "#draft",
+                  "value": "Durable synthetic draft"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:12.822Z",
+                "action": "click",
+                "details": {
+                  "selector": "#save-draft"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:12.941Z",
+                "action": "reload",
+                "details": {}
+              }
+            ],
+            "evidenceIds": [
+              "0ca1a10d-9fe2-48f7-ad74-ce995bdd41d6",
+              "db0e16f2-9fc8-4775-9110-9bc95582ed66",
+              "f5365e61-ac66-45be-bf21-b69ed763cf1e",
+              "d8aaf61c-4f7e-4cae-bb2f-71ae4059f35f",
+              "d600b51a-1103-4893-9c0f-7c2ab6c343a7"
+            ]
+          }
+        ],
+        "evidenceIds": [
+          "ae7720f2-eb44-4775-902f-c078c6ebcdcf",
+          "f2acd14d-9904-4b54-b495-156b29be456a",
+          "d7f6aaa2-66c3-427d-a2ca-0d9e4fcb64cc",
+          "8c4f9f68-9947-4b33-9de7-177e3787f450",
+          "66c94ecc-cc66-495c-b6e8-aa6318a75b56",
+          "0ca1a10d-9fe2-48f7-ad74-ce995bdd41d6",
+          "db0e16f2-9fc8-4775-9110-9bc95582ed66",
+          "f5365e61-ac66-45be-bf21-b69ed763cf1e",
+          "d8aaf61c-4f7e-4cae-bb2f-71ae4059f35f",
+          "d600b51a-1103-4893-9c0f-7c2ab6c343a7"
+        ],
+        "expectedBehavior": "A successful save acknowledgement corresponds to durable draft data.",
+        "observedBehavior": "Acknowledged draft survives refresh: expected \"Durable synthetic draft\", observed \"\"",
+        "limitations": [
+          "Assertions apply to the declared fixture contract, not arbitrary application semantics."
+        ],
+        "replayable": true,
+        "remediation": {
+          "hypothesis": "The acknowledgement may precede a durable write.",
+          "suggestion": "Inspect the failed invariant at the server boundary and use validated, atomic state changes with bounded retries where applicable.",
+          "verification": "Replay the failed scenario against the corrected isolated variant and confirm every previously failing assertion passes.",
+          "verified": false
+        }
+      },
+      {
+        "id": "53676d97-b1ea-40c9-93d1-3775ed27899f",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "firstObservedAt": "2026-10-23T02:46:13.301Z",
+        "scenarioId": "chaos.duplicates",
+        "version": 1,
+        "title": "Repeated submissions and shared-tab state",
+        "level": 2,
+        "category": "idempotency",
+        "outcome": "failed",
+        "classification": "confirmed",
+        "origin": "application",
+        "severity": "medium",
+        "severityRationale": "A declared data-integrity, idempotency, or bounded-resilience invariant failed in the disposable fixture. Impact is scoped to that demonstrated contract.",
+        "reproductionSteps": [
+          "Double click save",
+          "Wait for completion",
+          "Open second tab",
+          "Check authoritative records"
+        ],
+        "verification": {
+          "retested": true,
+          "reproduced": true,
+          "matchingAssertionIds": [
+            "one-record"
+          ]
+        },
+        "attempts": [
+          {
+            "index": 1,
+            "startedAt": "2026-10-23T02:46:13.301Z",
+            "durationMs": 1339.5149000000001,
+            "outcome": "failed",
+            "assertions": [
+              {
+                "id": "one-record",
+                "description": "Repeated submission creates exactly one record",
+                "expected": 1,
+                "observed": 2,
+                "passed": false
+              },
+              {
+                "id": "shared-tab",
+                "description": "Second tab shows authoritative record count",
+                "expected": 2,
+                "observed": 2,
+                "passed": true
+              }
+            ],
+            "actions": [
+              {
+                "at": "2026-10-23T02:46:13.395Z",
+                "action": "navigate",
+                "details": {
+                  "path": "/"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:13.642Z",
+                "action": "fill",
+                "details": {
+                  "selector": "#note-title",
+                  "value": "Single logical note"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:13.642Z",
+                "action": "double-click",
+                "details": {
+                  "selector": "#save-note"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:14.201Z",
+                "action": "new-tab",
+                "details": {}
+              }
+            ],
+            "evidenceIds": [
+              "ff815131-1019-4322-8e9e-683e6e9fa8c4",
+              "611481c2-b2e0-45b4-a508-bceff5588e4d",
+              "42249b0e-80d3-4a04-acbf-4f91ac28ba2b",
+              "fb0c1878-903d-43e7-842d-a570ed9e4b5e",
+              "7c507d24-f575-41fa-86c7-13d0c6251b86"
+            ]
+          },
+          {
+            "index": 2,
+            "startedAt": "2026-10-23T02:46:14.644Z",
+            "durationMs": 1347.9817000000003,
+            "outcome": "failed",
+            "assertions": [
+              {
+                "id": "one-record",
+                "description": "Repeated submission creates exactly one record",
+                "expected": 1,
+                "observed": 2,
+                "passed": false
+              },
+              {
+                "id": "shared-tab",
+                "description": "Second tab shows authoritative record count",
+                "expected": 2,
+                "observed": 2,
+                "passed": true
+              }
+            ],
+            "actions": [
+              {
+                "at": "2026-10-23T02:46:14.696Z",
+                "action": "navigate",
+                "details": {
+                  "path": "/"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:14.953Z",
+                "action": "fill",
+                "details": {
+                  "selector": "#note-title",
+                  "value": "Single logical note"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:14.953Z",
+                "action": "double-click",
+                "details": {
+                  "selector": "#save-note"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:15.520Z",
+                "action": "new-tab",
+                "details": {}
+              }
+            ],
+            "evidenceIds": [
+              "c5384363-6cf1-44c7-9987-f0d22dc450f6",
+              "34c51ef5-fdd2-4007-93b3-dc427f11fe83",
+              "602dd411-4660-4d61-9d5f-89291546730a",
+              "447a1640-c6ba-4ca2-b87f-c85441740097",
+              "8b0d0c5e-5812-48ed-801d-77474bcab7bd"
+            ]
+          }
+        ],
+        "evidenceIds": [
+          "ff815131-1019-4322-8e9e-683e6e9fa8c4",
+          "611481c2-b2e0-45b4-a508-bceff5588e4d",
+          "42249b0e-80d3-4a04-acbf-4f91ac28ba2b",
+          "fb0c1878-903d-43e7-842d-a570ed9e4b5e",
+          "7c507d24-f575-41fa-86c7-13d0c6251b86",
+          "c5384363-6cf1-44c7-9987-f0d22dc450f6",
+          "34c51ef5-fdd2-4007-93b3-dc427f11fe83",
+          "602dd411-4660-4d61-9d5f-89291546730a",
+          "447a1640-c6ba-4ca2-b87f-c85441740097",
+          "8b0d0c5e-5812-48ed-801d-77474bcab7bd"
+        ],
+        "expectedBehavior": "One logical submission creates exactly one record, visible in both tabs.",
+        "observedBehavior": "Repeated submission creates exactly one record: expected 1, observed 2",
+        "limitations": [
+          "Assertions apply to the declared fixture contract, not arbitrary application semantics."
+        ],
+        "replayable": true,
+        "remediation": {
+          "hypothesis": "Repeated operations may lack a stable key and atomic deduplication.",
+          "suggestion": "Inspect the failed invariant at the server boundary and use validated, atomic state changes with bounded retries where applicable.",
+          "verification": "Replay the failed scenario against the corrected isolated variant and confirm every previously failing assertion passes.",
+          "verified": false
+        }
+      },
+      {
+        "id": "206e2c7b-4d5a-4ec2-8b2c-2a629c0f7614",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "firstObservedAt": "2026-10-23T02:46:15.995Z",
+        "scenarioId": "chaos.boundaries",
+        "version": 1,
+        "title": "Invalid input, delay, interruption and retry",
+        "level": 2,
+        "category": "validation",
+        "outcome": "failed",
+        "classification": "confirmed",
+        "origin": "application",
+        "severity": "medium",
+        "severityRationale": "A declared data-integrity, idempotency, or bounded-resilience invariant failed in the disposable fixture. Impact is scoped to that demonstrated contract.",
+        "reproductionSteps": [
+          "Submit empty and overlong values",
+          "Delay a valid write",
+          "Reload during pending operation",
+          "Retry with same operation ID"
+        ],
+        "verification": {
+          "retested": true,
+          "reproduced": true,
+          "matchingAssertionIds": [
+            "retry-idempotency"
+          ]
+        },
+        "attempts": [
+          {
+            "index": 1,
+            "startedAt": "2026-10-23T02:46:15.995Z",
+            "durationMs": 1800.8116,
+            "outcome": "failed",
+            "assertions": [
+              {
+                "id": "native-validation",
+                "description": "Required input rejects empty submission",
+                "expected": false,
+                "observed": false,
+                "passed": true
+              },
+              {
+                "id": "boundary-0",
+                "description": "Server rejects invalid boundary input",
+                "expected": 400,
+                "observed": 400,
+                "passed": true
+              },
+              {
+                "id": "boundary-81",
+                "description": "Server rejects invalid boundary input",
+                "expected": 400,
+                "observed": 400,
+                "passed": true
+              },
+              {
+                "id": "retry-idempotency",
+                "description": "Retry creates one logical record",
+                "expected": 1,
+                "observed": 2,
+                "passed": false
+              },
+              {
+                "id": "ui-consistency",
+                "description": "UI matches authoritative persisted state",
+                "expected": 2,
+                "observed": 2,
+                "passed": true
+              }
+            ],
+            "actions": [
+              {
+                "at": "2026-10-23T02:46:16.053Z",
+                "action": "navigate",
+                "details": {
+                  "path": "/"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:16.284Z",
+                "action": "submit-empty",
+                "details": {}
+              },
+              {
+                "at": "2026-10-23T02:46:16.336Z",
+                "action": "invalid-request",
+                "details": {
+                  "titleLength": 0
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:16.367Z",
+                "action": "invalid-request",
+                "details": {
+                  "titleLength": 81
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:16.468Z",
+                "action": "inject-delay",
+                "details": {
+                  "delayMs": 300,
+                  "fixtureOnly": true
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:16.468Z",
+                "action": "pending-write",
+                "details": {
+                  "title": "Interrupted operation",
+                  "operationId": "retry-known-operation"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:16.468Z",
+                "action": "reload",
+                "details": {}
+              },
+              {
+                "at": "2026-10-23T02:46:16.946Z",
+                "action": "retry",
+                "details": {
+                  "operationId": "retry-known-operation"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:17.365Z",
+                "action": "reload",
+                "details": {}
+              }
+            ],
+            "evidenceIds": [
+              "3a570144-7f56-4742-84a4-c3a1e29472a0",
+              "62c708a2-7c0f-4956-aa86-5a20380bb2b9",
+              "f1f59d72-98b4-4c41-9e67-52fa8d7f7ae2",
+              "1e19ed17-b7ca-4b33-8eba-98c8e9fb636a",
+              "c1457bb3-86d6-495a-9621-bf83cd3b76c7"
+            ]
+          },
+          {
+            "index": 2,
+            "startedAt": "2026-10-23T02:46:17.800Z",
+            "durationMs": 1844.3685000000005,
+            "outcome": "failed",
+            "assertions": [
+              {
+                "id": "native-validation",
+                "description": "Required input rejects empty submission",
+                "expected": false,
+                "observed": false,
+                "passed": true
+              },
+              {
+                "id": "boundary-0",
+                "description": "Server rejects invalid boundary input",
+                "expected": 400,
+                "observed": 400,
+                "passed": true
+              },
+              {
+                "id": "boundary-81",
+                "description": "Server rejects invalid boundary input",
+                "expected": 400,
+                "observed": 400,
+                "passed": true
+              },
+              {
+                "id": "retry-idempotency",
+                "description": "Retry creates one logical record",
+                "expected": 1,
+                "observed": 2,
+                "passed": false
+              },
+              {
+                "id": "ui-consistency",
+                "description": "UI matches authoritative persisted state",
+                "expected": 2,
+                "observed": 2,
+                "passed": true
+              }
+            ],
+            "actions": [
+              {
+                "at": "2026-10-23T02:46:17.850Z",
+                "action": "navigate",
+                "details": {
+                  "path": "/"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:18.091Z",
+                "action": "submit-empty",
+                "details": {}
+              },
+              {
+                "at": "2026-10-23T02:46:18.151Z",
+                "action": "invalid-request",
+                "details": {
+                  "titleLength": 0
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:18.157Z",
+                "action": "invalid-request",
+                "details": {
+                  "titleLength": 81
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:18.259Z",
+                "action": "inject-delay",
+                "details": {
+                  "delayMs": 300,
+                  "fixtureOnly": true
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:18.259Z",
+                "action": "pending-write",
+                "details": {
+                  "title": "Interrupted operation",
+                  "operationId": "retry-known-operation"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:18.259Z",
+                "action": "reload",
+                "details": {}
+              },
+              {
+                "at": "2026-10-23T02:46:18.775Z",
+                "action": "retry",
+                "details": {
+                  "operationId": "retry-known-operation"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:19.162Z",
+                "action": "reload",
+                "details": {}
+              }
+            ],
+            "evidenceIds": [
+              "986182cf-3d29-448f-a462-ce303a95a7bd",
+              "6f19c36d-021d-4aff-aa12-28a892f60664",
+              "114ec9ec-4777-4387-8cfb-078579abf800",
+              "1824efbb-d58d-47f3-b73e-25d88958ccf6",
+              "f902a161-923c-42e5-8a70-8a73639e4e85"
+            ]
+          }
+        ],
+        "evidenceIds": [
+          "3a570144-7f56-4742-84a4-c3a1e29472a0",
+          "62c708a2-7c0f-4956-aa86-5a20380bb2b9",
+          "f1f59d72-98b4-4c41-9e67-52fa8d7f7ae2",
+          "1e19ed17-b7ca-4b33-8eba-98c8e9fb636a",
+          "c1457bb3-86d6-495a-9621-bf83cd3b76c7",
+          "986182cf-3d29-448f-a462-ce303a95a7bd",
+          "6f19c36d-021d-4aff-aa12-28a892f60664",
+          "114ec9ec-4777-4387-8cfb-078579abf800",
+          "1824efbb-d58d-47f3-b73e-25d88958ccf6",
+          "f902a161-923c-42e5-8a70-8a73639e4e85"
+        ],
+        "expectedBehavior": "Invalid values are rejected; interrupted retries persist exactly one operation.",
+        "observedBehavior": "Retry creates one logical record: expected 1, observed 2",
+        "limitations": [
+          "Assertions apply to the declared fixture contract, not arbitrary application semantics."
+        ],
+        "replayable": true,
+        "remediation": {
+          "hypothesis": "Observed behavior differs from the declared assertion; inspect the captured action sequence.",
+          "suggestion": "Inspect the failed invariant at the server boundary and use validated, atomic state changes with bounded retries where applicable.",
+          "verification": "Replay the failed scenario against the corrected isolated variant and confirm every previously failing assertion passes.",
+          "verified": false
+        }
+      },
+      {
+        "id": "5df02bbb-4827-42ff-9e48-1b63548d7f14",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "firstObservedAt": "2026-10-23T02:46:19.648Z",
+        "scenarioId": "hostile.authorization",
+        "version": 2,
+        "title": "Server permission enforcement",
+        "level": 3,
+        "category": "authorization",
+        "outcome": "failed",
+        "classification": "confirmed",
+        "origin": "application",
+        "severity": "high",
+        "severityRationale": "The explicit synthetic fixture policy allowed a protected action or exceeded a simulated cost limit. High impact within that fixture contract; no production financial impact is claimed.",
+        "reproductionSteps": [
+          "Open /permissions in the engine-owned fixture",
+          "Read the explicit viewer/admin policy",
+          "Click Attempt protected action as viewer",
+          "Observe the HTTP status and protected action count; expected 403 and zero changes",
+          "Click Perform allowed admin action; expected HTTP 200"
+        ],
+        "verification": {
+          "retested": true,
+          "reproduced": true,
+          "matchingAssertionIds": [
+            "viewer-denied",
+            "no-unauthorized-effect"
+          ]
+        },
+        "attempts": [
+          {
+            "index": 1,
+            "startedAt": "2026-10-23T02:46:19.648Z",
+            "durationMs": 981.8850000000002,
+            "outcome": "failed",
+            "assertions": [
+              {
+                "id": "declared-policy",
+                "description": "A verifiable permission policy is present",
+                "expected": "viewer may read notes but must receive 403 for POST /api/admin/reset; admin may perform it",
+                "observed": "viewer may read notes but must receive 403 for POST /api/admin/reset; admin may perform it",
+                "passed": true
+              },
+              {
+                "id": "viewer-denied",
+                "description": "Viewer must be denied server-side",
+                "expected": 403,
+                "observed": 200,
+                "passed": false
+              },
+              {
+                "id": "no-unauthorized-effect",
+                "description": "Denied identity must not mutate protected state",
+                "expected": 0,
+                "observed": 1,
+                "passed": false
+              },
+              {
+                "id": "admin-allowed",
+                "description": "Admin operation is permitted",
+                "expected": 200,
+                "observed": 200,
+                "passed": true
+              }
+            ],
+            "actions": [
+              {
+                "at": "2026-10-23T02:46:19.701Z",
+                "action": "permission-policy",
+                "details": {
+                  "permission": "viewer may read notes but must receive 403 for POST /api/admin/reset; admin may perform it",
+                  "costCeiling": 100,
+                  "maxTokensPerRequest": "[REDACTED]",
+                  "queueCapacity": 1,
+                  "eventWindowLimit": 4,
+                  "maxDependencyAttempts": 2,
+                  "initialBalance": 100
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:19.701Z",
+                "action": "fixture-source",
+                "details": {
+                  "file": "src/fixtures/app.ts",
+                  "handler": "POST /api/admin/reset",
+                  "policy": "FIXTURE_POLICY.permission",
+                  "driver": "src/strategies/execute.ts#hostile.authorization"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:19.701Z",
+                "action": "navigate",
+                "details": {
+                  "path": "/permissions"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:20.047Z",
+                "action": "click",
+                "details": {
+                  "selector": "#viewer-reset",
+                  "identity": "viewer",
+                  "operation": "POST /api/admin/reset"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:20.308Z",
+                "action": "click",
+                "details": {
+                  "selector": "#admin-reset",
+                  "identity": "admin",
+                  "operation": "POST /api/admin/reset"
+                }
+              }
+            ],
+            "evidenceIds": [
+              "ed96240f-9a72-4e57-ac6f-f0942658b017",
+              "2e416f78-bfd8-4fd4-bbbc-693cb73cf455",
+              "a32073dd-87d6-4b69-a394-b9bba0043969",
+              "594d1ec8-2c71-4a8a-b61b-19d8e63a7e81",
+              "82a1e810-545f-4bd4-9171-94591cd9f4ee"
+            ]
+          },
+          {
+            "index": 2,
+            "startedAt": "2026-10-23T02:46:20.633Z",
+            "durationMs": 987.4158000000007,
+            "outcome": "failed",
+            "assertions": [
+              {
+                "id": "declared-policy",
+                "description": "A verifiable permission policy is present",
+                "expected": "viewer may read notes but must receive 403 for POST /api/admin/reset; admin may perform it",
+                "observed": "viewer may read notes but must receive 403 for POST /api/admin/reset; admin may perform it",
+                "passed": true
+              },
+              {
+                "id": "viewer-denied",
+                "description": "Viewer must be denied server-side",
+                "expected": 403,
+                "observed": 200,
+                "passed": false
+              },
+              {
+                "id": "no-unauthorized-effect",
+                "description": "Denied identity must not mutate protected state",
+                "expected": 0,
+                "observed": 1,
+                "passed": false
+              },
+              {
+                "id": "admin-allowed",
+                "description": "Admin operation is permitted",
+                "expected": 200,
+                "observed": 200,
+                "passed": true
+              }
+            ],
+            "actions": [
+              {
+                "at": "2026-10-23T02:46:20.688Z",
+                "action": "permission-policy",
+                "details": {
+                  "permission": "viewer may read notes but must receive 403 for POST /api/admin/reset; admin may perform it",
+                  "costCeiling": 100,
+                  "maxTokensPerRequest": "[REDACTED]",
+                  "queueCapacity": 1,
+                  "eventWindowLimit": 4,
+                  "maxDependencyAttempts": 2,
+                  "initialBalance": 100
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:20.688Z",
+                "action": "fixture-source",
+                "details": {
+                  "file": "src/fixtures/app.ts",
+                  "handler": "POST /api/admin/reset",
+                  "policy": "FIXTURE_POLICY.permission",
+                  "driver": "src/strategies/execute.ts#hostile.authorization"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:20.688Z",
+                "action": "navigate",
+                "details": {
+                  "path": "/permissions"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:21.018Z",
+                "action": "click",
+                "details": {
+                  "selector": "#viewer-reset",
+                  "identity": "viewer",
+                  "operation": "POST /api/admin/reset"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:21.298Z",
+                "action": "click",
+                "details": {
+                  "selector": "#admin-reset",
+                  "identity": "admin",
+                  "operation": "POST /api/admin/reset"
+                }
+              }
+            ],
+            "evidenceIds": [
+              "5bb2181b-75f7-463d-b0bf-f17078d829b3",
+              "7545f149-6cab-4ed1-b7b4-ecd4b0e014e3",
+              "8f5d175e-5b9e-453c-8aac-bb0eaff69071",
+              "85f42bee-716b-425d-86f3-6e6e40c857e3",
+              "816fbb5a-3020-414d-ad37-4bb1ff6282d1"
+            ]
+          }
+        ],
+        "evidenceIds": [
+          "ed96240f-9a72-4e57-ac6f-f0942658b017",
+          "2e416f78-bfd8-4fd4-bbbc-693cb73cf455",
+          "a32073dd-87d6-4b69-a394-b9bba0043969",
+          "594d1ec8-2c71-4a8a-b61b-19d8e63a7e81",
+          "82a1e810-545f-4bd4-9171-94591cd9f4ee",
+          "5bb2181b-75f7-463d-b0bf-f17078d829b3",
+          "7545f149-6cab-4ed1-b7b4-ecd4b0e014e3",
+          "8f5d175e-5b9e-453c-8aac-bb0eaff69071",
+          "85f42bee-716b-425d-86f3-6e6e40c857e3",
+          "816fbb5a-3020-414d-ad37-4bb1ff6282d1"
+        ],
+        "expectedBehavior": "Viewer is denied with no side effects; admin succeeds under the explicit fixture policy.",
+        "observedBehavior": "Viewer must be denied server-side: expected 403, observed 200; Denied identity must not mutate protected state: expected 0, observed 1",
+        "limitations": [
+          "Assertions apply to the declared fixture contract, not arbitrary application semantics.",
+          "Synthetic fixture identities, counters and dependency failures; no real provider or billing traffic."
+        ],
+        "replayable": true,
+        "remediation": {
+          "hypothesis": "The server may be trusting client identity without applying the declared permission rule.",
+          "suggestion": "Inspect the failed invariant at the server boundary and use validated, atomic state changes with bounded retries where applicable.",
+          "verification": "Replay the failed scenario against the corrected isolated variant and confirm every previously failing assertion passes.",
+          "verified": false
+        }
+      },
+      {
+        "id": "d30c3f64-242f-42b4-8a4d-68411ef1bc6a",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "firstObservedAt": "2026-10-23T02:46:21.624Z",
+        "scenarioId": "hostile.cost",
+        "version": 1,
+        "title": "Simulated token ceiling and idempotent billing",
+        "level": 3,
+        "category": "cost-control",
+        "outcome": "failed",
+        "classification": "confirmed",
+        "origin": "application",
+        "severity": "high",
+        "severityRationale": "The explicit synthetic fixture policy allowed a protected action or exceeded a simulated cost limit. High impact within that fixture contract; no production financial impact is claimed.",
+        "reproductionSteps": [
+          "Read ceiling",
+          "Submit 60 synthetic tokens",
+          "Duplicate request",
+          "Attempt another 60 tokens"
+        ],
+        "verification": {
+          "retested": true,
+          "reproduced": true,
+          "matchingAssertionIds": [
+            "idempotent-charge",
+            "ceiling-rejection",
+            "ceiling-enforced",
+            "quota-counter"
+          ]
+        },
+        "attempts": [
+          {
+            "index": 1,
+            "startedAt": "2026-10-23T02:46:21.624Z",
+            "durationMs": 512.7970999999998,
+            "outcome": "failed",
+            "assertions": [
+              {
+                "id": "idempotent-charge",
+                "description": "Duplicate operation charges only once",
+                "expected": 60,
+                "observed": 120,
+                "passed": false
+              },
+              {
+                "id": "ceiling-rejection",
+                "description": "Over-ceiling request is rejected",
+                "expected": 402,
+                "observed": 200,
+                "passed": false
+              },
+              {
+                "id": "ceiling-enforced",
+                "description": "Synthetic cost never exceeds the configured ceiling",
+                "expected": true,
+                "observed": false,
+                "passed": false
+              },
+              {
+                "id": "quota-counter",
+                "description": "Accepted billable operation counter remains one",
+                "expected": 1,
+                "observed": 3,
+                "passed": false
+              }
+            ],
+            "actions": [
+              {
+                "at": "2026-10-23T02:46:21.625Z",
+                "action": "simulated-cost-policy",
+                "details": {
+                  "ceiling": 100,
+                  "realProviderCalls": 0
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:21.625Z",
+                "action": "simulated-ai-request",
+                "details": {
+                  "operationId": "cost-a",
+                  "tokens": "[REDACTED]"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:21.737Z",
+                "action": "simulated-ai-request",
+                "details": {
+                  "operationId": "cost-a",
+                  "tokens": "[REDACTED]"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:21.926Z",
+                "action": "simulated-ai-request",
+                "details": {
+                  "operationId": "cost-b",
+                  "tokens": "[REDACTED]"
+                }
+              }
+            ],
+            "evidenceIds": [
+              "edca456f-70af-4514-b092-028c604817a3",
+              "b1ddee57-6b68-4af4-8e69-3219d4fd6a46"
+            ]
+          },
+          {
+            "index": 2,
+            "startedAt": "2026-10-23T02:46:22.141Z",
+            "durationMs": 596.3768999999993,
+            "outcome": "failed",
+            "assertions": [
+              {
+                "id": "idempotent-charge",
+                "description": "Duplicate operation charges only once",
+                "expected": 60,
+                "observed": 120,
+                "passed": false
+              },
+              {
+                "id": "ceiling-rejection",
+                "description": "Over-ceiling request is rejected",
+                "expected": 402,
+                "observed": 200,
+                "passed": false
+              },
+              {
+                "id": "ceiling-enforced",
+                "description": "Synthetic cost never exceeds the configured ceiling",
+                "expected": true,
+                "observed": false,
+                "passed": false
+              },
+              {
+                "id": "quota-counter",
+                "description": "Accepted billable operation counter remains one",
+                "expected": 1,
+                "observed": 3,
+                "passed": false
+              }
+            ],
+            "actions": [
+              {
+                "at": "2026-10-23T02:46:22.233Z",
+                "action": "simulated-cost-policy",
+                "details": {
+                  "ceiling": 100,
+                  "realProviderCalls": 0
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:22.233Z",
+                "action": "simulated-ai-request",
+                "details": {
+                  "operationId": "cost-a",
+                  "tokens": "[REDACTED]"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:22.335Z",
+                "action": "simulated-ai-request",
+                "details": {
+                  "operationId": "cost-a",
+                  "tokens": "[REDACTED]"
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:22.536Z",
+                "action": "simulated-ai-request",
+                "details": {
+                  "operationId": "cost-b",
+                  "tokens": "[REDACTED]"
+                }
+              }
+            ],
+            "evidenceIds": [
+              "04208644-ec48-44ba-a548-5d44a1ea7905",
+              "c9b5f357-75db-4434-85aa-6ee710291bed"
+            ]
+          }
+        ],
+        "evidenceIds": [
+          "edca456f-70af-4514-b092-028c604817a3",
+          "b1ddee57-6b68-4af4-8e69-3219d4fd6a46",
+          "04208644-ec48-44ba-a548-5d44a1ea7905",
+          "c9b5f357-75db-4434-85aa-6ee710291bed"
+        ],
+        "expectedBehavior": "Duplicate operations are not charged twice and simulated spend never exceeds 100 units.",
+        "observedBehavior": "Duplicate operation charges only once: expected 60, observed 120; Over-ceiling request is rejected: expected 402, observed 200; Synthetic cost never exceeds the configured ceiling: expected true, observed false; Accepted billable operation counter remains one: expected 1, observed 3",
+        "limitations": [
+          "Assertions apply to the declared fixture contract, not arbitrary application semantics.",
+          "Synthetic fixture identities, counters and dependency failures; no real provider or billing traffic."
+        ],
+        "replayable": true,
+        "remediation": {
+          "hypothesis": "Budget reservation and idempotency may not be enforced atomically.",
+          "suggestion": "Inspect the failed invariant at the server boundary and use validated, atomic state changes with bounded retries where applicable.",
+          "verification": "Replay the failed scenario against the corrected isolated variant and confirm every previously failing assertion passes.",
+          "verified": false
+        }
+      },
+      {
+        "id": "8657f7d3-8648-4562-8ae0-cd2fdceb3292",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "firstObservedAt": "2026-10-23T02:46:22.740Z",
+        "scenarioId": "siege.bounded",
+        "version": 1,
+        "title": "Bounded event traffic, throttling, queue and recovery",
+        "level": 4,
+        "category": "resilience",
+        "outcome": "failed",
+        "classification": "confirmed",
+        "origin": "application",
+        "severity": "medium",
+        "severityRationale": "A declared data-integrity, idempotency, or bounded-resilience invariant failed in the disposable fixture. Impact is scoped to that demonstrated contract.",
+        "reproductionSteps": [
+          "Two concurrent request lanes",
+          "Eight duplicate event requests",
+          "Measure rejections and queue",
+          "Wait for recovery",
+          "Submit a new event"
+        ],
+        "verification": {
+          "retested": true,
+          "reproduced": true,
+          "matchingAssertionIds": [
+            "throttling",
+            "bounded-queue",
+            "deduplicated-events"
+          ]
+        },
+        "attempts": [
+          {
+            "index": 1,
+            "startedAt": "2026-10-23T02:46:22.740Z",
+            "durationMs": 2611.9927000000007,
+            "outcome": "failed",
+            "assertions": [
+              {
+                "id": "server-errors",
+                "description": "Bounded event traffic does not cause server errors",
+                "expected": 0,
+                "observed": 0,
+                "passed": true
+              },
+              {
+                "id": "throttling",
+                "description": "Over-capacity fixture rejects some requests",
+                "expected": true,
+                "observed": false,
+                "passed": false
+              },
+              {
+                "id": "bounded-queue",
+                "description": "Queue peak does not exceed declared capacity",
+                "expected": true,
+                "observed": false,
+                "passed": false
+              },
+              {
+                "id": "deduplicated-events",
+                "description": "Duplicate accepted events are applied once",
+                "expected": 1,
+                "observed": 8,
+                "passed": false
+              },
+              {
+                "id": "drained-queue",
+                "description": "Queue drains after load",
+                "expected": 0,
+                "observed": 0,
+                "passed": true
+              },
+              {
+                "id": "recovery",
+                "description": "New work succeeds after quiet period",
+                "expected": 200,
+                "observed": 200,
+                "passed": true
+              }
+            ],
+            "actions": [
+              {
+                "at": "2026-10-23T02:46:22.741Z",
+                "action": "bounded-burst",
+                "details": {
+                  "actualRequestsPlanned": 8,
+                  "simulatedEventsPerRequest": 10,
+                  "concurrency": 2,
+                  "rateCap": 10
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:25.079Z",
+                "action": "recovery-request",
+                "details": {
+                  "afterQuietPeriodMs": 1100
+                }
+              }
+            ],
+            "evidenceIds": [
+              "1771ef2c-40e2-454d-876b-9a12ad82f537",
+              "ddc4e575-9a37-49c2-9664-c67a09d097c8"
+            ]
+          },
+          {
+            "index": 2,
+            "startedAt": "2026-10-23T02:46:25.356Z",
+            "durationMs": 2508.2223000000013,
+            "outcome": "failed",
+            "assertions": [
+              {
+                "id": "server-errors",
+                "description": "Bounded event traffic does not cause server errors",
+                "expected": 0,
+                "observed": 0,
+                "passed": true
+              },
+              {
+                "id": "throttling",
+                "description": "Over-capacity fixture rejects some requests",
+                "expected": true,
+                "observed": false,
+                "passed": false
+              },
+              {
+                "id": "bounded-queue",
+                "description": "Queue peak does not exceed declared capacity",
+                "expected": true,
+                "observed": false,
+                "passed": false
+              },
+              {
+                "id": "deduplicated-events",
+                "description": "Duplicate accepted events are applied once",
+                "expected": 1,
+                "observed": 8,
+                "passed": false
+              },
+              {
+                "id": "drained-queue",
+                "description": "Queue drains after load",
+                "expected": 0,
+                "observed": 0,
+                "passed": true
+              },
+              {
+                "id": "recovery",
+                "description": "New work succeeds after quiet period",
+                "expected": 200,
+                "observed": 200,
+                "passed": true
+              }
+            ],
+            "actions": [
+              {
+                "at": "2026-10-23T02:46:25.356Z",
+                "action": "bounded-burst",
+                "details": {
+                  "actualRequestsPlanned": 8,
+                  "simulatedEventsPerRequest": 10,
+                  "concurrency": 2,
+                  "rateCap": 10
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:27.604Z",
+                "action": "recovery-request",
+                "details": {
+                  "afterQuietPeriodMs": 1100
+                }
+              }
+            ],
+            "evidenceIds": [
+              "9e49abec-f2d0-4b7e-a6da-7984b2d26bc8",
+              "610f00d4-86c3-4766-b2be-69c368d4efaa"
+            ]
+          }
+        ],
+        "evidenceIds": [
+          "1771ef2c-40e2-454d-876b-9a12ad82f537",
+          "ddc4e575-9a37-49c2-9664-c67a09d097c8",
+          "9e49abec-f2d0-4b7e-a6da-7984b2d26bc8",
+          "610f00d4-86c3-4766-b2be-69c368d4efaa"
+        ],
+        "expectedBehavior": "A bounded queue rejects overload, deduplicates accepted events, drains, and recovers.",
+        "observedBehavior": "Over-capacity fixture rejects some requests: expected true, observed false; Queue peak does not exceed declared capacity: expected true, observed false; Duplicate accepted events are applied once: expected 1, observed 8",
+        "limitations": [
+          "Assertions apply to the declared fixture contract, not arbitrary application semantics.",
+          "Synthetic fixture identities, counters and dependency failures; no real provider or billing traffic."
+        ],
+        "replayable": true,
+        "remediation": {
+          "hypothesis": "Queue admission, throttling or event deduplication may be missing.",
+          "suggestion": "Inspect the failed invariant at the server boundary and use validated, atomic state changes with bounded retries where applicable.",
+          "verification": "Replay the failed scenario against the corrected isolated variant and confirm every previously failing assertion passes.",
+          "verified": false
+        }
+      },
+      {
+        "id": "e07f9e2c-3c79-44f7-8d25-73dfab5cc233",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "firstObservedAt": "2026-10-23T02:46:27.869Z",
+        "scenarioId": "breakpoint.recovery",
+        "version": 1,
+        "title": "Dependency outage, failed writes and integrity",
+        "level": 5,
+        "category": "recovery",
+        "outcome": "failed",
+        "classification": "confirmed",
+        "origin": "application",
+        "severity": "medium",
+        "severityRationale": "A declared data-integrity, idempotency, or bounded-resilience invariant failed in the disposable fixture. Impact is scoped to that demonstrated contract.",
+        "reproductionSteps": [
+          "Inject local dependency outage",
+          "Observe retry exhaustion",
+          "Inject dependency timeout",
+          "Restore dependency",
+          "Inject failed write",
+          "Verify no partial state",
+          "Concurrent idempotent recovery"
+        ],
+        "verification": {
+          "retested": true,
+          "reproduced": true,
+          "matchingAssertionIds": [
+            "outage-no-partial-write",
+            "timeout-integrity",
+            "write-rollback",
+            "conservation"
+          ]
+        },
+        "attempts": [
+          {
+            "index": 1,
+            "startedAt": "2026-10-23T02:46:27.869Z",
+            "durationMs": 874.3078999999998,
+            "outcome": "failed",
+            "assertions": [
+              {
+                "id": "outage-rejected",
+                "description": "Dependency outage produces an explicit failure",
+                "expected": 503,
+                "observed": 503,
+                "passed": true
+              },
+              {
+                "id": "retry-exhaustion",
+                "description": "Dependency retries stop at policy limit",
+                "expected": 2,
+                "observed": 2,
+                "passed": true
+              },
+              {
+                "id": "outage-no-partial-write",
+                "description": "Rejected operation leaves balance unchanged",
+                "expected": 100,
+                "observed": 90,
+                "passed": false
+              },
+              {
+                "id": "retry-counter",
+                "description": "Actual simulated dependency attempts are bounded",
+                "expected": 2,
+                "observed": 2,
+                "passed": true
+              },
+              {
+                "id": "dependency-timeout",
+                "description": "Dependency timeout is reported distinctly",
+                "expected": 504,
+                "observed": 504,
+                "passed": true
+              },
+              {
+                "id": "timeout-attempts",
+                "description": "Dependency timeout retries remain bounded",
+                "expected": 2,
+                "observed": 2,
+                "passed": true
+              },
+              {
+                "id": "timeout-integrity",
+                "description": "Timed-out operation leaves balance unchanged",
+                "expected": 100,
+                "observed": 80,
+                "passed": false
+              },
+              {
+                "id": "write-failure",
+                "description": "Failed write is reported",
+                "expected": 503,
+                "observed": 503,
+                "passed": true
+              },
+              {
+                "id": "write-rollback",
+                "description": "Failed write leaves balance unchanged",
+                "expected": 100,
+                "observed": 70,
+                "passed": false
+              },
+              {
+                "id": "ledger-rollback",
+                "description": "Failed write leaves ledger unchanged",
+                "expected": 0,
+                "observed": 0,
+                "passed": true
+              },
+              {
+                "id": "recovered-status",
+                "description": "Recovered requests succeed",
+                "expected": true,
+                "observed": true,
+                "passed": true
+              },
+              {
+                "id": "single-commit",
+                "description": "Recovered logical operation commits exactly once",
+                "expected": 10,
+                "observed": 10,
+                "passed": true
+              },
+              {
+                "id": "conservation",
+                "description": "Balance plus ledger preserves initial value",
+                "expected": 100,
+                "observed": 70,
+                "passed": false
+              }
+            ],
+            "actions": [
+              {
+                "at": "2026-10-23T02:46:27.869Z",
+                "action": "inject-outage",
+                "details": {
+                  "fixtureOnly": true
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:27.978Z",
+                "action": "inject-dependency-timeout",
+                "details": {
+                  "fixtureOnly": true,
+                  "timeoutPerAttemptMs": 60
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:28.231Z",
+                "action": "restore-dependency-and-fail-write",
+                "details": {
+                  "fixtureOnly": true
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:28.435Z",
+                "action": "restore-write-and-concurrent-retry",
+                "details": {
+                  "concurrentOperations": 2,
+                  "operationId": "recovery-op"
+                }
+              }
+            ],
+            "evidenceIds": [
+              "c28ec61e-63fa-4c67-ba16-096011e3b69a",
+              "899b388c-67d4-4490-8744-724c0d4307e7"
+            ]
+          },
+          {
+            "index": 2,
+            "startedAt": "2026-10-23T02:46:28.746Z",
+            "durationMs": 947.6641999999993,
+            "outcome": "failed",
+            "assertions": [
+              {
+                "id": "outage-rejected",
+                "description": "Dependency outage produces an explicit failure",
+                "expected": 503,
+                "observed": 503,
+                "passed": true
+              },
+              {
+                "id": "retry-exhaustion",
+                "description": "Dependency retries stop at policy limit",
+                "expected": 2,
+                "observed": 2,
+                "passed": true
+              },
+              {
+                "id": "outage-no-partial-write",
+                "description": "Rejected operation leaves balance unchanged",
+                "expected": 100,
+                "observed": 90,
+                "passed": false
+              },
+              {
+                "id": "retry-counter",
+                "description": "Actual simulated dependency attempts are bounded",
+                "expected": 2,
+                "observed": 2,
+                "passed": true
+              },
+              {
+                "id": "dependency-timeout",
+                "description": "Dependency timeout is reported distinctly",
+                "expected": 504,
+                "observed": 504,
+                "passed": true
+              },
+              {
+                "id": "timeout-attempts",
+                "description": "Dependency timeout retries remain bounded",
+                "expected": 2,
+                "observed": 2,
+                "passed": true
+              },
+              {
+                "id": "timeout-integrity",
+                "description": "Timed-out operation leaves balance unchanged",
+                "expected": 100,
+                "observed": 80,
+                "passed": false
+              },
+              {
+                "id": "write-failure",
+                "description": "Failed write is reported",
+                "expected": 503,
+                "observed": 503,
+                "passed": true
+              },
+              {
+                "id": "write-rollback",
+                "description": "Failed write leaves balance unchanged",
+                "expected": 100,
+                "observed": 70,
+                "passed": false
+              },
+              {
+                "id": "ledger-rollback",
+                "description": "Failed write leaves ledger unchanged",
+                "expected": 0,
+                "observed": 0,
+                "passed": true
+              },
+              {
+                "id": "recovered-status",
+                "description": "Recovered requests succeed",
+                "expected": true,
+                "observed": true,
+                "passed": true
+              },
+              {
+                "id": "single-commit",
+                "description": "Recovered logical operation commits exactly once",
+                "expected": 10,
+                "observed": 10,
+                "passed": true
+              },
+              {
+                "id": "conservation",
+                "description": "Balance plus ledger preserves initial value",
+                "expected": 100,
+                "observed": 70,
+                "passed": false
+              }
+            ],
+            "actions": [
+              {
+                "at": "2026-10-23T02:46:28.746Z",
+                "action": "inject-outage",
+                "details": {
+                  "fixtureOnly": true
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:28.934Z",
+                "action": "inject-dependency-timeout",
+                "details": {
+                  "fixtureOnly": true,
+                  "timeoutPerAttemptMs": 60
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:29.182Z",
+                "action": "restore-dependency-and-fail-write",
+                "details": {
+                  "fixtureOnly": true
+                }
+              },
+              {
+                "at": "2026-10-23T02:46:29.395Z",
+                "action": "restore-write-and-concurrent-retry",
+                "details": {
+                  "concurrentOperations": 2,
+                  "operationId": "recovery-op"
+                }
+              }
+            ],
+            "evidenceIds": [
+              "312ebcec-4650-4829-95b7-ebbd5dcc2af6",
+              "b79d9ee2-84d5-493e-97a9-9709885339ce"
+            ]
+          }
+        ],
+        "evidenceIds": [
+          "c28ec61e-63fa-4c67-ba16-096011e3b69a",
+          "899b388c-67d4-4490-8744-724c0d4307e7",
+          "312ebcec-4650-4829-95b7-ebbd5dcc2af6",
+          "b79d9ee2-84d5-493e-97a9-9709885339ce"
+        ],
+        "expectedBehavior": "Failed operations leave state unchanged; recovered duplicate operations commit once and conserve value.",
+        "observedBehavior": "Rejected operation leaves balance unchanged: expected 100, observed 90; Timed-out operation leaves balance unchanged: expected 100, observed 80; Failed write leaves balance unchanged: expected 100, observed 70; Balance plus ledger preserves initial value: expected 100, observed 70",
+        "limitations": [
+          "Assertions apply to the declared fixture contract, not arbitrary application semantics.",
+          "Synthetic fixture identities, counters and dependency failures; no real provider or billing traffic."
+        ],
+        "replayable": true,
+        "remediation": {
+          "hypothesis": "State may be mutated before dependency success or outside a transaction.",
+          "suggestion": "Inspect the failed invariant at the server boundary and use validated, atomic state changes with bounded retries where applicable.",
+          "verification": "Replay the failed scenario against the corrected isolated variant and confirm every previously failing assertion passes.",
+          "verified": false
+        }
+      }
+    ],
+    "evidence": [
+      {
+        "id": "e8e6766b-b9a4-4f06-90fe-4e9889bbb993",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "normal.workflow",
+        "attempt": 1,
+        "kind": "screenshot",
+        "relativePath": "e8e6766b-b9a4-4f06-90fe-4e9889bbb993.png",
+        "mediaType": "image/png",
+        "bytes": 10923,
+        "sha256": "f7e9febac0211467938e78264b01677353fcd6241fdad9cb9aa0602ed1278124",
+        "sensitive": true,
+        "createdAt": "2026-10-23T02:46:11.552Z"
+      },
+      {
+        "id": "fca28e03-a055-409e-89ef-d4751b0f7b11",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "normal.workflow",
+        "attempt": 1,
+        "kind": "trace",
+        "relativePath": "fca28e03-a055-409e-89ef-d4751b0f7b11.zip",
+        "mediaType": "application/zip",
+        "bytes": 207191,
+        "sha256": "3677b48d2b681b7678af0addaeb2d2aff3cb5cd4ad4e742b808ca9e6890c1a4b",
+        "sensitive": true,
+        "createdAt": "2026-10-23T02:46:11.634Z"
+      },
+      {
+        "id": "25b20e08-9bea-40e1-b31d-ad3a1193c83d",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "normal.workflow",
+        "attempt": 1,
+        "kind": "actions",
+        "relativePath": "25b20e08-9bea-40e1-b31d-ad3a1193c83d.json",
+        "mediaType": "application/json",
+        "bytes": 2785,
+        "sha256": "ff8ed8c350947a913b808762383a045b1db42af26376ae01a9ca3243d069114a",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:11.635Z"
+      },
+      {
+        "id": "d58e31a8-d05c-4791-9fc0-03c6bd18b907",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "normal.workflow",
+        "attempt": 1,
+        "kind": "network",
+        "relativePath": "d58e31a8-d05c-4791-9fc0-03c6bd18b907.json",
+        "mediaType": "application/json",
+        "bytes": 1733,
+        "sha256": "e9da41b2821022994454bab060155a01de0ef45bfcf40ca55372ab19bd2c7d8c",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:11.636Z"
+      },
+      {
+        "id": "aa6696fa-62ce-4014-a4dc-d3d9aac00e99",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "normal.workflow",
+        "attempt": 1,
+        "kind": "console",
+        "relativePath": "aa6696fa-62ce-4014-a4dc-d3d9aac00e99.json",
+        "mediaType": "application/json",
+        "bytes": 57,
+        "sha256": "8e97efe7f03f3f4eb60c4b216d4767d39e1bc239982ace75b06d521d4d14621c",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:11.638Z"
+      },
+      {
+        "id": "ae7720f2-eb44-4775-902f-c078c6ebcdcf",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "normal.persistence",
+        "attempt": 1,
+        "kind": "screenshot",
+        "relativePath": "ae7720f2-eb44-4775-902f-c078c6ebcdcf.png",
+        "mediaType": "image/png",
+        "bytes": 12415,
+        "sha256": "7702ff21dd28396cc0618cea48780ecd5e5d00790734348afb3cd99a0cd6e359",
+        "sensitive": true,
+        "createdAt": "2026-10-23T02:46:12.403Z"
+      },
+      {
+        "id": "f2acd14d-9904-4b54-b495-156b29be456a",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "normal.persistence",
+        "attempt": 1,
+        "kind": "trace",
+        "relativePath": "f2acd14d-9904-4b54-b495-156b29be456a.zip",
+        "mediaType": "application/zip",
+        "bytes": 102303,
+        "sha256": "8ade19d05a04d635feb5e884fb565f60527383359a3e27da8f92756e2be0de96",
+        "sensitive": true,
+        "createdAt": "2026-10-23T02:46:12.451Z"
+      },
+      {
+        "id": "d7f6aaa2-66c3-427d-a2ca-0d9e4fcb64cc",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "normal.persistence",
+        "attempt": 1,
+        "kind": "actions",
+        "relativePath": "d7f6aaa2-66c3-427d-a2ca-0d9e4fcb64cc.json",
+        "mediaType": "application/json",
+        "bytes": 948,
+        "sha256": "f0086b4f614ca9547c1e8f2508ee866267fe1b3ffc20f66b492d67b777011bfb",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:12.453Z"
+      },
+      {
+        "id": "8c4f9f68-9947-4b33-9de7-177e3787f450",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "normal.persistence",
+        "attempt": 1,
+        "kind": "network",
+        "relativePath": "8c4f9f68-9947-4b33-9de7-177e3787f450.json",
+        "mediaType": "application/json",
+        "bytes": 766,
+        "sha256": "98bcd3601a1eccd2aea540d2a6ec40771bf48ae048101c161d6b8da5f9a1a2bd",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:12.453Z"
+      },
+      {
+        "id": "66c94ecc-cc66-495c-b6e8-aa6318a75b56",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "normal.persistence",
+        "attempt": 1,
+        "kind": "console",
+        "relativePath": "66c94ecc-cc66-495c-b6e8-aa6318a75b56.json",
+        "mediaType": "application/json",
+        "bytes": 57,
+        "sha256": "8e97efe7f03f3f4eb60c4b216d4767d39e1bc239982ace75b06d521d4d14621c",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:12.454Z"
+      },
+      {
+        "id": "0ca1a10d-9fe2-48f7-ad74-ce995bdd41d6",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "normal.persistence",
+        "attempt": 2,
+        "kind": "screenshot",
+        "relativePath": "0ca1a10d-9fe2-48f7-ad74-ce995bdd41d6.png",
+        "mediaType": "image/png",
+        "bytes": 12415,
+        "sha256": "7702ff21dd28396cc0618cea48780ecd5e5d00790734348afb3cd99a0cd6e359",
+        "sensitive": true,
+        "createdAt": "2026-10-23T02:46:13.259Z"
+      },
+      {
+        "id": "db0e16f2-9fc8-4775-9110-9bc95582ed66",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "normal.persistence",
+        "attempt": 2,
+        "kind": "trace",
+        "relativePath": "db0e16f2-9fc8-4775-9110-9bc95582ed66.zip",
+        "mediaType": "application/zip",
+        "bytes": 102283,
+        "sha256": "9074a62c82acecad4aa5f8ebaaa999594b050cba2520302097c1130216b65725",
+        "sensitive": true,
+        "createdAt": "2026-10-23T02:46:13.292Z"
+      },
+      {
+        "id": "f5365e61-ac66-45be-bf21-b69ed763cf1e",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "normal.persistence",
+        "attempt": 2,
+        "kind": "actions",
+        "relativePath": "f5365e61-ac66-45be-bf21-b69ed763cf1e.json",
+        "mediaType": "application/json",
+        "bytes": 948,
+        "sha256": "7e6b5e06908a584c237e8e0ac03b0761b42c4a300f188137e673774a10114553",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:13.293Z"
+      },
+      {
+        "id": "d8aaf61c-4f7e-4cae-bb2f-71ae4059f35f",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "normal.persistence",
+        "attempt": 2,
+        "kind": "network",
+        "relativePath": "d8aaf61c-4f7e-4cae-bb2f-71ae4059f35f.json",
+        "mediaType": "application/json",
+        "bytes": 762,
+        "sha256": "feb938afb0cb90b2a9535cb3a053b1fc70351379f0bd8a3a672c11ed16bc2eaf",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:13.293Z"
+      },
+      {
+        "id": "d600b51a-1103-4893-9c0f-7c2ab6c343a7",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "normal.persistence",
+        "attempt": 2,
+        "kind": "console",
+        "relativePath": "d600b51a-1103-4893-9c0f-7c2ab6c343a7.json",
+        "mediaType": "application/json",
+        "bytes": 57,
+        "sha256": "8e97efe7f03f3f4eb60c4b216d4767d39e1bc239982ace75b06d521d4d14621c",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:13.294Z"
+      },
+      {
+        "id": "ff815131-1019-4322-8e9e-683e6e9fa8c4",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "chaos.duplicates",
+        "attempt": 1,
+        "kind": "screenshot",
+        "relativePath": "ff815131-1019-4322-8e9e-683e6e9fa8c4.png",
+        "mediaType": "image/png",
+        "bytes": 15877,
+        "sha256": "9be7d6757f257bae2cb7f722cae9bdb5e384bd874d8047a7ac66418a509cd6fe",
+        "sensitive": true,
+        "createdAt": "2026-10-23T02:46:14.577Z"
+      },
+      {
+        "id": "611481c2-b2e0-45b4-a508-bceff5588e4d",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "chaos.duplicates",
+        "attempt": 1,
+        "kind": "trace",
+        "relativePath": "611481c2-b2e0-45b4-a508-bceff5588e4d.zip",
+        "mediaType": "application/zip",
+        "bytes": 207247,
+        "sha256": "4a9a600a4fd4d6bb1abe18456a23e8060eaef29364a6bf3dd152cce6c1d10393",
+        "sensitive": true,
+        "createdAt": "2026-10-23T02:46:14.634Z"
+      },
+      {
+        "id": "42249b0e-80d3-4a04-acbf-4f91ac28ba2b",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "chaos.duplicates",
+        "attempt": 1,
+        "kind": "actions",
+        "relativePath": "42249b0e-80d3-4a04-acbf-4f91ac28ba2b.json",
+        "mediaType": "application/json",
+        "bytes": 938,
+        "sha256": "5d99d9c69b80015519ba363e034d5d98afd337e47b23bbd5fd5c626fcacdc68b",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:14.635Z"
+      },
+      {
+        "id": "fb0c1878-903d-43e7-842d-a570ed9e4b5e",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "chaos.duplicates",
+        "attempt": 1,
+        "kind": "network",
+        "relativePath": "fb0c1878-903d-43e7-842d-a570ed9e4b5e.json",
+        "mediaType": "application/json",
+        "bytes": 1215,
+        "sha256": "fa597a50736d4f8de092d3aed5de187584e44766977bcfbef54e905a069a04a3",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:14.635Z"
+      },
+      {
+        "id": "7c507d24-f575-41fa-86c7-13d0c6251b86",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "chaos.duplicates",
+        "attempt": 1,
+        "kind": "console",
+        "relativePath": "7c507d24-f575-41fa-86c7-13d0c6251b86.json",
+        "mediaType": "application/json",
+        "bytes": 57,
+        "sha256": "8e97efe7f03f3f4eb60c4b216d4767d39e1bc239982ace75b06d521d4d14621c",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:14.636Z"
+      },
+      {
+        "id": "c5384363-6cf1-44c7-9987-f0d22dc450f6",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "chaos.duplicates",
+        "attempt": 2,
+        "kind": "screenshot",
+        "relativePath": "c5384363-6cf1-44c7-9987-f0d22dc450f6.png",
+        "mediaType": "image/png",
+        "bytes": 15877,
+        "sha256": "9be7d6757f257bae2cb7f722cae9bdb5e384bd874d8047a7ac66418a509cd6fe",
+        "sensitive": true,
+        "createdAt": "2026-10-23T02:46:15.930Z"
+      },
+      {
+        "id": "34c51ef5-fdd2-4007-93b3-dc427f11fe83",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "chaos.duplicates",
+        "attempt": 2,
+        "kind": "trace",
+        "relativePath": "34c51ef5-fdd2-4007-93b3-dc427f11fe83.zip",
+        "mediaType": "application/zip",
+        "bytes": 197510,
+        "sha256": "0f9c4c46d231fc581b78ba9d5bae7bd6176b7c5584ca3cc8da9bfba2c7b1a713",
+        "sensitive": true,
+        "createdAt": "2026-10-23T02:46:15.986Z"
+      },
+      {
+        "id": "602dd411-4660-4d61-9d5f-89291546730a",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "chaos.duplicates",
+        "attempt": 2,
+        "kind": "actions",
+        "relativePath": "602dd411-4660-4d61-9d5f-89291546730a.json",
+        "mediaType": "application/json",
+        "bytes": 938,
+        "sha256": "ddef55ca3ab041d0cda75a90cbfb5003cf66dcc140bb4bdca5360fada90528f6",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:15.987Z"
+      },
+      {
+        "id": "447a1640-c6ba-4ca2-b87f-c85441740097",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "chaos.duplicates",
+        "attempt": 2,
+        "kind": "network",
+        "relativePath": "447a1640-c6ba-4ca2-b87f-c85441740097.json",
+        "mediaType": "application/json",
+        "bytes": 1212,
+        "sha256": "b8e38d0fd9031d2fcf5588456bd40b8c637d1f9cc990c3ace985d981aef92644",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:15.987Z"
+      },
+      {
+        "id": "8b0d0c5e-5812-48ed-801d-77474bcab7bd",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "chaos.duplicates",
+        "attempt": 2,
+        "kind": "console",
+        "relativePath": "8b0d0c5e-5812-48ed-801d-77474bcab7bd.json",
+        "mediaType": "application/json",
+        "bytes": 57,
+        "sha256": "8e97efe7f03f3f4eb60c4b216d4767d39e1bc239982ace75b06d521d4d14621c",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:15.988Z"
+      },
+      {
+        "id": "3a570144-7f56-4742-84a4-c3a1e29472a0",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "chaos.boundaries",
+        "attempt": 1,
+        "kind": "screenshot",
+        "relativePath": "3a570144-7f56-4742-84a4-c3a1e29472a0.png",
+        "mediaType": "image/png",
+        "bytes": 14467,
+        "sha256": "bb97ae1d39582b2d7e707b08fc169c8ccc26852fd1aba3eb60b9c50347b2feea",
+        "sensitive": true,
+        "createdAt": "2026-10-23T02:46:17.725Z"
+      },
+      {
+        "id": "62c708a2-7c0f-4956-aa86-5a20380bb2b9",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "chaos.boundaries",
+        "attempt": 1,
+        "kind": "trace",
+        "relativePath": "62c708a2-7c0f-4956-aa86-5a20380bb2b9.zip",
+        "mediaType": "application/zip",
+        "bytes": 311003,
+        "sha256": "99f0783ffb4bf65a30abae2a59f25868c4c5d87a25d69b4ec5ca7cf92c2bbf71",
+        "sensitive": true,
+        "createdAt": "2026-10-23T02:46:17.790Z"
+      },
+      {
+        "id": "f1f59d72-98b4-4c41-9e67-52fa8d7f7ae2",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "chaos.boundaries",
+        "attempt": 1,
+        "kind": "actions",
+        "relativePath": "f1f59d72-98b4-4c41-9e67-52fa8d7f7ae2.json",
+        "mediaType": "application/json",
+        "bytes": 2129,
+        "sha256": "e528c52f76cec74e9df20c2e5187fe92d15c2d4f5ef2b8d8d8b11b7c27adc33b",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:17.791Z"
+      },
+      {
+        "id": "1e19ed17-b7ca-4b33-8eba-98c8e9fb636a",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "chaos.boundaries",
+        "attempt": 1,
+        "kind": "network",
+        "relativePath": "1e19ed17-b7ca-4b33-8eba-98c8e9fb636a.json",
+        "mediaType": "application/json",
+        "bytes": 1532,
+        "sha256": "1e1abc76449e9b16077870d5837a5b5decf8d4c2b2e30cf43f6c7068ff8f3fed",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:17.792Z"
+      },
+      {
+        "id": "c1457bb3-86d6-495a-9621-bf83cd3b76c7",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "chaos.boundaries",
+        "attempt": 1,
+        "kind": "console",
+        "relativePath": "c1457bb3-86d6-495a-9621-bf83cd3b76c7.json",
+        "mediaType": "application/json",
+        "bytes": 57,
+        "sha256": "8e97efe7f03f3f4eb60c4b216d4767d39e1bc239982ace75b06d521d4d14621c",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:17.793Z"
+      },
+      {
+        "id": "986182cf-3d29-448f-a462-ce303a95a7bd",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "chaos.boundaries",
+        "attempt": 2,
+        "kind": "screenshot",
+        "relativePath": "986182cf-3d29-448f-a462-ce303a95a7bd.png",
+        "mediaType": "image/png",
+        "bytes": 14467,
+        "sha256": "bb97ae1d39582b2d7e707b08fc169c8ccc26852fd1aba3eb60b9c50347b2feea",
+        "sensitive": true,
+        "createdAt": "2026-10-23T02:46:19.531Z"
+      },
+      {
+        "id": "6f19c36d-021d-4aff-aa12-28a892f60664",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "chaos.boundaries",
+        "attempt": 2,
+        "kind": "trace",
+        "relativePath": "6f19c36d-021d-4aff-aa12-28a892f60664.zip",
+        "mediaType": "application/zip",
+        "bytes": 300434,
+        "sha256": "7ef04257fabaf412802b11ce18d3c000f1aaa2141fcded3d713c8ba567ccaf9e",
+        "sensitive": true,
+        "createdAt": "2026-10-23T02:46:19.628Z"
+      },
+      {
+        "id": "114ec9ec-4777-4387-8cfb-078579abf800",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "chaos.boundaries",
+        "attempt": 2,
+        "kind": "actions",
+        "relativePath": "114ec9ec-4777-4387-8cfb-078579abf800.json",
+        "mediaType": "application/json",
+        "bytes": 2129,
+        "sha256": "ff9f301c51fd288c8207f9df3971b9586673a52d2dd93bf9447a39bdfa3741cc",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:19.633Z"
+      },
+      {
+        "id": "1824efbb-d58d-47f3-b73e-25d88958ccf6",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "chaos.boundaries",
+        "attempt": 2,
+        "kind": "network",
+        "relativePath": "1824efbb-d58d-47f3-b73e-25d88958ccf6.json",
+        "mediaType": "application/json",
+        "bytes": 1541,
+        "sha256": "156431ad0a71178daa837ae17bcdbcb60b37093fa445275a79e95d3de078c067",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:19.634Z"
+      },
+      {
+        "id": "f902a161-923c-42e5-8a70-8a73639e4e85",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "chaos.boundaries",
+        "attempt": 2,
+        "kind": "console",
+        "relativePath": "f902a161-923c-42e5-8a70-8a73639e4e85.json",
+        "mediaType": "application/json",
+        "bytes": 57,
+        "sha256": "8e97efe7f03f3f4eb60c4b216d4767d39e1bc239982ace75b06d521d4d14621c",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:19.638Z"
+      },
+      {
+        "id": "ed96240f-9a72-4e57-ac6f-f0942658b017",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "hostile.authorization",
+        "attempt": 1,
+        "kind": "screenshot",
+        "relativePath": "ed96240f-9a72-4e57-ac6f-f0942658b017.png",
+        "mediaType": "image/png",
+        "bytes": 39435,
+        "sha256": "20f4e2963805b7349738bd238020546ce9e619f4daf292184e6128e3b4e174e0",
+        "sensitive": true,
+        "createdAt": "2026-10-23T02:46:20.580Z"
+      },
+      {
+        "id": "2e416f78-bfd8-4fd4-bbbc-693cb73cf455",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "hostile.authorization",
+        "attempt": 1,
+        "kind": "trace",
+        "relativePath": "2e416f78-bfd8-4fd4-bbbc-693cb73cf455.zip",
+        "mediaType": "application/zip",
+        "bytes": 254633,
+        "sha256": "ac7fd022d7e2a374e61f3768a96a6a9f82d7af9a305a26abae69baa8e649a191",
+        "sensitive": true,
+        "createdAt": "2026-10-23T02:46:20.623Z"
+      },
+      {
+        "id": "a32073dd-87d6-4b69-a394-b9bba0043969",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "hostile.authorization",
+        "attempt": 1,
+        "kind": "actions",
+        "relativePath": "a32073dd-87d6-4b69-a394-b9bba0043969.json",
+        "mediaType": "application/json",
+        "bytes": 2229,
+        "sha256": "c9356fbc525fba99ef2446bad8860775d700c4b32e95ab7cf38ff09d0469fa13",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:20.624Z"
+      },
+      {
+        "id": "594d1ec8-2c71-4a8a-b61b-19d8e63a7e81",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "hostile.authorization",
+        "attempt": 1,
+        "kind": "network",
+        "relativePath": "594d1ec8-2c71-4a8a-b61b-19d8e63a7e81.json",
+        "mediaType": "application/json",
+        "bytes": 1019,
+        "sha256": "21c4aec4356cff39a04b23519dfeb5aa343429fd8af728da32578f8bbdc5e8aa",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:20.625Z"
+      },
+      {
+        "id": "82a1e810-545f-4bd4-9171-94591cd9f4ee",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "hostile.authorization",
+        "attempt": 1,
+        "kind": "console",
+        "relativePath": "82a1e810-545f-4bd4-9171-94591cd9f4ee.json",
+        "mediaType": "application/json",
+        "bytes": 57,
+        "sha256": "8e97efe7f03f3f4eb60c4b216d4767d39e1bc239982ace75b06d521d4d14621c",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:20.625Z"
+      },
+      {
+        "id": "5bb2181b-75f7-463d-b0bf-f17078d829b3",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "hostile.authorization",
+        "attempt": 2,
+        "kind": "screenshot",
+        "relativePath": "5bb2181b-75f7-463d-b0bf-f17078d829b3.png",
+        "mediaType": "image/png",
+        "bytes": 39435,
+        "sha256": "20f4e2963805b7349738bd238020546ce9e619f4daf292184e6128e3b4e174e0",
+        "sensitive": true,
+        "createdAt": "2026-10-23T02:46:21.566Z"
+      },
+      {
+        "id": "7545f149-6cab-4ed1-b7b4-ecd4b0e014e3",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "hostile.authorization",
+        "attempt": 2,
+        "kind": "trace",
+        "relativePath": "7545f149-6cab-4ed1-b7b4-ecd4b0e014e3.zip",
+        "mediaType": "application/zip",
+        "bytes": 254594,
+        "sha256": "170b33d0aea24b7381745ba3dad668ba2299769bf40e9004995d9288c23ac1c7",
+        "sensitive": true,
+        "createdAt": "2026-10-23T02:46:21.615Z"
+      },
+      {
+        "id": "8f5d175e-5b9e-453c-8aac-bb0eaff69071",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "hostile.authorization",
+        "attempt": 2,
+        "kind": "actions",
+        "relativePath": "8f5d175e-5b9e-453c-8aac-bb0eaff69071.json",
+        "mediaType": "application/json",
+        "bytes": 2229,
+        "sha256": "ddd494a322711ddccf2518439e53002669cd895a99cfa166d2ed476c0dd519ed",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:21.616Z"
+      },
+      {
+        "id": "85f42bee-716b-425d-86f3-6e6e40c857e3",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "hostile.authorization",
+        "attempt": 2,
+        "kind": "network",
+        "relativePath": "85f42bee-716b-425d-86f3-6e6e40c857e3.json",
+        "mediaType": "application/json",
+        "bytes": 1019,
+        "sha256": "d2f3c75b27ee269a8caff7c92589ebd03521217fa555507639188eccaaae010c",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:21.617Z"
+      },
+      {
+        "id": "816fbb5a-3020-414d-ad37-4bb1ff6282d1",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "hostile.authorization",
+        "attempt": 2,
+        "kind": "console",
+        "relativePath": "816fbb5a-3020-414d-ad37-4bb1ff6282d1.json",
+        "mediaType": "application/json",
+        "bytes": 57,
+        "sha256": "8e97efe7f03f3f4eb60c4b216d4767d39e1bc239982ace75b06d521d4d14621c",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:21.617Z"
+      },
+      {
+        "id": "edca456f-70af-4514-b092-028c604817a3",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "hostile.cost",
+        "attempt": 1,
+        "kind": "actions",
+        "relativePath": "edca456f-70af-4514-b092-028c604817a3.json",
+        "mediaType": "application/json",
+        "bytes": 1487,
+        "sha256": "92fbff3714dbf56c157c8c57617b37694302395bca2cbfba8c637b53e33835e5",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:22.136Z"
+      },
+      {
+        "id": "b1ddee57-6b68-4af4-8e69-3219d4fd6a46",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "hostile.cost",
+        "attempt": 1,
+        "kind": "network",
+        "relativePath": "b1ddee57-6b68-4af4-8e69-3219d4fd6a46.json",
+        "mediaType": "application/json",
+        "bytes": 667,
+        "sha256": "eff1624d1a48a3722e752124e44324b54b379de727fe7c1e483bc2468cf90882",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:22.137Z"
+      },
+      {
+        "id": "04208644-ec48-44ba-a548-5d44a1ea7905",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "hostile.cost",
+        "attempt": 2,
+        "kind": "actions",
+        "relativePath": "04208644-ec48-44ba-a548-5d44a1ea7905.json",
+        "mediaType": "application/json",
+        "bytes": 1487,
+        "sha256": "5a1d000cda5cce50a276a01dbf29257314fb50b4073fbbcbb91e62cf583c4f1a",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:22.737Z"
+      },
+      {
+        "id": "c9b5f357-75db-4434-85aa-6ee710291bed",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "hostile.cost",
+        "attempt": 2,
+        "kind": "network",
+        "relativePath": "c9b5f357-75db-4434-85aa-6ee710291bed.json",
+        "mediaType": "application/json",
+        "bytes": 669,
+        "sha256": "f033e32751416647ed0d3de61ee8ee51e0e6ae858d3c0480e734380769991597",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:22.737Z"
+      },
+      {
+        "id": "1771ef2c-40e2-454d-876b-9a12ad82f537",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "siege.bounded",
+        "attempt": 1,
+        "kind": "actions",
+        "relativePath": "1771ef2c-40e2-454d-876b-9a12ad82f537.json",
+        "mediaType": "application/json",
+        "bytes": 1469,
+        "sha256": "e88b017d65f53971601c13eeeac2b991957aab6c15d0a23964e70e8186afa251",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:25.351Z"
+      },
+      {
+        "id": "ddc4e575-9a37-49c2-9664-c67a09d097c8",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "siege.bounded",
+        "attempt": 1,
+        "kind": "network",
+        "relativePath": "ddc4e575-9a37-49c2-9664-c67a09d097c8.json",
+        "mediaType": "application/json",
+        "bytes": 1135,
+        "sha256": "e932c33162e8a066f13d6a3f60ec18388f4a68cb8cad0cf60a61b022f18a1e8e",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:25.352Z"
+      },
+      {
+        "id": "9e49abec-f2d0-4b7e-a6da-7984b2d26bc8",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "siege.bounded",
+        "attempt": 2,
+        "kind": "actions",
+        "relativePath": "9e49abec-f2d0-4b7e-a6da-7984b2d26bc8.json",
+        "mediaType": "application/json",
+        "bytes": 1469,
+        "sha256": "61922514ad2409d084750f6288fda233debcf377844e9ae29fc8393b83ff1e82",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:27.863Z"
+      },
+      {
+        "id": "610f00d4-86c3-4766-b2be-69c368d4efaa",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "siege.bounded",
+        "attempt": 2,
+        "kind": "network",
+        "relativePath": "610f00d4-86c3-4766-b2be-69c368d4efaa.json",
+        "mediaType": "application/json",
+        "bytes": 1136,
+        "sha256": "bc99135bbc87de2d5528bb2de20ac7aa06e48951793088a2704d50fa2f0a6ab0",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:27.864Z"
+      },
+      {
+        "id": "c28ec61e-63fa-4c67-ba16-096011e3b69a",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "breakpoint.recovery",
+        "attempt": 1,
+        "kind": "actions",
+        "relativePath": "c28ec61e-63fa-4c67-ba16-096011e3b69a.json",
+        "mediaType": "application/json",
+        "bytes": 3013,
+        "sha256": "b297f9a7647e5d033903a9795eb3a5433445ed6b1463d1c63ea1d5f8c921df21",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:28.743Z"
+      },
+      {
+        "id": "899b388c-67d4-4490-8744-724c0d4307e7",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "breakpoint.recovery",
+        "attempt": 1,
+        "kind": "network",
+        "relativePath": "899b388c-67d4-4490-8744-724c0d4307e7.json",
+        "mediaType": "application/json",
+        "bytes": 1024,
+        "sha256": "14aecd638aef7153673c86644c913fdca53abcf119daedb2c44eb384759bbc23",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:28.744Z"
+      },
+      {
+        "id": "312ebcec-4650-4829-95b7-ebbd5dcc2af6",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "breakpoint.recovery",
+        "attempt": 2,
+        "kind": "actions",
+        "relativePath": "312ebcec-4650-4829-95b7-ebbd5dcc2af6.json",
+        "mediaType": "application/json",
+        "bytes": 3013,
+        "sha256": "43f5805b253110ab9a1493e0ac2913a25fd62763c45bd2093a95b07736032dc4",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:29.693Z"
+      },
+      {
+        "id": "b79d9ee2-84d5-493e-97a9-9709885339ce",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "breakpoint.recovery",
+        "attempt": 2,
+        "kind": "network",
+        "relativePath": "b79d9ee2-84d5-493e-97a9-9709885339ce.json",
+        "mediaType": "application/json",
+        "bytes": 1017,
+        "sha256": "b8dfd9176c260805602c4b6afa8ecee9bad6c485e329eeaa591ec6f335347660",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:29.694Z"
+      }
+    ],
+    "metrics": {
+      "actualNetworkRequests": 148,
+      "simulatedEvents": 162,
+      "failedRequests": 0,
+      "serverErrors": 6,
+      "rejectedRequests": 4,
+      "blockedRequests": 0,
+      "latencyMs": [
+        15.565000000000055,
+        80.33029999999985,
+        175.7213999999999,
+        98.88130000000001,
+        2.0025000000000546,
+        2.5228000000001884,
+        103.47540000000004,
+        197.33949999999982,
+        55.67579999999998,
+        83.53030000000012,
+        76.56920000000036,
+        173.01240000000007,
+        43.103200000000015,
+        98.29899999999998,
+        82.1866,
+        180.51870000000008,
+        1.9072999999998501,
+        94.22600000000011,
+        201.23540000000003,
+        29.484699999999975,
+        40.698999999999614,
+        86.49959999999965,
+        181.10190000000011,
+        2.3087000000000444,
+        89.0945999999999,
+        196.86009999999987,
+        22.735599999999977,
+        43.45259999999962,
+        79.1265999999996,
+        185.3784999999998,
+        1.6061999999992622,
+        94.14750000000004,
+        200.47519999999986,
+        85.1855999999998,
+        120.61799999999948,
+        113.15679999999975,
+        116.64119999999912,
+        0.9776000000001659,
+        24.843399999999747,
+        103.25370000000021,
+        193.78580000000056,
+        1.7020000000002256,
+        95.41810000000078,
+        195.5030999999999,
+        83.07639999999992,
+        108.49349999999959,
+        105.4413999999997,
+        113.04690000000028,
+        1.3903000000000247,
+        65.72609999999986,
+        87.57639999999992,
+        191.29709999999977,
+        2.0865999999996347,
+        102.55630000000019,
+        194.79619999999977,
+        2.058600000000297,
+        2.428399999999783,
+        191.28459999999995,
+        100.70120000000043,
+        200.3772999999992,
+        385.96739999999954,
+        396.2338,
+        0.6302000000014232,
+        99.52980000000025,
+        103.9344000000001,
+        191.76200000000063,
+        1.7995000000009895,
+        95.54639999999927,
+        191.13180000000102,
+        1.8425999999999476,
+        1.6028000000005704,
+        196.14619999999923,
+        90.51699999999983,
+        202.0666999999994,
+        395.7534999999989,
+        386.2479999999996,
+        0.6877000000004045,
+        102.23019999999997,
+        98.07810000000063,
+        196.70600000000013,
+        0.9699000000000524,
+        109.82369999999901,
+        86.12170000000151,
+        179.69650000000001,
+        33.62079999999878,
+        101.87510000000111,
+        1.3297999999995227,
+        89.11149999999907,
+        92.0051999999996,
+        0.6599999999998545,
+        101.19820000000072,
+        100.5573000000004,
+        189.65810000000056,
+        34.00810000000092,
+        96.84859999999935,
+        0.9342999999989843,
+        67.79789999999957,
+        96.19080000000031,
+        0.9672000000009575,
+        2.578700000000026,
+        1.8634000000001834,
+        1.108700000000681,
+        1.4278999999987718,
+        1.0668000000005122,
+        0.8378000000011525,
+        1.3928999999989173,
+        1.3444000000017695,
+        1.1656000000002678,
+        1.4825999999993655,
+        1.3791000000001077,
+        264.27899999999863,
+        254.03689999999915,
+        254.11089999999967,
+        253.8125999999993,
+        254.1891999999989,
+        257.6112000000012,
+        261.7709999999988,
+        260.2954000000009,
+        1.2482999999992899,
+        270.46649999999863,
+        260.36119999999937,
+        265.6179000000011,
+        259.7259000000013,
+        264.70360000000073,
+        251.23819999999978,
+        257.71949999999924,
+        257.2515999999996,
+        252.31720000000132,
+        0.7914999999993597,
+        257.9904999999999,
+        87.39839999999822,
+        1.2819000000017695,
+        148.3222999999998,
+        2.318300000002637,
+        2.9460999999973865,
+        1.271600000000035,
+        3.569900000002235,
+        2.273400000001857,
+        1.2111000000004424,
+        102.85619999999835,
+        1.0806999999986147,
+        145.0036,
+        0.9261000000005879,
+        2.672500000000582,
+        1.0288000000000466,
+        2.73070000000007,
+        2.6463000000003376,
+        1.0697000000000116
+      ]
+    },
+    "environment": {
+      "engineVersion": "0.1.0",
+      "nodeVersion": "v24.11.1",
+      "platform": "win32",
+      "targetKind": "fixture",
+      "fixtureVariant": "faulty",
+      "targetOrigin": "http://127.0.0.1:60647",
+      "isolated": true,
+      "browserVersion": "156.0.8078.4"
+    },
+    "error": null,
+    "replayOf": null,
+    "ai": {
+      "status": "disabled",
+      "explanation": "Deterministic execution; AI analysis is disabled.",
+      "suggestions": [],
+      "proposedScenarios": [],
+      "requests": 0
+    },
+    "revision": 94,
+    "progress": {
+      "totalScenarios": 8,
+      "completedScenarios": 8,
+      "currentScenarioId": null,
+      "percent": 100
+    }
+  },
+  "summary": {
+    "tested": 8,
+    "passed": 1,
+    "confirmed": 7,
+    "intermittent": 0,
+    "suspected": 0,
+    "inconclusive": 0,
+    "skipped": 0,
+    "blocked": 0,
+    "infrastructureErrors": 0,
+    "unexecuted": []
+  },
+  "coverage": [
+    {
+      "level": 1,
+      "name": "NORMAL",
+      "scenarioIds": [
+        "normal.workflow",
+        "normal.persistence"
+      ],
+      "mode": "Real Chromium browser execution"
+    },
+    {
+      "level": 2,
+      "name": "CHAOS",
+      "scenarioIds": [
+        "chaos.duplicates",
+        "chaos.boundaries"
+      ],
+      "mode": "Real Chromium browser execution"
+    },
+    {
+      "level": 3,
+      "name": "HOSTILE",
+      "scenarioIds": [
+        "hostile.authorization",
+        "hostile.cost"
+      ],
+      "mode": "Real Chromium permission interaction and local HTTP against synthetic fixture policies"
+    },
+    {
+      "level": 4,
+      "name": "SIEGE",
+      "scenarioIds": [
+        "siege.bounded"
+      ],
+      "mode": "Real local HTTP execution against synthetic fixture policy and fault controls"
+    },
+    {
+      "level": 5,
+      "name": "BREAKPOINT",
+      "scenarioIds": [
+        "breakpoint.recovery"
+      ],
+      "mode": "Real local HTTP execution against synthetic fixture policy and fault controls"
+    }
+  ],
+  "reproduction": [
+    {
+      "scenarioId": "normal.workflow",
+      "eligible": true,
+      "instructions": "POST /v1/runs/754b4e25-30bc-4002-a243-8a917a863f55/replay with {\"scenarioIds\":[\"normal.workflow\"]}. A fresh disposable fixture of the same variant is created."
+    },
+    {
+      "scenarioId": "normal.persistence",
+      "eligible": true,
+      "instructions": "POST /v1/runs/754b4e25-30bc-4002-a243-8a917a863f55/replay with {\"scenarioIds\":[\"normal.persistence\"]}. A fresh disposable fixture of the same variant is created."
+    },
+    {
+      "scenarioId": "chaos.duplicates",
+      "eligible": true,
+      "instructions": "POST /v1/runs/754b4e25-30bc-4002-a243-8a917a863f55/replay with {\"scenarioIds\":[\"chaos.duplicates\"]}. A fresh disposable fixture of the same variant is created."
+    },
+    {
+      "scenarioId": "chaos.boundaries",
+      "eligible": true,
+      "instructions": "POST /v1/runs/754b4e25-30bc-4002-a243-8a917a863f55/replay with {\"scenarioIds\":[\"chaos.boundaries\"]}. A fresh disposable fixture of the same variant is created."
+    },
+    {
+      "scenarioId": "hostile.authorization",
+      "eligible": true,
+      "instructions": "POST /v1/runs/754b4e25-30bc-4002-a243-8a917a863f55/replay with {\"scenarioIds\":[\"hostile.authorization\"]}. A fresh disposable fixture of the same variant is created."
+    },
+    {
+      "scenarioId": "hostile.cost",
+      "eligible": true,
+      "instructions": "POST /v1/runs/754b4e25-30bc-4002-a243-8a917a863f55/replay with {\"scenarioIds\":[\"hostile.cost\"]}. A fresh disposable fixture of the same variant is created."
+    },
+    {
+      "scenarioId": "siege.bounded",
+      "eligible": true,
+      "instructions": "POST /v1/runs/754b4e25-30bc-4002-a243-8a917a863f55/replay with {\"scenarioIds\":[\"siege.bounded\"]}. A fresh disposable fixture of the same variant is created."
+    },
+    {
+      "scenarioId": "breakpoint.recovery",
+      "eligible": true,
+      "instructions": "POST /v1/runs/754b4e25-30bc-4002-a243-8a917a863f55/replay with {\"scenarioIds\":[\"breakpoint.recovery\"]}. A fresh disposable fixture of the same variant is created."
+    }
+  ],
+  "artifactPrivacy": "Action and metadata JSON are redacted. Screenshots and traces can contain sensitive page data and are local-only, authenticated artifacts; raw traces cannot be reliably redacted automatically.",
+  "regressionComparison": null
+}

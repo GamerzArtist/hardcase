@@ -3,6 +3,7 @@ import { timingSafeEqual, randomBytes } from 'node:crypto';
 import { mkdir, open, readFile, writeFile, unlink, realpath } from 'node:fs/promises';
 import { createReadStream } from 'node:fs';
 import { join, relative, isAbsolute } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { z } from 'zod';
 import { loadConfig, type EngineConfig } from '../config.js';
 import { CreateRunSchema, ENGINE_VERSION, LEVEL_NAMES, ScenarioSchema, TargetSchema, isTerminal, type CreateRun, type RunEvent, type Run } from '../domain/models.js';
@@ -15,6 +16,8 @@ import { compareRuns, makeReport, markdownReport, sanitizedRun, saveReports } fr
 import { CompareSchema, EvidenceParamsSchema, IdParamsSchema, ReplaySchema, openApiDocument } from './contracts.js';
 import { isProcessAlive } from '../workers/processes.js';
 import { cleanupDisposable } from '../workers/cleanup.js';
+import { IdempotencyConflict, idempotencyRecord } from './idempotency.js';
+import { RuntimeReadiness } from './readiness.js';
 
 class ApiError extends Error { constructor(readonly statusCode: number, message: string) { super(message); } }
 export function validateRunRequest(raw: unknown, forbiddenPorts: number[] = []): CreateRun {
@@ -56,6 +59,7 @@ export async function createEngine(overrides: Partial<EngineConfig> = {}, intern
   const token = config.token ?? randomBytes(32).toString('base64url');
   const store = new RunStore(join(config.dataDir, 'history.sqlite'));
   const manager = new RunManager(store, config, internal.workerPath);
+  const readiness = new RuntimeReadiness(store, config.artifactDir, internal.workerPath ?? fileURLToPath(new URL('../workers/entry.js', import.meta.url)));
   const app = Fastify({ logger: config.logger ? { redact: ['req.headers.authorization', 'req.headers.cookie'], level: 'info' } : false,
     logController: new LogController({ disableRequestLogging: true }), bodyLimit: 131072, requestTimeout: 10000, connectionTimeout: 15000, forceCloseConnections: true,
     ajv: { customOptions: { removeAdditional: false, coerceTypes: false } },
@@ -72,22 +76,23 @@ export async function createEngine(overrides: Partial<EngineConfig> = {}, intern
     if (!host || !['127.0.0.1', `127.0.0.1:${port}`, 'localhost', `localhost:${port}`].includes(host)) throw new ApiError(403, 'Host is not an approved local address');
     const origin = request.headers.origin;
     if (origin && !config.allowedOrigins.includes(origin)) throw new ApiError(403, 'Origin is not allowed');
-    if (origin) reply.header('access-control-allow-origin', origin).header('vary', 'Origin');
+    if (origin) reply.header('access-control-allow-origin', origin).header('vary', 'Origin').header('access-control-expose-headers', 'Idempotency-Replayed');
     if (request.method === 'OPTIONS') {
       if (!origin) throw new ApiError(403, 'CORS preflight requires an allowed origin');
-      return reply.header('access-control-allow-methods', 'GET,POST,OPTIONS').header('access-control-allow-headers', 'Authorization,Content-Type,Last-Event-ID').code(204).send();
+      return reply.header('access-control-allow-methods', 'GET,POST,OPTIONS').header('access-control-allow-headers', 'Authorization,Content-Type,Last-Event-ID,Idempotency-Key').code(204).send();
     }
     if (request.url.split('?')[0] !== '/v1/health' && !authorized(request.headers.authorization)) throw new ApiError(401, 'A local Bearer session token is required');
   });
   app.setErrorHandler((error, _request, reply) => {
-    const code = error instanceof z.ZodError || error instanceof SafetyError ? 400 : error instanceof ApiError ? error.statusCode : typeof (error as { statusCode?: number }).statusCode === 'number' ? (error as { statusCode: number }).statusCode : 500;
+    const code = error instanceof IdempotencyConflict ? 409 : error instanceof z.ZodError || error instanceof SafetyError ? 400 : error instanceof ApiError ? error.statusCode : typeof (error as { statusCode?: number }).statusCode === 'number' ? (error as { statusCode: number }).statusCode : 500;
     const message = error instanceof z.ZodError ? error.issues.map(issue => `${issue.path.join('.')}: ${issue.message}`).join('; ') : error instanceof Error ? error.message : 'Unexpected error';
     if (code >= 500) app.log.error({ error: redactText(message) }, 'API operation failed');
-    return reply.code(code).send({ error: code >= 500 ? 'INTERNAL_ERROR' : 'REQUEST_REJECTED', message: code >= 500 ? 'Operation failed; inspect local engine logs' : redactText(message) });
+    return reply.code(code).send({ error: error instanceof IdempotencyConflict ? 'IDEMPOTENCY_CONFLICT' : error instanceof SafetyError ? 'SAFETY_REJECTED' : code >= 500 ? 'INTERNAL_ERROR' : 'REQUEST_REJECTED', message: code >= 500 ? 'Operation failed; inspect local engine logs' : redactText(message) });
   });
   app.setNotFoundHandler((_request, reply) => reply.code(404).send({ error: 'NOT_FOUND', message: 'Unknown API route' }));
   const getRun = (params: unknown): Run => { const { id } = IdParamsSchema.parse(params); const run = store.get(id); if (!run) throw new ApiError(404, 'Run not found'); return run; };
   app.get('/v1/health', async () => ({ ok: true, version: ENGINE_VERSION }));
+  app.get('/v1/ready', async (_request, reply) => { const result = await readiness.check(); return reply.code(result.ok ? 200 : 503).send(result); });
   app.get('/v1/capabilities', async () => ({ version: ENGINE_VERSION, apiVersion: 'v1',
     levels: Object.entries(LEVEL_NAMES).map(([level, name]) => ({ level: Number(level), name, targetKinds: Number(level) <= 2 ? ['fixture', 'loopback'] : ['fixture'] })),
     targetKinds: ['fixture', 'loopback'], aiOptional: true, aiConfigured: process.env.AI_ENABLED === 'true' && !!process.env.AI_ENDPOINT && !!process.env.AI_MODEL,
@@ -101,15 +106,24 @@ export async function createEngine(overrides: Partial<EngineConfig> = {}, intern
   app.get('/v1/openapi.json', async () => openApiDocument());
   app.post('/v1/runs', async (request, reply) => {
     const input = validateRunRequest(request.body, manager.forbiddenPorts);
+    const record = idempotencyRecord(request.headers['idempotency-key'], input);
+    const existing = record && store.findIdempotent(record);
+    if (existing) return reply.header('Idempotency-Replayed', 'true').code(202).send(sanitizedRun(existing));
     if (store.queued().length >= config.maxQueuedJobs) throw new ApiError(429, 'Run queue is full');
-    const run = manager.create(input); app.log.info({ runId: run.id, levels: input.levels, targetKind: input.target.kind }, 'Run queued');
-    return reply.code(202).send(sanitizedRun(run));
+    const run = manager.create(input, null, record); app.log.info({ runId: run.id, levels: input.levels, targetKind: input.target.kind }, 'Run queued');
+    return reply.header('Idempotency-Replayed', 'false').code(202).send(sanitizedRun(run));
   });
   app.get('/v1/runs', async request => {
     const query = z.strictObject({ limit: z.coerce.number().int().min(1).max(100).default(50), offset: z.coerce.number().int().min(0).max(1000000).default(0) }).parse(request.query);
     return store.list(query.limit, query.offset).map(sanitizedRun);
   });
   app.get('/v1/runs/:id', async request => sanitizedRun(getRun(request.params)));
+  app.get('/v1/runs/:id/events/poll', async request => {
+    const run = getRun(request.params);
+    const query = z.strictObject({ after: z.coerce.number().int().min(0).max(Number.MAX_SAFE_INTEGER).default(0), limit: z.coerce.number().int().min(1).max(200).default(100) }).parse(request.query);
+    const page = store.history(run.id, query.after, query.limit + 1); const events = page.slice(0, query.limit);
+    return { events: events.map(event => redact(event)), nextCursor: events.at(-1)?.id ?? query.after, hasMore: page.length > query.limit, terminal: isTerminal(run.state), state: run.state };
+  });
   app.post('/v1/runs/:id/cancel', async (request, reply) => { const run = getRun(request.params); return reply.code(202).send(sanitizedRun(manager.cancel(run.id))); });
   app.get('/v1/runs/:id/findings', async request => sanitizedRun(getRun(request.params)).results);
   app.get('/v1/runs/:id/evidence', async request => getRun(request.params).evidence);
@@ -117,8 +131,8 @@ export async function createEngine(overrides: Partial<EngineConfig> = {}, intern
     const { id, artifactId } = EvidenceParamsSchema.parse(request.params); const run = store.get(id); if (!run) throw new ApiError(404, 'Run not found');
     const artifact = run.evidence.find(e => e.id === artifactId); if (!artifact) throw new ApiError(404, 'Artifact not found');
     if (!/^[a-f0-9-]+\.(png|zip|json)$/.test(artifact.relativePath)) throw new ApiError(500, 'Invalid artifact record');
-    const root = await realpath(join(config.artifactDir, id)); let path: string;
-    try { path = await realpath(join(root, artifact.relativePath)); } catch { throw new ApiError(404, 'Artifact file is unavailable'); }
+    let root: string; let path: string;
+    try { root = await realpath(join(config.artifactDir, id)); path = await realpath(join(root, artifact.relativePath)); } catch { throw new ApiError(404, 'Artifact file is unavailable'); }
     const contained = relative(root, path); if (contained.startsWith('..') || isAbsolute(contained)) throw new ApiError(403, 'Artifact path escapes run storage');
     return reply.header('content-disposition', `attachment; filename="${artifact.relativePath}"`).type(artifact.mediaType).send(createReadStream(path));
   });
@@ -137,7 +151,11 @@ export async function createEngine(overrides: Partial<EngineConfig> = {}, intern
     if (new Set(scenarioIds).size !== scenarioIds.length || scenarioIds.some(id => !run.results.some(r => r.scenarioId === id && r.replayable))) throw new ApiError(400, 'One or more scenarios are not eligible for replay');
     const results = run.results.filter(r => scenarioIds.includes(r.scenarioId));
     const input = validateRunRequest({ ...run.request, levels: [...new Set(results.map(r => r.level))], recipeIds: scenarioIds.filter(id => !!findRecipe(id)), scenarios: run.request.scenarios.filter(s => scenarioIds.includes(s.id)) }, manager.forbiddenPorts);
-    return reply.code(202).send(sanitizedRun(manager.create(input, run.id)));
+    const record = idempotencyRecord(request.headers['idempotency-key'], input, run.id);
+    const existing = record && store.findIdempotent(record);
+    if (existing) return reply.header('Idempotency-Replayed', 'true').code(202).send(sanitizedRun(existing));
+    if (store.queued().length >= config.maxQueuedJobs) throw new ApiError(429, 'Run queue is full');
+    return reply.header('Idempotency-Replayed', 'false').code(202).send(sanitizedRun(manager.create(input, run.id, record)));
   });
   app.post('/v1/compare', async request => {
     const ids = CompareSchema.parse(request.body); const before = store.get(ids.before); const after = store.get(ids.after);
@@ -148,9 +166,9 @@ export async function createEngine(overrides: Partial<EngineConfig> = {}, intern
   app.get('/v1/runs/:id/events', async (request, reply) => {
     const run = getRun(request.params);
     if (eventClients.size >= 20) throw new ApiError(429, 'Too many event streams');
-    const query = z.strictObject({ after: z.coerce.number().int().min(0).default(0) }).parse(request.query);
+    const query = z.strictObject({ after: z.coerce.number().int().min(0).max(Number.MAX_SAFE_INTEGER).default(0) }).parse(request.query);
     const lastId = request.headers['last-event-id'];
-    const after = lastId === undefined ? query.after : z.coerce.number().int().min(0).parse(lastId);
+    const after = lastId === undefined ? query.after : z.coerce.number().int().min(0).max(Number.MAX_SAFE_INTEGER).parse(lastId);
     reply.hijack();
     reply.raw.writeHead(200, { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-store', Connection: 'keep-alive', 'X-Content-Type-Options': 'nosniff', ...(request.headers.origin ? { 'Access-Control-Allow-Origin': request.headers.origin, Vary: 'Origin' } : {}) });
     let stopped = false; let last = after;
@@ -164,13 +182,17 @@ export async function createEngine(overrides: Partial<EngineConfig> = {}, intern
     const heartbeat = setInterval(() => { if (!stopped) reply.raw.write(': heartbeat\n\n'); }, 10000); heartbeat.unref();
     eventClients.add(close); request.raw.on('close', close); reply.raw.on('close', close);
     store.events.on(run.id, send);
-    for (const event of store.history(run.id, after)) send(event);
+    for (;;) {
+      const batch = store.history(run.id, last, 100);
+      for (const event of batch) send(event);
+      if (stopped || batch.length < 100) break;
+    }
     if (isTerminal(store.get(run.id)!.state)) close();
   });
   async function close(): Promise<void> {
     if (closed) return; closed = true;
     for (const stop of eventClients) stop();
-    await manager.shutdown(); await app.close(); store.close();
+    await manager.shutdown(); await app.close(); await readiness.close(); store.close();
     await unlink(lockPath);
   }
   async function listen(): Promise<string> {

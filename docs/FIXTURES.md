@@ -4,6 +4,8 @@ Every engine fixture run creates a fresh SQLite database in its run directory an
 
 The browser page is a minimal testing target, not the product frontend. It provides a notes form, a draft field, navigation and status text. Its HTML/JavaScript runs in real Chromium.
 
+`/permissions` is the source-linked permission demonstrator. `hostile.authorization` version2 clicks its viewer/admin buttons in Chromium, reads the returned HTTP status and protected-state counter, and captures the actual rendered page. `src/fixtures/app.ts` contains both the page and the deliberately faulty/clean `POST /api/admin/reset` handler; `src/strategies/execute.ts` contains the assertions. Actions evidence records these source references, timestamps and selectors. This is real HTTP behavior with synthetic identities; no production authentication integration is implied.
+
 | Scenario | Declared policy | Faulty observation | Clean control |
 |---|---|---|---|
 | `normal.workflow` | One valid note survives reload; navigation, focus and narrow layout work | Passes | Passes |
@@ -19,7 +21,7 @@ The engine confirms a defect only after the same failed assertion recurs from a 
 
 ## Safe manual observations
 
-After `npm run fixture`, use `GET http://127.0.0.1:4319/api/state` to inspect synthetic counters. `GET /api/policy` provides expected invariants. POST `/api/admin/reset` with the predefined `x-test-role: viewer` or `admin` header demonstrates the permission contract. This is a simulated identity boundary, not real user authentication.
+After `npm run build:api` and `npm run fixture`, open `http://127.0.0.1:4319/permissions`. Click the viewer button: the faulty variant returns200 and increments the counter even though the displayed policy requires403 and no change. The admin control returns200 as allowed. Stop the fixture, use a fresh `FIXTURE_DATA_DIR`, and run `npm run fixture -- --clean`: viewer returns403 without a side effect, while admin succeeds. `GET http://127.0.0.1:4319/api/state` inspects synthetic counters; `GET /api/policy` provides expected invariants. The predefined `x-test-role: viewer|admin` header is a synthetic identity boundary, not real user authentication.
 
 POST `/api/ai` accepts `{ "tokens": 60, "operationId": "one" }`; repeat it, then use another operation ID. It only updates in-memory synthetic billing counters. POST `/api/events` accepts `{ "eventId": "one", "simulatedVolume": 10 }`. Simulated volume is a logical payload value, not a multiplier on network requests.
 

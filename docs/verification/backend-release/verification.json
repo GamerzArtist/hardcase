@@ -1,0 +1,688 @@
+{
+  "at": "2026-10-23T02:46:08.522Z",
+  "aiEnabled": false,
+  "readiness": {
+    "ok": true,
+    "version": "0.1.0",
+    "checks": {
+      "storage": true,
+      "worker": true,
+      "chromium": true
+    },
+    "issues": []
+  },
+  "sourceHashes": [
+    {
+      "path": "src/fixtures/app.ts",
+      "sha256": "15e035a7a3cc335fa416c0cc76a3dd3481f3a48bc365f961243e0ff70fec6222"
+    },
+    {
+      "path": "src/strategies/execute.ts",
+      "sha256": "5de516afde4721ea194b2ab5a022e76dc024dc2dc6817335aeeb7c5340b99acf"
+    },
+    {
+      "path": "src/strategies/catalog.ts",
+      "sha256": "a3661f7e09983ed6740d52343e024b0b697245355356e8bb8921c875846b6004"
+    },
+    {
+      "path": "src/api/server.ts",
+      "sha256": "5542b4226377441a8ac7b2b2b14deae1a920b58f63f84fa4f15aa56b9a11514f"
+    },
+    {
+      "path": "src/persistence/store.ts",
+      "sha256": "60ea051259d6ca632f94f417e1366dbca6aa4a2712963dbd2f5608c6022af061"
+    }
+  ],
+  "faulty": {
+    "id": "754b4e25-30bc-4002-a243-8a917a863f55",
+    "state": "completed",
+    "duplicateStartReusedRun": true,
+    "scenarios": [
+      {
+        "id": "normal.workflow",
+        "findingId": "7b0e5c1a-8194-42af-b85b-fb7fbca5030c",
+        "version": 1,
+        "observedAt": "2026-10-23T02:46:09.756Z",
+        "outcome": "passed",
+        "classification": "passed",
+        "attempts": 1
+      },
+      {
+        "id": "normal.persistence",
+        "findingId": "05bb0fd9-de32-4b31-9d04-e3a0ee02a8be",
+        "version": 1,
+        "observedAt": "2026-10-23T02:46:11.647Z",
+        "outcome": "failed",
+        "classification": "confirmed",
+        "attempts": 2
+      },
+      {
+        "id": "chaos.duplicates",
+        "findingId": "53676d97-b1ea-40c9-93d1-3775ed27899f",
+        "version": 1,
+        "observedAt": "2026-10-23T02:46:13.301Z",
+        "outcome": "failed",
+        "classification": "confirmed",
+        "attempts": 2
+      },
+      {
+        "id": "chaos.boundaries",
+        "findingId": "206e2c7b-4d5a-4ec2-8b2c-2a629c0f7614",
+        "version": 1,
+        "observedAt": "2026-10-23T02:46:15.995Z",
+        "outcome": "failed",
+        "classification": "confirmed",
+        "attempts": 2
+      },
+      {
+        "id": "hostile.authorization",
+        "findingId": "5df02bbb-4827-42ff-9e48-1b63548d7f14",
+        "version": 2,
+        "observedAt": "2026-10-23T02:46:19.648Z",
+        "outcome": "failed",
+        "classification": "confirmed",
+        "attempts": 2
+      },
+      {
+        "id": "hostile.cost",
+        "findingId": "d30c3f64-242f-42b4-8a4d-68411ef1bc6a",
+        "version": 1,
+        "observedAt": "2026-10-23T02:46:21.624Z",
+        "outcome": "failed",
+        "classification": "confirmed",
+        "attempts": 2
+      },
+      {
+        "id": "siege.bounded",
+        "findingId": "8657f7d3-8648-4562-8ae0-cd2fdceb3292",
+        "version": 1,
+        "observedAt": "2026-10-23T02:46:22.740Z",
+        "outcome": "failed",
+        "classification": "confirmed",
+        "attempts": 2
+      },
+      {
+        "id": "breakpoint.recovery",
+        "findingId": "e07f9e2c-3c79-44f7-8d25-73dfab5cc233",
+        "version": 1,
+        "observedAt": "2026-10-23T02:46:27.869Z",
+        "outcome": "failed",
+        "classification": "confirmed",
+        "attempts": 2
+      }
+    ],
+    "evidenceCount": 57,
+    "actualNetworkRequests": 148,
+    "simulatedEvents": 162,
+    "progressEvents": 95,
+    "directory": ".engine/release-20261023/artifacts/754b4e25-30bc-4002-a243-8a917a863f55"
+  },
+  "faultyPermission": {
+    "findingId": "5df02bbb-4827-42ff-9e48-1b63548d7f14",
+    "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+    "scenarioId": "hostile.authorization",
+    "classification": "confirmed",
+    "observedBehavior": "Viewer must be denied server-side: expected 403, observed 200; Denied identity must not mutate protected state: expected 0, observed 1",
+    "verification": {
+      "retested": true,
+      "reproduced": true,
+      "matchingAssertionIds": [
+        "viewer-denied",
+        "no-unauthorized-effect"
+      ]
+    },
+    "source": {
+      "file": "src/fixtures/app.ts",
+      "handler": "POST /api/admin/reset"
+    },
+    "artifacts": [
+      {
+        "id": "ed96240f-9a72-4e57-ac6f-f0942658b017",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "hostile.authorization",
+        "attempt": 1,
+        "kind": "screenshot",
+        "relativePath": "ed96240f-9a72-4e57-ac6f-f0942658b017.png",
+        "mediaType": "image/png",
+        "bytes": 39435,
+        "sha256": "20f4e2963805b7349738bd238020546ce9e619f4daf292184e6128e3b4e174e0",
+        "sensitive": true,
+        "createdAt": "2026-10-23T02:46:20.580Z"
+      },
+      {
+        "id": "2e416f78-bfd8-4fd4-bbbc-693cb73cf455",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "hostile.authorization",
+        "attempt": 1,
+        "kind": "trace",
+        "relativePath": "2e416f78-bfd8-4fd4-bbbc-693cb73cf455.zip",
+        "mediaType": "application/zip",
+        "bytes": 254633,
+        "sha256": "ac7fd022d7e2a374e61f3768a96a6a9f82d7af9a305a26abae69baa8e649a191",
+        "sensitive": true,
+        "createdAt": "2026-10-23T02:46:20.623Z"
+      },
+      {
+        "id": "a32073dd-87d6-4b69-a394-b9bba0043969",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "hostile.authorization",
+        "attempt": 1,
+        "kind": "actions",
+        "relativePath": "a32073dd-87d6-4b69-a394-b9bba0043969.json",
+        "mediaType": "application/json",
+        "bytes": 2229,
+        "sha256": "c9356fbc525fba99ef2446bad8860775d700c4b32e95ab7cf38ff09d0469fa13",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:20.624Z"
+      },
+      {
+        "id": "594d1ec8-2c71-4a8a-b61b-19d8e63a7e81",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "hostile.authorization",
+        "attempt": 1,
+        "kind": "network",
+        "relativePath": "594d1ec8-2c71-4a8a-b61b-19d8e63a7e81.json",
+        "mediaType": "application/json",
+        "bytes": 1019,
+        "sha256": "21c4aec4356cff39a04b23519dfeb5aa343429fd8af728da32578f8bbdc5e8aa",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:20.625Z"
+      },
+      {
+        "id": "82a1e810-545f-4bd4-9171-94591cd9f4ee",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "hostile.authorization",
+        "attempt": 1,
+        "kind": "console",
+        "relativePath": "82a1e810-545f-4bd4-9171-94591cd9f4ee.json",
+        "mediaType": "application/json",
+        "bytes": 57,
+        "sha256": "8e97efe7f03f3f4eb60c4b216d4767d39e1bc239982ace75b06d521d4d14621c",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:20.625Z"
+      },
+      {
+        "id": "5bb2181b-75f7-463d-b0bf-f17078d829b3",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "hostile.authorization",
+        "attempt": 2,
+        "kind": "screenshot",
+        "relativePath": "5bb2181b-75f7-463d-b0bf-f17078d829b3.png",
+        "mediaType": "image/png",
+        "bytes": 39435,
+        "sha256": "20f4e2963805b7349738bd238020546ce9e619f4daf292184e6128e3b4e174e0",
+        "sensitive": true,
+        "createdAt": "2026-10-23T02:46:21.566Z"
+      },
+      {
+        "id": "7545f149-6cab-4ed1-b7b4-ecd4b0e014e3",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "hostile.authorization",
+        "attempt": 2,
+        "kind": "trace",
+        "relativePath": "7545f149-6cab-4ed1-b7b4-ecd4b0e014e3.zip",
+        "mediaType": "application/zip",
+        "bytes": 254594,
+        "sha256": "170b33d0aea24b7381745ba3dad668ba2299769bf40e9004995d9288c23ac1c7",
+        "sensitive": true,
+        "createdAt": "2026-10-23T02:46:21.615Z"
+      },
+      {
+        "id": "8f5d175e-5b9e-453c-8aac-bb0eaff69071",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "hostile.authorization",
+        "attempt": 2,
+        "kind": "actions",
+        "relativePath": "8f5d175e-5b9e-453c-8aac-bb0eaff69071.json",
+        "mediaType": "application/json",
+        "bytes": 2229,
+        "sha256": "ddd494a322711ddccf2518439e53002669cd895a99cfa166d2ed476c0dd519ed",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:21.616Z"
+      },
+      {
+        "id": "85f42bee-716b-425d-86f3-6e6e40c857e3",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "hostile.authorization",
+        "attempt": 2,
+        "kind": "network",
+        "relativePath": "85f42bee-716b-425d-86f3-6e6e40c857e3.json",
+        "mediaType": "application/json",
+        "bytes": 1019,
+        "sha256": "d2f3c75b27ee269a8caff7c92589ebd03521217fa555507639188eccaaae010c",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:21.617Z"
+      },
+      {
+        "id": "816fbb5a-3020-414d-ad37-4bb1ff6282d1",
+        "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+        "scenarioId": "hostile.authorization",
+        "attempt": 2,
+        "kind": "console",
+        "relativePath": "816fbb5a-3020-414d-ad37-4bb1ff6282d1.json",
+        "mediaType": "application/json",
+        "bytes": 57,
+        "sha256": "8e97efe7f03f3f4eb60c4b216d4767d39e1bc239982ace75b06d521d4d14621c",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:21.617Z"
+      }
+    ]
+  },
+  "clean": {
+    "id": "ea14e39c-f9f9-4048-ae97-20e94ad923bd",
+    "state": "completed",
+    "duplicateStartReusedRun": true,
+    "scenarios": [
+      {
+        "id": "normal.workflow",
+        "findingId": "6e2dc39d-74ea-4701-bd6a-3e04bfd3943d",
+        "version": 1,
+        "observedAt": "2026-10-23T02:46:31.639Z",
+        "outcome": "passed",
+        "classification": "passed",
+        "attempts": 1
+      },
+      {
+        "id": "normal.persistence",
+        "findingId": "f6ca374d-ce9b-4709-b274-2500feefc3fb",
+        "version": 1,
+        "observedAt": "2026-10-23T02:46:33.667Z",
+        "outcome": "passed",
+        "classification": "passed",
+        "attempts": 1
+      },
+      {
+        "id": "chaos.duplicates",
+        "findingId": "4305c09b-3d3a-4623-90ef-8459256fea39",
+        "version": 1,
+        "observedAt": "2026-10-23T02:46:34.445Z",
+        "outcome": "passed",
+        "classification": "passed",
+        "attempts": 1
+      },
+      {
+        "id": "chaos.boundaries",
+        "findingId": "322d6962-bb2b-4f0c-8360-a1dc36055027",
+        "version": 1,
+        "observedAt": "2026-10-23T02:46:35.804Z",
+        "outcome": "passed",
+        "classification": "passed",
+        "attempts": 1
+      },
+      {
+        "id": "hostile.authorization",
+        "findingId": "371093cf-9a7e-4b2e-88b4-dc8e7e9958f2",
+        "version": 2,
+        "observedAt": "2026-10-23T02:46:37.615Z",
+        "outcome": "passed",
+        "classification": "passed",
+        "attempts": 1
+      },
+      {
+        "id": "hostile.cost",
+        "findingId": "d0808d32-d97d-4561-b38c-465f41b5bda3",
+        "version": 1,
+        "observedAt": "2026-10-23T02:46:38.730Z",
+        "outcome": "passed",
+        "classification": "passed",
+        "attempts": 1
+      },
+      {
+        "id": "siege.bounded",
+        "findingId": "5e903431-06db-472d-b6db-2689873516e6",
+        "version": 1,
+        "observedAt": "2026-10-23T02:46:39.250Z",
+        "outcome": "passed",
+        "classification": "passed",
+        "attempts": 1
+      },
+      {
+        "id": "breakpoint.recovery",
+        "findingId": "4e5efb4b-600f-4c74-b45e-a225f9652db3",
+        "version": 1,
+        "observedAt": "2026-10-23T02:46:41.510Z",
+        "outcome": "passed",
+        "classification": "passed",
+        "attempts": 1
+      }
+    ],
+    "evidenceCount": 31,
+    "actualNetworkRequests": 82,
+    "simulatedEvents": 81,
+    "progressEvents": 62,
+    "directory": ".engine/release-20261023/artifacts/ea14e39c-f9f9-4048-ae97-20e94ad923bd"
+  },
+  "cleanPermission": {
+    "findingId": "371093cf-9a7e-4b2e-88b4-dc8e7e9958f2",
+    "runId": "ea14e39c-f9f9-4048-ae97-20e94ad923bd",
+    "scenarioId": "hostile.authorization",
+    "classification": "passed",
+    "observedBehavior": "4 explicit assertions passed.",
+    "verification": {
+      "retested": false,
+      "reproduced": false,
+      "matchingAssertionIds": []
+    },
+    "source": {
+      "file": "src/fixtures/app.ts",
+      "handler": "POST /api/admin/reset"
+    },
+    "artifacts": [
+      {
+        "id": "938ab812-4532-4137-8335-6a6d15ffaae4",
+        "runId": "ea14e39c-f9f9-4048-ae97-20e94ad923bd",
+        "scenarioId": "hostile.authorization",
+        "attempt": 1,
+        "kind": "screenshot",
+        "relativePath": "938ab812-4532-4137-8335-6a6d15ffaae4.png",
+        "mediaType": "image/png",
+        "bytes": 38711,
+        "sha256": "790ce1e0cd100ba1dffb5567889ad6e8b45d8c0eb858c00e6c9473071519dad7",
+        "sensitive": true,
+        "createdAt": "2026-10-23T02:46:38.651Z"
+      },
+      {
+        "id": "bd7ce40f-7cc1-4b4e-a881-53e6678d55ef",
+        "runId": "ea14e39c-f9f9-4048-ae97-20e94ad923bd",
+        "scenarioId": "hostile.authorization",
+        "attempt": 1,
+        "kind": "trace",
+        "relativePath": "bd7ce40f-7cc1-4b4e-a881-53e6678d55ef.zip",
+        "mediaType": "application/zip",
+        "bytes": 251132,
+        "sha256": "50c03ee6c5eb74dcada96d2987e96c457efb93a6b13f868bee5c8521819d6b05",
+        "sensitive": true,
+        "createdAt": "2026-10-23T02:46:38.719Z"
+      },
+      {
+        "id": "73d0910b-4412-431d-b063-31d62e53476f",
+        "runId": "ea14e39c-f9f9-4048-ae97-20e94ad923bd",
+        "scenarioId": "hostile.authorization",
+        "attempt": 1,
+        "kind": "actions",
+        "relativePath": "73d0910b-4412-431d-b063-31d62e53476f.json",
+        "mediaType": "application/json",
+        "bytes": 2227,
+        "sha256": "6e4f3c38e9f830c418d60b9652f471a5ff10591de693338a632b3bed12a8f295",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:38.720Z"
+      },
+      {
+        "id": "c1ef83e5-75f2-45e9-a82c-195862a3fb52",
+        "runId": "ea14e39c-f9f9-4048-ae97-20e94ad923bd",
+        "scenarioId": "hostile.authorization",
+        "attempt": 1,
+        "kind": "network",
+        "relativePath": "c1ef83e5-75f2-45e9-a82c-195862a3fb52.json",
+        "mediaType": "application/json",
+        "bytes": 1018,
+        "sha256": "5ff28eb0106f087f809eda4e471f2b4dadcef8935fe080b40e905eb5387527d6",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:38.721Z"
+      },
+      {
+        "id": "b7f797e7-8a7f-4a2d-a218-9e519ccbe809",
+        "runId": "ea14e39c-f9f9-4048-ae97-20e94ad923bd",
+        "scenarioId": "hostile.authorization",
+        "attempt": 1,
+        "kind": "console",
+        "relativePath": "b7f797e7-8a7f-4a2d-a218-9e519ccbe809.json",
+        "mediaType": "application/json",
+        "bytes": 190,
+        "sha256": "cbcd9ef551a191d01f5ce4d1d711c9a47984c615487353632889651a4b42e776",
+        "sensitive": false,
+        "createdAt": "2026-10-23T02:46:38.722Z"
+      }
+    ]
+  },
+  "comparison": {
+    "before": "754b4e25-30bc-4002-a243-8a917a863f55",
+    "after": "ea14e39c-f9f9-4048-ae97-20e94ad923bd",
+    "changes": [
+      {
+        "scenarioId": "normal.workflow",
+        "before": "passed",
+        "after": "passed",
+        "change": "unchanged"
+      },
+      {
+        "scenarioId": "normal.persistence",
+        "before": "confirmed",
+        "after": "passed",
+        "change": "resolved_in_this_run"
+      },
+      {
+        "scenarioId": "chaos.duplicates",
+        "before": "confirmed",
+        "after": "passed",
+        "change": "resolved_in_this_run"
+      },
+      {
+        "scenarioId": "chaos.boundaries",
+        "before": "confirmed",
+        "after": "passed",
+        "change": "resolved_in_this_run"
+      },
+      {
+        "scenarioId": "hostile.authorization",
+        "before": "confirmed",
+        "after": "passed",
+        "change": "resolved_in_this_run"
+      },
+      {
+        "scenarioId": "hostile.cost",
+        "before": "confirmed",
+        "after": "passed",
+        "change": "resolved_in_this_run"
+      },
+      {
+        "scenarioId": "siege.bounded",
+        "before": "confirmed",
+        "after": "passed",
+        "change": "resolved_in_this_run"
+      },
+      {
+        "scenarioId": "breakpoint.recovery",
+        "before": "confirmed",
+        "after": "passed",
+        "change": "resolved_in_this_run"
+      }
+    ]
+  },
+  "replay": {
+    "id": "afa1387b-637f-4ce2-9267-672309b2ad8b",
+    "state": "completed",
+    "reproduced": true
+  },
+  "cancellation": {
+    "id": "7f50c066-397d-43d1-9a08-d80375172696",
+    "state": "cancelled",
+    "activeWorkers": 0
+  },
+  "restart": {
+    "persisted": true,
+    "savedReportReadable": true
+  },
+  "passed": true,
+  "backendChecks": {
+    "testCommand": "npm run test:api",
+    "testFilesPassed": 10,
+    "testsPassed": 55,
+    "durationSeconds": 79.86,
+    "typecheckCommand": "npm run typecheck:api",
+    "typecheckPassed": true,
+    "auditCommand": "npm audit --json",
+    "auditVulnerabilities": 0
+  },
+  "exportedArtifacts": [
+    {
+      "id": "ed96240f-9a72-4e57-ac6f-f0942658b017",
+      "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+      "scenarioId": "hostile.authorization",
+      "attempt": 1,
+      "kind": "screenshot",
+      "relativePath": "ed96240f-9a72-4e57-ac6f-f0942658b017.png",
+      "mediaType": "image/png",
+      "bytes": 39435,
+      "sha256": "20f4e2963805b7349738bd238020546ce9e619f4daf292184e6128e3b4e174e0",
+      "sensitive": true,
+      "createdAt": "2026-10-23T02:46:20.580Z",
+      "path": "docs/verification/backend-release/754b4e25-30bc-4002-a243-8a917a863f55/ed96240f-9a72-4e57-ac6f-f0942658b017.png"
+    },
+    {
+      "id": "a32073dd-87d6-4b69-a394-b9bba0043969",
+      "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+      "scenarioId": "hostile.authorization",
+      "attempt": 1,
+      "kind": "actions",
+      "relativePath": "a32073dd-87d6-4b69-a394-b9bba0043969.json",
+      "mediaType": "application/json",
+      "bytes": 2229,
+      "sha256": "c9356fbc525fba99ef2446bad8860775d700c4b32e95ab7cf38ff09d0469fa13",
+      "sensitive": false,
+      "createdAt": "2026-10-23T02:46:20.624Z",
+      "path": "docs/verification/backend-release/754b4e25-30bc-4002-a243-8a917a863f55/a32073dd-87d6-4b69-a394-b9bba0043969.json"
+    },
+    {
+      "id": "594d1ec8-2c71-4a8a-b61b-19d8e63a7e81",
+      "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+      "scenarioId": "hostile.authorization",
+      "attempt": 1,
+      "kind": "network",
+      "relativePath": "594d1ec8-2c71-4a8a-b61b-19d8e63a7e81.json",
+      "mediaType": "application/json",
+      "bytes": 1019,
+      "sha256": "21c4aec4356cff39a04b23519dfeb5aa343429fd8af728da32578f8bbdc5e8aa",
+      "sensitive": false,
+      "createdAt": "2026-10-23T02:46:20.625Z",
+      "path": "docs/verification/backend-release/754b4e25-30bc-4002-a243-8a917a863f55/594d1ec8-2c71-4a8a-b61b-19d8e63a7e81.json"
+    },
+    {
+      "id": "82a1e810-545f-4bd4-9171-94591cd9f4ee",
+      "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+      "scenarioId": "hostile.authorization",
+      "attempt": 1,
+      "kind": "console",
+      "relativePath": "82a1e810-545f-4bd4-9171-94591cd9f4ee.json",
+      "mediaType": "application/json",
+      "bytes": 57,
+      "sha256": "8e97efe7f03f3f4eb60c4b216d4767d39e1bc239982ace75b06d521d4d14621c",
+      "sensitive": false,
+      "createdAt": "2026-10-23T02:46:20.625Z",
+      "path": "docs/verification/backend-release/754b4e25-30bc-4002-a243-8a917a863f55/82a1e810-545f-4bd4-9171-94591cd9f4ee.json"
+    },
+    {
+      "id": "5bb2181b-75f7-463d-b0bf-f17078d829b3",
+      "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+      "scenarioId": "hostile.authorization",
+      "attempt": 2,
+      "kind": "screenshot",
+      "relativePath": "5bb2181b-75f7-463d-b0bf-f17078d829b3.png",
+      "mediaType": "image/png",
+      "bytes": 39435,
+      "sha256": "20f4e2963805b7349738bd238020546ce9e619f4daf292184e6128e3b4e174e0",
+      "sensitive": true,
+      "createdAt": "2026-10-23T02:46:21.566Z",
+      "path": "docs/verification/backend-release/754b4e25-30bc-4002-a243-8a917a863f55/5bb2181b-75f7-463d-b0bf-f17078d829b3.png"
+    },
+    {
+      "id": "8f5d175e-5b9e-453c-8aac-bb0eaff69071",
+      "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+      "scenarioId": "hostile.authorization",
+      "attempt": 2,
+      "kind": "actions",
+      "relativePath": "8f5d175e-5b9e-453c-8aac-bb0eaff69071.json",
+      "mediaType": "application/json",
+      "bytes": 2229,
+      "sha256": "ddd494a322711ddccf2518439e53002669cd895a99cfa166d2ed476c0dd519ed",
+      "sensitive": false,
+      "createdAt": "2026-10-23T02:46:21.616Z",
+      "path": "docs/verification/backend-release/754b4e25-30bc-4002-a243-8a917a863f55/8f5d175e-5b9e-453c-8aac-bb0eaff69071.json"
+    },
+    {
+      "id": "85f42bee-716b-425d-86f3-6e6e40c857e3",
+      "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+      "scenarioId": "hostile.authorization",
+      "attempt": 2,
+      "kind": "network",
+      "relativePath": "85f42bee-716b-425d-86f3-6e6e40c857e3.json",
+      "mediaType": "application/json",
+      "bytes": 1019,
+      "sha256": "d2f3c75b27ee269a8caff7c92589ebd03521217fa555507639188eccaaae010c",
+      "sensitive": false,
+      "createdAt": "2026-10-23T02:46:21.617Z",
+      "path": "docs/verification/backend-release/754b4e25-30bc-4002-a243-8a917a863f55/85f42bee-716b-425d-86f3-6e6e40c857e3.json"
+    },
+    {
+      "id": "816fbb5a-3020-414d-ad37-4bb1ff6282d1",
+      "runId": "754b4e25-30bc-4002-a243-8a917a863f55",
+      "scenarioId": "hostile.authorization",
+      "attempt": 2,
+      "kind": "console",
+      "relativePath": "816fbb5a-3020-414d-ad37-4bb1ff6282d1.json",
+      "mediaType": "application/json",
+      "bytes": 57,
+      "sha256": "8e97efe7f03f3f4eb60c4b216d4767d39e1bc239982ace75b06d521d4d14621c",
+      "sensitive": false,
+      "createdAt": "2026-10-23T02:46:21.617Z",
+      "path": "docs/verification/backend-release/754b4e25-30bc-4002-a243-8a917a863f55/816fbb5a-3020-414d-ad37-4bb1ff6282d1.json"
+    },
+    {
+      "id": "938ab812-4532-4137-8335-6a6d15ffaae4",
+      "runId": "ea14e39c-f9f9-4048-ae97-20e94ad923bd",
+      "scenarioId": "hostile.authorization",
+      "attempt": 1,
+      "kind": "screenshot",
+      "relativePath": "938ab812-4532-4137-8335-6a6d15ffaae4.png",
+      "mediaType": "image/png",
+      "bytes": 38711,
+      "sha256": "790ce1e0cd100ba1dffb5567889ad6e8b45d8c0eb858c00e6c9473071519dad7",
+      "sensitive": true,
+      "createdAt": "2026-10-23T02:46:38.651Z",
+      "path": "docs/verification/backend-release/ea14e39c-f9f9-4048-ae97-20e94ad923bd/938ab812-4532-4137-8335-6a6d15ffaae4.png"
+    },
+    {
+      "id": "73d0910b-4412-431d-b063-31d62e53476f",
+      "runId": "ea14e39c-f9f9-4048-ae97-20e94ad923bd",
+      "scenarioId": "hostile.authorization",
+      "attempt": 1,
+      "kind": "actions",
+      "relativePath": "73d0910b-4412-431d-b063-31d62e53476f.json",
+      "mediaType": "application/json",
+      "bytes": 2227,
+      "sha256": "6e4f3c38e9f830c418d60b9652f471a5ff10591de693338a632b3bed12a8f295",
+      "sensitive": false,
+      "createdAt": "2026-10-23T02:46:38.720Z",
+      "path": "docs/verification/backend-release/ea14e39c-f9f9-4048-ae97-20e94ad923bd/73d0910b-4412-431d-b063-31d62e53476f.json"
+    },
+    {
+      "id": "c1ef83e5-75f2-45e9-a82c-195862a3fb52",
+      "runId": "ea14e39c-f9f9-4048-ae97-20e94ad923bd",
+      "scenarioId": "hostile.authorization",
+      "attempt": 1,
+      "kind": "network",
+      "relativePath": "c1ef83e5-75f2-45e9-a82c-195862a3fb52.json",
+      "mediaType": "application/json",
+      "bytes": 1018,
+      "sha256": "5ff28eb0106f087f809eda4e471f2b4dadcef8935fe080b40e905eb5387527d6",
+      "sensitive": false,
+      "createdAt": "2026-10-23T02:46:38.721Z",
+      "path": "docs/verification/backend-release/ea14e39c-f9f9-4048-ae97-20e94ad923bd/c1ef83e5-75f2-45e9-a82c-195862a3fb52.json"
+    },
+    {
+      "id": "b7f797e7-8a7f-4a2d-a218-9e519ccbe809",
+      "runId": "ea14e39c-f9f9-4048-ae97-20e94ad923bd",
+      "scenarioId": "hostile.authorization",
+      "attempt": 1,
+      "kind": "console",
+      "relativePath": "b7f797e7-8a7f-4a2d-a218-9e519ccbe809.json",
+      "mediaType": "application/json",
+      "bytes": 190,
+      "sha256": "cbcd9ef551a191d01f5ce4d1d711c9a47984c615487353632889651a4b42e776",
+      "sensitive": false,
+      "createdAt": "2026-10-23T02:46:38.722Z",
+      "path": "docs/verification/backend-release/ea14e39c-f9f9-4048-ae97-20e94ad923bd/b7f797e7-8a7f-4a2d-a218-9e519ccbe809.json"
+    }
+  ],
+  "sensitiveReview": "Only engine-owned synthetic fixture content exported. Screenshots inspected visually. Traces and private session/database remain in ignored local storage."
+}

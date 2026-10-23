@@ -32,7 +32,7 @@ export function makeReport(run: Run, baseline?: Run): Report {
   return {
     schemaVersion: 1, generatedAt: new Date().toISOString(), disclaimer: 'This report covers only the executed scenarios and declared assertions. Passing does not establish that the application is safe, secure, or bug-free.',
     run: sanitizedRun(run), summary: { tested: run.results.length, passed: count('passed'), confirmed: count('confirmed'), intermittent: count('intermittent'), suspected: count('suspected'), inconclusive: count('inconclusive'), skipped: run.results.filter(r => r.outcome === 'skipped').length, blocked: run.results.filter(r => r.outcome === 'blocked').length, infrastructureErrors: run.results.filter(r => r.origin === 'infrastructure').length, unexecuted: plannedIds.filter(id => !completedIds.has(id)) },
-    coverage: run.request.levels.map(level => ({ level, name: LEVEL_NAMES[level], scenarioIds: run.results.filter(r => r.level === level).map(r => r.scenarioId), mode: level >= 3 ? 'Real local HTTP execution against synthetic fixture policy and fault controls' : 'Real Chromium browser execution' })),
+    coverage: run.request.levels.map(level => ({ level, name: LEVEL_NAMES[level], scenarioIds: run.results.filter(r => r.level === level).map(r => r.scenarioId), mode: level === 3 && run.results.some(r => r.scenarioId === 'hostile.authorization' && r.version >= 2) ? 'Real Chromium permission interaction and local HTTP against synthetic fixture policies' : level >= 3 ? 'Real local HTTP execution against synthetic fixture policy and fault controls' : 'Real Chromium browser execution' })),
     reproduction: run.results.map(result => ({ scenarioId: result.scenarioId, eligible: result.replayable, instructions: result.replayable ? `POST /v1/runs/${run.id}/replay with {"scenarioIds":["${result.scenarioId}"]}. A fresh disposable fixture of the same variant is created.` : 'Use the stored local scenario and explicitly authorize a new run; automatic replay is unavailable for this target.' })),
     artifactPrivacy: 'Action and metadata JSON are redacted. Screenshots and traces can contain sensitive page data and are local-only, authenticated artifacts; raw traces cannot be reliably redacted automatically.',
     regressionComparison: baseline ? compareRuns(baseline, run) : null,
@@ -75,7 +75,7 @@ export function compareRuns(before: Run, after: Run): z.infer<typeof RegressionS
   const ids = [...new Set([...before.results, ...after.results].map(r => r.scenarioId))];
   return { before: before.id, after: after.id, changes: ids.map(scenarioId => {
     const a = before.results.find(r => r.scenarioId === scenarioId); const b = after.results.find(r => r.scenarioId === scenarioId);
-    const change = !a || !b ? 'not_comparable' : a.classification !== 'passed' && b.classification === 'passed' ? 'resolved_in_this_run' : a.classification === 'passed' && b.classification !== 'passed' ? 'regression' : a.classification === b.classification ? 'unchanged' : 'changed';
+    const change = !a || !b || a.version !== b.version ? 'not_comparable' : a.classification !== 'passed' && b.classification === 'passed' ? 'resolved_in_this_run' : a.classification === 'passed' && b.classification !== 'passed' ? 'regression' : a.classification === b.classification ? 'unchanged' : 'changed';
     return { scenarioId, before: a?.classification ?? 'unexecuted', after: b?.classification ?? 'unexecuted', change };
   }) };
 }
