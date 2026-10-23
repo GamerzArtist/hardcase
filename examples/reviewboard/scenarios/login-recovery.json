@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "level": 1,
+  "category": "authentication",
+  "prerequisites": [
+    "Reviewboard is running on an explicitly approved loopback origin with fresh synthetic data."
+  ],
+  "requiredFixtures": [],
+  "safetyPermissions": [
+    "navigation",
+    "form-interaction"
+  ],
+  "budget": {
+    "maxDurationMs": 45000,
+    "maxRequests": 100,
+    "maxConcurrency": 2,
+    "requestsPerSecond": 10,
+    "maxArtifactBytes": 16777216,
+    "maxResponseBytes": 1048576
+  },
+  "cleanup": "close-context",
+  "evidenceRequirements": [
+    "screenshot",
+    "trace",
+    "network",
+    "console"
+  ],
+  "replayable": false,
+  "id": "reviewboard.login-recovery",
+  "title": "Invalid login recovers and logout revokes the session",
+  "steps": [
+    {
+      "action": "navigate",
+      "path": "/"
+    },
+    {
+      "action": "fill",
+      "selector": "#username",
+      "value": "alex"
+    },
+    {
+      "action": "fill",
+      "selector": "#password",
+      "value": "incorrect-demo-password"
+    },
+    {
+      "action": "click",
+      "selector": "#sign-in"
+    },
+    {
+      "action": "wait",
+      "ms": 750
+    },
+    {
+      "action": "assert",
+      "assertionId": "invalid-login"
+    },
+    {
+      "action": "fill",
+      "selector": "#password",
+      "value": "reviewboard-demo"
+    },
+    {
+      "action": "click",
+      "selector": "#sign-in"
+    },
+    {
+      "action": "click",
+      "selector": "#sign-out"
+    },
+    {
+      "action": "wait",
+      "ms": 500
+    },
+    {
+      "action": "reload"
+    },
+    {
+      "action": "wait",
+      "ms": 750
+    },
+    {
+      "action": "assert",
+      "assertionId": "login-visible"
+    },
+    {
+      "action": "assert",
+      "assertionId": "board-hidden"
+    }
+  ],
+  "expectedBehavior": "Invalid credentials produce an actionable error. The user can correct them, sign in, sign out, and reload without regaining access to the board.",
+  "assertions": [
+    {
+      "id": "invalid-login",
+      "kind": "text",
+      "selector": "#login-error",
+      "expected": "Username or password is incorrect.",
+      "description": "Invalid credentials are rejected with a clear message."
+    },
+    {
+      "id": "login-visible",
+      "kind": "visible",
+      "selector": "#login-panel",
+      "expected": true,
+      "description": "After logout and reload the login form is visible."
+    },
+    {
+      "id": "board-hidden",
+      "kind": "visible",
+      "selector": "#board-panel",
+      "expected": false,
+      "description": "The board is inaccessible after session revocation."
+    }
+  ]
+}

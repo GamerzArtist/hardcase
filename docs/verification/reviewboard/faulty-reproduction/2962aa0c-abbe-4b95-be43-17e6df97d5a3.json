@@ -1,0 +1,131 @@
+{
+  "actions": [
+    {
+      "at": "2026-10-23T07:54:59.341Z",
+      "action": "navigate",
+      "details": {
+        "action": "navigate",
+        "path": "/"
+      }
+    },
+    {
+      "at": "2026-10-23T07:54:59.570Z",
+      "action": "fill",
+      "details": {
+        "selector": "#username",
+        "value": "[LOCAL INPUT OMITTED]"
+      }
+    },
+    {
+      "at": "2026-10-23T07:54:59.595Z",
+      "action": "fill",
+      "details": {
+        "selector": "#password",
+        "value": "[LOCAL INPUT OMITTED]"
+      }
+    },
+    {
+      "at": "2026-10-23T07:54:59.603Z",
+      "action": "click",
+      "details": {
+        "action": "click",
+        "selector": "#sign-in",
+        "count": 1
+      }
+    },
+    {
+      "at": "2026-10-23T07:54:59.642Z",
+      "action": "click",
+      "details": {
+        "action": "click",
+        "selector": "#complete-1",
+        "count": 1
+      }
+    },
+    {
+      "at": "2026-10-23T07:54:59.972Z",
+      "action": "wait",
+      "details": {
+        "action": "wait",
+        "ms": 750
+      }
+    },
+    {
+      "at": "2026-10-23T07:55:00.730Z",
+      "action": "assert",
+      "details": {
+        "action": "assert",
+        "assertionId": "viewer-denied"
+      }
+    },
+    {
+      "at": "2026-10-23T07:55:00.734Z",
+      "action": "assert",
+      "details": {
+        "action": "assert",
+        "assertionId": "no-immediate-change"
+      }
+    },
+    {
+      "at": "2026-10-23T07:55:00.737Z",
+      "action": "reload",
+      "details": {
+        "action": "reload"
+      }
+    },
+    {
+      "at": "2026-10-23T07:55:00.971Z",
+      "action": "wait",
+      "details": {
+        "action": "wait",
+        "ms": 750
+      }
+    },
+    {
+      "at": "2026-10-23T07:55:01.725Z",
+      "action": "assert",
+      "details": {
+        "action": "assert",
+        "assertionId": "no-persisted-change"
+      }
+    },
+    {
+      "at": "2026-10-23T07:55:01.742Z",
+      "action": "assert",
+      "details": {
+        "action": "assert",
+        "assertionId": "viewer-session"
+      }
+    }
+  ],
+  "assertions": [
+    {
+      "id": "viewer-denied",
+      "description": "The viewer sees the server's permission denial.",
+      "expected": "Viewers cannot change task status.",
+      "observed": "Task moved to Done.",
+      "passed": false
+    },
+    {
+      "id": "no-immediate-change",
+      "description": "Denied changes do not update the current board.",
+      "expected": "Todo",
+      "observed": "Done",
+      "passed": false
+    },
+    {
+      "id": "no-persisted-change",
+      "description": "Reloading retrieves the unchanged task from SQLite.",
+      "expected": "Todo",
+      "observed": "Done",
+      "passed": false
+    },
+    {
+      "id": "viewer-session",
+      "description": "The browser remains signed in as the real viewer account.",
+      "expected": "viewer",
+      "observed": "viewer",
+      "passed": true
+    }
+  ]
+}

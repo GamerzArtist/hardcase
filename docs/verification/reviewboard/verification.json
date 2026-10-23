@@ -1,0 +1,683 @@
+{
+  "at": "2026-10-23T07:54:46.551Z",
+  "root": "D:\\Code stuff\\HACKATHON-PROJECTS\\TEAM\\hackathon-project-02\\.engine\\reviewboard\\2026-10-23T07-54-46-548Z",
+  "aiEnabled": false,
+  "target": "Standalone Reviewboard MVP, synthetic local accounts",
+  "runs": [
+    {
+      "phase": "faulty",
+      "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+      "state": "completed",
+      "browser": "156.0.8078.4",
+      "targetOrigin": "http://127.0.0.1:51980",
+      "results": [
+        {
+          "scenarioId": "reviewboard.viewer-status",
+          "findingId": "5de825c9-454b-4d8e-85f4-6c86def05111",
+          "classification": "suspected",
+          "outcome": "failed",
+          "failedAssertions": [
+            {
+              "id": "viewer-denied",
+              "description": "The viewer sees the server's permission denial.",
+              "expected": "Viewers cannot change task status.",
+              "observed": "Task moved to Done.",
+              "passed": false
+            },
+            {
+              "id": "no-immediate-change",
+              "description": "Denied changes do not update the current board.",
+              "expected": "Todo",
+              "observed": "Done",
+              "passed": false
+            },
+            {
+              "id": "no-persisted-change",
+              "description": "Reloading retrieves the unchanged task from SQLite.",
+              "expected": "Todo",
+              "observed": "Done",
+              "passed": false
+            }
+          ]
+        },
+        {
+          "scenarioId": "reviewboard.editor-persistence",
+          "findingId": "928b9036-1193-4ebb-8454-a72768f0c0e1",
+          "classification": "passed",
+          "outcome": "passed",
+          "failedAssertions": []
+        },
+        {
+          "scenarioId": "reviewboard.login-recovery",
+          "findingId": "2f14d080-5b93-4e44-92e8-daf984ada1a1",
+          "classification": "passed",
+          "outcome": "passed",
+          "failedAssertions": []
+        }
+      ],
+      "requests": 40,
+      "artifacts": [
+        {
+          "id": "779d9478-e809-45c9-bea3-05798a2cde57",
+          "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+          "scenarioId": "reviewboard.viewer-status",
+          "attempt": 1,
+          "kind": "screenshot",
+          "relativePath": "779d9478-e809-45c9-bea3-05798a2cde57.png",
+          "mediaType": "image/png",
+          "bytes": 50325,
+          "sha256": "f11d980afa7a33c8f51cfdccf10ff28ecb7eacdcc617d1ca5960f0b0b597f4f4",
+          "sensitive": true,
+          "createdAt": "2026-10-23T07:54:51.599Z",
+          "exportedPath": "faulty/779d9478-e809-45c9-bea3-05798a2cde57.png"
+        },
+        {
+          "id": "9745e7e6-8c48-42f5-935f-fdfed6027bfa",
+          "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+          "scenarioId": "reviewboard.viewer-status",
+          "attempt": 1,
+          "kind": "actions",
+          "relativePath": "9745e7e6-8c48-42f5-935f-fdfed6027bfa.json",
+          "mediaType": "application/json",
+          "bytes": 2887,
+          "sha256": "e3542540f864394d49d8c89b2412dcc0285831f8d78c4b5b75d13a019ebd4b21",
+          "sensitive": false,
+          "createdAt": "2026-10-23T07:54:51.709Z",
+          "exportedPath": "faulty/9745e7e6-8c48-42f5-935f-fdfed6027bfa.json"
+        },
+        {
+          "id": "051b1100-9893-4e1d-ad6d-e0925328b526",
+          "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+          "scenarioId": "reviewboard.viewer-status",
+          "attempt": 1,
+          "kind": "network",
+          "relativePath": "051b1100-9893-4e1d-ad6d-e0925328b526.json",
+          "mediaType": "application/json",
+          "bytes": 1441,
+          "sha256": "f43efe3533698decc6981395de3a0a54fda5b67e57651acc6fe1cea190e14061",
+          "sensitive": false,
+          "createdAt": "2026-10-23T07:54:51.710Z",
+          "exportedPath": "faulty/051b1100-9893-4e1d-ad6d-e0925328b526.json"
+        },
+        {
+          "id": "66941507-ec54-445e-a45f-c260ca14cf0b",
+          "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+          "scenarioId": "reviewboard.viewer-status",
+          "attempt": 1,
+          "kind": "console",
+          "relativePath": "66941507-ec54-445e-a45f-c260ca14cf0b.json",
+          "mediaType": "application/json",
+          "bytes": 57,
+          "sha256": "8e97efe7f03f3f4eb60c4b216d4767d39e1bc239982ace75b06d521d4d14621c",
+          "sensitive": false,
+          "createdAt": "2026-10-23T07:54:51.710Z",
+          "exportedPath": "faulty/66941507-ec54-445e-a45f-c260ca14cf0b.json"
+        },
+        {
+          "id": "a6a71c9a-bcf4-43cd-8ce3-1c3de249bb84",
+          "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+          "scenarioId": "reviewboard.editor-persistence",
+          "attempt": 1,
+          "kind": "screenshot",
+          "relativePath": "a6a71c9a-bcf4-43cd-8ce3-1c3de249bb84.png",
+          "mediaType": "image/png",
+          "bytes": 54267,
+          "sha256": "f8e24bdb19612df5b382050899dee2a6e51621197481c5070424a78b11a35d77",
+          "sensitive": true,
+          "createdAt": "2026-10-23T07:54:54.431Z",
+          "exportedPath": "faulty/a6a71c9a-bcf4-43cd-8ce3-1c3de249bb84.png"
+        },
+        {
+          "id": "9b88dcff-b9cb-480b-bddc-806a2fcd4d71",
+          "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+          "scenarioId": "reviewboard.editor-persistence",
+          "attempt": 1,
+          "kind": "actions",
+          "relativePath": "9b88dcff-b9cb-480b-bddc-806a2fcd4d71.json",
+          "mediaType": "application/json",
+          "bytes": 3370,
+          "sha256": "fb94c60949d4c62b504b299b9d161dfddfc41b97dbe93dd5da957beafdaac0af",
+          "sensitive": false,
+          "createdAt": "2026-10-23T07:54:54.558Z",
+          "exportedPath": "faulty/9b88dcff-b9cb-480b-bddc-806a2fcd4d71.json"
+        },
+        {
+          "id": "987d8c1b-d4ce-4a5c-b7b2-4c41aa8d636f",
+          "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+          "scenarioId": "reviewboard.editor-persistence",
+          "attempt": 1,
+          "kind": "network",
+          "relativePath": "987d8c1b-d4ce-4a5c-b7b2-4c41aa8d636f.json",
+          "mediaType": "application/json",
+          "bytes": 1652,
+          "sha256": "493adb9ea71144224a4748c8d833785fd1af1c58271bf6b7388a97bd739b2171",
+          "sensitive": false,
+          "createdAt": "2026-10-23T07:54:54.558Z",
+          "exportedPath": "faulty/987d8c1b-d4ce-4a5c-b7b2-4c41aa8d636f.json"
+        },
+        {
+          "id": "6cb75b5b-6685-4fad-9774-34f57bbf774e",
+          "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+          "scenarioId": "reviewboard.editor-persistence",
+          "attempt": 1,
+          "kind": "console",
+          "relativePath": "6cb75b5b-6685-4fad-9774-34f57bbf774e.json",
+          "mediaType": "application/json",
+          "bytes": 57,
+          "sha256": "8e97efe7f03f3f4eb60c4b216d4767d39e1bc239982ace75b06d521d4d14621c",
+          "sensitive": false,
+          "createdAt": "2026-10-23T07:54:54.559Z",
+          "exportedPath": "faulty/6cb75b5b-6685-4fad-9774-34f57bbf774e.json"
+        },
+        {
+          "id": "d715ac4d-c954-4971-8b9f-4d0be9697b65",
+          "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+          "scenarioId": "reviewboard.login-recovery",
+          "attempt": 1,
+          "kind": "screenshot",
+          "relativePath": "d715ac4d-c954-4971-8b9f-4d0be9697b65.png",
+          "mediaType": "image/png",
+          "bytes": 32502,
+          "sha256": "9570c1deec622b4ee1a2b819aacd77b37c599936fdf5087e2255398f373e987c",
+          "sensitive": true,
+          "createdAt": "2026-10-23T07:54:57.473Z",
+          "exportedPath": "faulty/d715ac4d-c954-4971-8b9f-4d0be9697b65.png"
+        },
+        {
+          "id": "78229966-56aa-45f4-8a01-1f2da761a2f3",
+          "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+          "scenarioId": "reviewboard.login-recovery",
+          "attempt": 1,
+          "kind": "actions",
+          "relativePath": "78229966-56aa-45f4-8a01-1f2da761a2f3.json",
+          "mediaType": "application/json",
+          "bytes": 3008,
+          "sha256": "4e2d1a9f5bcdd3847aeef5671bcba2e6ce53ca8cba0217fcc459b2b5c743e843",
+          "sensitive": false,
+          "createdAt": "2026-10-23T07:54:57.544Z",
+          "exportedPath": "faulty/78229966-56aa-45f4-8a01-1f2da761a2f3.json"
+        },
+        {
+          "id": "651e555a-6d2c-4cce-97cf-592d1cc2330c",
+          "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+          "scenarioId": "reviewboard.login-recovery",
+          "attempt": 1,
+          "kind": "network",
+          "relativePath": "651e555a-6d2c-4cce-97cf-592d1cc2330c.json",
+          "mediaType": "application/json",
+          "bytes": 1324,
+          "sha256": "a248384021b215f102929ce15d8a3a9d0779bb6ba85ffee39d961684a4e92ba6",
+          "sensitive": false,
+          "createdAt": "2026-10-23T07:54:57.544Z",
+          "exportedPath": "faulty/651e555a-6d2c-4cce-97cf-592d1cc2330c.json"
+        },
+        {
+          "id": "9550291c-d0ee-4db7-949f-30c32c032990",
+          "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+          "scenarioId": "reviewboard.login-recovery",
+          "attempt": 1,
+          "kind": "console",
+          "relativePath": "9550291c-d0ee-4db7-949f-30c32c032990.json",
+          "mediaType": "application/json",
+          "bytes": 193,
+          "sha256": "ed28901aa978af721b7141b0c397fb4a8400056348a9a51b6b9d4233262a85a2",
+          "sensitive": false,
+          "createdAt": "2026-10-23T07:54:57.545Z",
+          "exportedPath": "faulty/9550291c-d0ee-4db7-949f-30c32c032990.json"
+        }
+      ],
+      "databaseTasks": [
+        {
+          "id": 1,
+          "title": "Review access rules",
+          "state": "Done",
+          "version": 2
+        },
+        {
+          "id": 2,
+          "title": "Confirm launch checklist",
+          "state": "Todo",
+          "version": 1
+        },
+        {
+          "id": 3,
+          "title": "Write the owner review notes",
+          "state": "Done",
+          "version": 2
+        }
+      ]
+    },
+    {
+      "phase": "faulty-reproduction",
+      "runId": "48e24cff-6f8d-46dd-abd3-9c608547cabc",
+      "state": "completed",
+      "browser": "156.0.8078.4",
+      "targetOrigin": "http://127.0.0.1:51980",
+      "results": [
+        {
+          "scenarioId": "reviewboard.viewer-status",
+          "findingId": "28708cb2-6589-41b3-95e6-7d57453feb03",
+          "classification": "suspected",
+          "outcome": "failed",
+          "failedAssertions": [
+            {
+              "id": "viewer-denied",
+              "description": "The viewer sees the server's permission denial.",
+              "expected": "Viewers cannot change task status.",
+              "observed": "Task moved to Done.",
+              "passed": false
+            },
+            {
+              "id": "no-immediate-change",
+              "description": "Denied changes do not update the current board.",
+              "expected": "Todo",
+              "observed": "Done",
+              "passed": false
+            },
+            {
+              "id": "no-persisted-change",
+              "description": "Reloading retrieves the unchanged task from SQLite.",
+              "expected": "Todo",
+              "observed": "Done",
+              "passed": false
+            }
+          ]
+        }
+      ],
+      "requests": 13,
+      "artifacts": [
+        {
+          "id": "e6e9ab6c-a97a-4091-84d3-5f86edc364ee",
+          "runId": "48e24cff-6f8d-46dd-abd3-9c608547cabc",
+          "scenarioId": "reviewboard.viewer-status",
+          "attempt": 1,
+          "kind": "screenshot",
+          "relativePath": "e6e9ab6c-a97a-4091-84d3-5f86edc364ee.png",
+          "mediaType": "image/png",
+          "bytes": 50325,
+          "sha256": "f11d980afa7a33c8f51cfdccf10ff28ecb7eacdcc617d1ca5960f0b0b597f4f4",
+          "sensitive": true,
+          "createdAt": "2026-10-23T07:55:01.809Z",
+          "exportedPath": "faulty-reproduction/e6e9ab6c-a97a-4091-84d3-5f86edc364ee.png"
+        },
+        {
+          "id": "2962aa0c-abbe-4b95-be43-17e6df97d5a3",
+          "runId": "48e24cff-6f8d-46dd-abd3-9c608547cabc",
+          "scenarioId": "reviewboard.viewer-status",
+          "attempt": 1,
+          "kind": "actions",
+          "relativePath": "2962aa0c-abbe-4b95-be43-17e6df97d5a3.json",
+          "mediaType": "application/json",
+          "bytes": 2887,
+          "sha256": "f8df9ad65e0ae915518a0adca3d84df1a32e1da94edcfbcfb6db072e603d3159",
+          "sensitive": false,
+          "createdAt": "2026-10-23T07:55:01.910Z",
+          "exportedPath": "faulty-reproduction/2962aa0c-abbe-4b95-be43-17e6df97d5a3.json"
+        },
+        {
+          "id": "e2316b1a-2d3e-4066-a543-2fb881d1ab08",
+          "runId": "48e24cff-6f8d-46dd-abd3-9c608547cabc",
+          "scenarioId": "reviewboard.viewer-status",
+          "attempt": 1,
+          "kind": "network",
+          "relativePath": "e2316b1a-2d3e-4066-a543-2fb881d1ab08.json",
+          "mediaType": "application/json",
+          "bytes": 1430,
+          "sha256": "2e70f32443ddeec4804e651bc85534173bf6976f9a1ae80f1a60285e412600f5",
+          "sensitive": false,
+          "createdAt": "2026-10-23T07:55:01.911Z",
+          "exportedPath": "faulty-reproduction/e2316b1a-2d3e-4066-a543-2fb881d1ab08.json"
+        },
+        {
+          "id": "c6b6262d-0d0d-419a-8a7c-f8a51d40b74d",
+          "runId": "48e24cff-6f8d-46dd-abd3-9c608547cabc",
+          "scenarioId": "reviewboard.viewer-status",
+          "attempt": 1,
+          "kind": "console",
+          "relativePath": "c6b6262d-0d0d-419a-8a7c-f8a51d40b74d.json",
+          "mediaType": "application/json",
+          "bytes": 57,
+          "sha256": "8e97efe7f03f3f4eb60c4b216d4767d39e1bc239982ace75b06d521d4d14621c",
+          "sensitive": false,
+          "createdAt": "2026-10-23T07:55:01.911Z",
+          "exportedPath": "faulty-reproduction/c6b6262d-0d0d-419a-8a7c-f8a51d40b74d.json"
+        }
+      ],
+      "databaseTasks": [
+        {
+          "id": 1,
+          "title": "Review access rules",
+          "state": "Done",
+          "version": 2
+        },
+        {
+          "id": 2,
+          "title": "Confirm launch checklist",
+          "state": "Todo",
+          "version": 1
+        }
+      ]
+    },
+    {
+      "phase": "clean",
+      "runId": "b347d0f5-af25-4abd-ab45-1a461392435e",
+      "state": "completed",
+      "browser": "156.0.8078.4",
+      "targetOrigin": "http://127.0.0.1:51980",
+      "results": [
+        {
+          "scenarioId": "reviewboard.viewer-status",
+          "findingId": "f4e2bb01-71a6-4474-be58-323632ef2223",
+          "classification": "passed",
+          "outcome": "passed",
+          "failedAssertions": []
+        },
+        {
+          "scenarioId": "reviewboard.editor-persistence",
+          "findingId": "f2ef4421-d2ad-4523-ba7f-7fb74d6fec29",
+          "classification": "passed",
+          "outcome": "passed",
+          "failedAssertions": []
+        },
+        {
+          "scenarioId": "reviewboard.login-recovery",
+          "findingId": "968ede3b-85e2-40a1-bac1-f019ced99112",
+          "classification": "passed",
+          "outcome": "passed",
+          "failedAssertions": []
+        }
+      ],
+      "requests": 39,
+      "artifacts": [
+        {
+          "id": "3d3ebbdc-8a6f-4c69-889a-377551c3671e",
+          "runId": "b347d0f5-af25-4abd-ab45-1a461392435e",
+          "scenarioId": "reviewboard.viewer-status",
+          "attempt": 1,
+          "kind": "screenshot",
+          "relativePath": "3d3ebbdc-8a6f-4c69-889a-377551c3671e.png",
+          "mediaType": "image/png",
+          "bytes": 50062,
+          "sha256": "53083456f134b1d9921211f5c6f575808589f2e97644bc06a620f9b2cf532dbf",
+          "sensitive": true,
+          "createdAt": "2026-10-23T07:55:06.075Z",
+          "exportedPath": "clean/3d3ebbdc-8a6f-4c69-889a-377551c3671e.png"
+        },
+        {
+          "id": "4b815180-e10c-46d6-89b8-3903643abdeb",
+          "runId": "b347d0f5-af25-4abd-ab45-1a461392435e",
+          "scenarioId": "reviewboard.viewer-status",
+          "attempt": 1,
+          "kind": "actions",
+          "relativePath": "4b815180-e10c-46d6-89b8-3903643abdeb.json",
+          "mediaType": "application/json",
+          "bytes": 2899,
+          "sha256": "5ba1b86e163888ac0a8fb5403d44a64387a7eeea3099b9ddaaa690c3d7ff75f5",
+          "sensitive": false,
+          "createdAt": "2026-10-23T07:55:06.164Z",
+          "exportedPath": "clean/4b815180-e10c-46d6-89b8-3903643abdeb.json"
+        },
+        {
+          "id": "20ca5565-8c90-483c-9838-0e5b442ff640",
+          "runId": "b347d0f5-af25-4abd-ab45-1a461392435e",
+          "scenarioId": "reviewboard.viewer-status",
+          "attempt": 1,
+          "kind": "network",
+          "relativePath": "20ca5565-8c90-483c-9838-0e5b442ff640.json",
+          "mediaType": "application/json",
+          "bytes": 1316,
+          "sha256": "2a5ea767d974fb852e8f067e928a67254baafbf553068cc6661983db0f411c26",
+          "sensitive": false,
+          "createdAt": "2026-10-23T07:55:06.165Z",
+          "exportedPath": "clean/20ca5565-8c90-483c-9838-0e5b442ff640.json"
+        },
+        {
+          "id": "fa0dc7c9-89d9-41d1-b399-550c7bde718a",
+          "runId": "b347d0f5-af25-4abd-ab45-1a461392435e",
+          "scenarioId": "reviewboard.viewer-status",
+          "attempt": 1,
+          "kind": "console",
+          "relativePath": "fa0dc7c9-89d9-41d1-b399-550c7bde718a.json",
+          "mediaType": "application/json",
+          "bytes": 190,
+          "sha256": "cbcd9ef551a191d01f5ce4d1d711c9a47984c615487353632889651a4b42e776",
+          "sensitive": false,
+          "createdAt": "2026-10-23T07:55:06.166Z",
+          "exportedPath": "clean/fa0dc7c9-89d9-41d1-b399-550c7bde718a.json"
+        },
+        {
+          "id": "9e8325e9-a791-4aa1-9eaa-cb1c7b586e70",
+          "runId": "b347d0f5-af25-4abd-ab45-1a461392435e",
+          "scenarioId": "reviewboard.editor-persistence",
+          "attempt": 1,
+          "kind": "screenshot",
+          "relativePath": "9e8325e9-a791-4aa1-9eaa-cb1c7b586e70.png",
+          "mediaType": "image/png",
+          "bytes": 51655,
+          "sha256": "d8ba3e7531d23df9d818e4cfc8c102d0323d0b9345014952f044154411e9bc26",
+          "sensitive": true,
+          "createdAt": "2026-10-23T07:55:08.873Z",
+          "exportedPath": "clean/9e8325e9-a791-4aa1-9eaa-cb1c7b586e70.png"
+        },
+        {
+          "id": "80489581-8ac2-40be-aae1-b724c484a282",
+          "runId": "b347d0f5-af25-4abd-ab45-1a461392435e",
+          "scenarioId": "reviewboard.editor-persistence",
+          "attempt": 1,
+          "kind": "actions",
+          "relativePath": "80489581-8ac2-40be-aae1-b724c484a282.json",
+          "mediaType": "application/json",
+          "bytes": 3370,
+          "sha256": "fee2214a4adb1ca884ebf19ec1c3ac7635bb505a61b95e6adecda16297f48c1c",
+          "sensitive": false,
+          "createdAt": "2026-10-23T07:55:08.991Z",
+          "exportedPath": "clean/80489581-8ac2-40be-aae1-b724c484a282.json"
+        },
+        {
+          "id": "b9036796-374e-433c-82ff-0f33bacb4b27",
+          "runId": "b347d0f5-af25-4abd-ab45-1a461392435e",
+          "scenarioId": "reviewboard.editor-persistence",
+          "attempt": 1,
+          "kind": "network",
+          "relativePath": "b9036796-374e-433c-82ff-0f33bacb4b27.json",
+          "mediaType": "application/json",
+          "bytes": 1663,
+          "sha256": "6c647ab73cd34561a5f7628bd6ff3f53b092650113fe54706fb0f885e46cdadd",
+          "sensitive": false,
+          "createdAt": "2026-10-23T07:55:08.992Z",
+          "exportedPath": "clean/b9036796-374e-433c-82ff-0f33bacb4b27.json"
+        },
+        {
+          "id": "f40a4c44-8b0c-490d-91af-2d078f8d215c",
+          "runId": "b347d0f5-af25-4abd-ab45-1a461392435e",
+          "scenarioId": "reviewboard.editor-persistence",
+          "attempt": 1,
+          "kind": "console",
+          "relativePath": "f40a4c44-8b0c-490d-91af-2d078f8d215c.json",
+          "mediaType": "application/json",
+          "bytes": 57,
+          "sha256": "8e97efe7f03f3f4eb60c4b216d4767d39e1bc239982ace75b06d521d4d14621c",
+          "sensitive": false,
+          "createdAt": "2026-10-23T07:55:08.993Z",
+          "exportedPath": "clean/f40a4c44-8b0c-490d-91af-2d078f8d215c.json"
+        },
+        {
+          "id": "1c898621-76a8-4413-be88-af5633a870f0",
+          "runId": "b347d0f5-af25-4abd-ab45-1a461392435e",
+          "scenarioId": "reviewboard.login-recovery",
+          "attempt": 1,
+          "kind": "screenshot",
+          "relativePath": "1c898621-76a8-4413-be88-af5633a870f0.png",
+          "mediaType": "image/png",
+          "bytes": 32439,
+          "sha256": "b5b95b2192b43c3fd2099a892f760d79afd70bdbb989b92da566100294d87d14",
+          "sensitive": true,
+          "createdAt": "2026-10-23T07:55:11.924Z",
+          "exportedPath": "clean/1c898621-76a8-4413-be88-af5633a870f0.png"
+        },
+        {
+          "id": "a00c1e33-4714-47df-a24b-ca9f594e77d9",
+          "runId": "b347d0f5-af25-4abd-ab45-1a461392435e",
+          "scenarioId": "reviewboard.login-recovery",
+          "attempt": 1,
+          "kind": "actions",
+          "relativePath": "a00c1e33-4714-47df-a24b-ca9f594e77d9.json",
+          "mediaType": "application/json",
+          "bytes": 3008,
+          "sha256": "c98fce49558eea22b721770b4bb8d5c2b4f083b7ba4092ca35c6f05e18dbd10c",
+          "sensitive": false,
+          "createdAt": "2026-10-23T07:55:12.014Z",
+          "exportedPath": "clean/a00c1e33-4714-47df-a24b-ca9f594e77d9.json"
+        },
+        {
+          "id": "3fb941c6-cbb2-4f21-8316-4f44556fd5dc",
+          "runId": "b347d0f5-af25-4abd-ab45-1a461392435e",
+          "scenarioId": "reviewboard.login-recovery",
+          "attempt": 1,
+          "kind": "network",
+          "relativePath": "3fb941c6-cbb2-4f21-8316-4f44556fd5dc.json",
+          "mediaType": "application/json",
+          "bytes": 1327,
+          "sha256": "4f537e0173cc884e1771af2538f4ad0b353633ad455491c2371545a363eeb623",
+          "sensitive": false,
+          "createdAt": "2026-10-23T07:55:12.015Z",
+          "exportedPath": "clean/3fb941c6-cbb2-4f21-8316-4f44556fd5dc.json"
+        },
+        {
+          "id": "457c235d-a58d-47c6-9f53-915edfe9054d",
+          "runId": "b347d0f5-af25-4abd-ab45-1a461392435e",
+          "scenarioId": "reviewboard.login-recovery",
+          "attempt": 1,
+          "kind": "console",
+          "relativePath": "457c235d-a58d-47c6-9f53-915edfe9054d.json",
+          "mediaType": "application/json",
+          "bytes": 193,
+          "sha256": "ed28901aa978af721b7141b0c397fb4a8400056348a9a51b6b9d4233262a85a2",
+          "sensitive": false,
+          "createdAt": "2026-10-23T07:55:12.016Z",
+          "exportedPath": "clean/457c235d-a58d-47c6-9f53-915edfe9054d.json"
+        }
+      ],
+      "databaseTasks": [
+        {
+          "id": 1,
+          "title": "Review access rules",
+          "state": "Todo",
+          "version": 1
+        },
+        {
+          "id": 2,
+          "title": "Confirm launch checklist",
+          "state": "Todo",
+          "version": 1
+        },
+        {
+          "id": 3,
+          "title": "Write the owner review notes",
+          "state": "Done",
+          "version": 2
+        }
+      ]
+    }
+  ],
+  "passed": true,
+  "sourceHashes": [
+    {
+      "path": "examples/reviewboard/server.mjs",
+      "sha256": "9c5de6c62e0dde1483188ad7be923a7cdd394f7de89dcc147ab8e65409635774"
+    },
+    {
+      "path": "examples/reviewboard/public/app.js",
+      "sha256": "0a400124e6ef67a2abdb5ddeb0474f2a5ae13980741076be394cf07d1cdf6259"
+    },
+    {
+      "path": "examples/reviewboard/public/index.html",
+      "sha256": "cf35f81e93743f828d50a10163709368a19ea8dee8b1249b1edb410e1c96f9a6"
+    },
+    {
+      "path": "examples/reviewboard/public/styles.css",
+      "sha256": "b2e97cde9dcd4a7e558b0dc8f9e2f69933a665bae5ea02d96026928d6cf9cc8e"
+    },
+    {
+      "path": "examples/reviewboard/verify.mjs",
+      "sha256": "f5c00b37146546bbf89d18a17b62e237df62bd8e497016d6acbfa445e259500f"
+    },
+    {
+      "path": "examples/reviewboard/scenarios/viewer-status.json",
+      "sha256": "062247b5c745280f4caf25c7ef315c33ab2af3528c5a74c3545d68ca46804985"
+    },
+    {
+      "path": "examples/reviewboard/scenarios/editor-persistence.json",
+      "sha256": "330b5fc114ac366eda4456b03884872f10eb5dd8eea73d1f2414fa96e8fabd8e"
+    },
+    {
+      "path": "examples/reviewboard/scenarios/login-recovery.json",
+      "sha256": "3e9d08a68b8db5512afa5743a94a777b42edf3b0bd13293d3a811329ea9ce0a4"
+    }
+  ],
+  "manualBrowser": {
+    "browserVersion": "156.0.8078.4",
+    "invalidLoginStatus": 401,
+    "viewerUpdateStatus": 403,
+    "viewerCreateStatus": 403,
+    "afterLogoutStatus": 401,
+    "editorPersistence": true,
+    "mobileNoHorizontalOverflow": true,
+    "pageErrors": [],
+    "screenshots": [
+      "mvp-editor-desktop.png",
+      "mvp-viewer-mobile.png"
+    ]
+  },
+  "readiness": {
+    "ok": true,
+    "version": "0.1.0",
+    "checks": {
+      "storage": true,
+      "worker": true,
+      "chromium": true
+    },
+    "issues": []
+  },
+  "reproduction": {
+    "method": "Second explicit authorized run against a fresh standalone database; no automatic loopback replay",
+    "matchingAssertionIds": [
+      "viewer-denied",
+      "no-immediate-change",
+      "no-persisted-change"
+    ],
+    "engineClassificationRetained": "suspected"
+  },
+  "loopbackReplayRestriction": {
+    "status": 409,
+    "preserved": true,
+    "response": {
+      "error": "REQUEST_REJECTED",
+      "message": "Only terminal fixture runs can be replayed"
+    }
+  },
+  "comparison": {
+    "before": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+    "after": "b347d0f5-af25-4abd-ab45-1a461392435e",
+    "changes": [
+      {
+        "scenarioId": "reviewboard.viewer-status",
+        "before": "suspected",
+        "after": "passed",
+        "change": "resolved_in_this_run"
+      },
+      {
+        "scenarioId": "reviewboard.editor-persistence",
+        "before": "passed",
+        "after": "passed",
+        "change": "unchanged"
+      },
+      {
+        "scenarioId": "reviewboard.login-recovery",
+        "before": "passed",
+        "after": "passed",
+        "change": "unchanged"
+      }
+    ]
+  }
+}

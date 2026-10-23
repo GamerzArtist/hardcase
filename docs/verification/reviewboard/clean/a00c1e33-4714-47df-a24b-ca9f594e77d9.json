@@ -1,0 +1,141 @@
+{
+  "actions": [
+    {
+      "at": "2026-10-23T07:55:09.046Z",
+      "action": "navigate",
+      "details": {
+        "action": "navigate",
+        "path": "/"
+      }
+    },
+    {
+      "at": "2026-10-23T07:55:09.271Z",
+      "action": "fill",
+      "details": {
+        "selector": "#username",
+        "value": "[LOCAL INPUT OMITTED]"
+      }
+    },
+    {
+      "at": "2026-10-23T07:55:09.290Z",
+      "action": "fill",
+      "details": {
+        "selector": "#password",
+        "value": "[LOCAL INPUT OMITTED]"
+      }
+    },
+    {
+      "at": "2026-10-23T07:55:09.299Z",
+      "action": "click",
+      "details": {
+        "action": "click",
+        "selector": "#sign-in",
+        "count": 1
+      }
+    },
+    {
+      "at": "2026-10-23T07:55:09.339Z",
+      "action": "wait",
+      "details": {
+        "action": "wait",
+        "ms": 750
+      }
+    },
+    {
+      "at": "2026-10-23T07:55:10.103Z",
+      "action": "assert",
+      "details": {
+        "action": "assert",
+        "assertionId": "invalid-login"
+      }
+    },
+    {
+      "at": "2026-10-23T07:55:10.108Z",
+      "action": "fill",
+      "details": {
+        "selector": "#password",
+        "value": "[LOCAL INPUT OMITTED]"
+      }
+    },
+    {
+      "at": "2026-10-23T07:55:10.115Z",
+      "action": "click",
+      "details": {
+        "action": "click",
+        "selector": "#sign-in",
+        "count": 1
+      }
+    },
+    {
+      "at": "2026-10-23T07:55:10.154Z",
+      "action": "click",
+      "details": {
+        "action": "click",
+        "selector": "#sign-out",
+        "count": 1
+      }
+    },
+    {
+      "at": "2026-10-23T07:55:10.373Z",
+      "action": "wait",
+      "details": {
+        "action": "wait",
+        "ms": 500
+      }
+    },
+    {
+      "at": "2026-10-23T07:55:10.878Z",
+      "action": "reload",
+      "details": {
+        "action": "reload"
+      }
+    },
+    {
+      "at": "2026-10-23T07:55:11.101Z",
+      "action": "wait",
+      "details": {
+        "action": "wait",
+        "ms": 750
+      }
+    },
+    {
+      "at": "2026-10-23T07:55:11.857Z",
+      "action": "assert",
+      "details": {
+        "action": "assert",
+        "assertionId": "login-visible"
+      }
+    },
+    {
+      "at": "2026-10-23T07:55:11.872Z",
+      "action": "assert",
+      "details": {
+        "action": "assert",
+        "assertionId": "board-hidden"
+      }
+    }
+  ],
+  "assertions": [
+    {
+      "id": "invalid-login",
+      "description": "Invalid credentials are rejected with a clear message.",
+      "expected": "Username or password is incorrect.",
+      "observed": "Username or password is incorrect.",
+      "passed": true
+    },
+    {
+      "id": "login-visible",
+      "description": "After logout and reload the login form is visible.",
+      "expected": true,
+      "observed": true,
+      "passed": true
+    },
+    {
+      "id": "board-hidden",
+      "description": "The board is inaccessible after session revocation.",
+      "expected": false,
+      "observed": false,
+      "passed": true
+    }
+  ]
+}

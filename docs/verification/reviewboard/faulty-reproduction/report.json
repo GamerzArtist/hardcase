@@ -1,0 +1,499 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-23T07:55:02.783Z",
+  "disclaimer": "This report covers only the executed scenarios and declared assertions. Passing does not establish that the application is safe, secure, or bug-free.",
+  "run": {
+    "id": "48e24cff-6f8d-46dd-abd3-9c608547cabc",
+    "state": "completed",
+    "createdAt": "2026-10-23T07:54:58.611Z",
+    "updatedAt": "2026-10-23T07:55:02.693Z",
+    "startedAt": "2026-10-23T07:54:58.612Z",
+    "finishedAt": "2026-10-23T07:55:02.693Z",
+    "request": {
+      "target": {
+        "kind": "loopback",
+        "baseUrl": "http://127.0.0.1:51980",
+        "approvedOrigins": [
+          "http://127.0.0.1:51980"
+        ],
+        "acknowledgeOwnership": true
+      },
+      "levels": [
+        1
+      ],
+      "allowFixtureFaults": false,
+      "scenarios": [
+        {
+          "id": "reviewboard.viewer-status",
+          "version": 1,
+          "title": "Viewer cannot complete a task or persist an unauthorized change",
+          "level": 1,
+          "category": "authorization",
+          "prerequisites": [
+            "Reviewboard is running on an explicitly approved loopback origin with fresh synthetic data."
+          ],
+          "requiredFixtures": [],
+          "steps": [
+            {
+              "action": "navigate",
+              "path": "/"
+            },
+            {
+              "action": "fill",
+              "selector": "#username",
+              "value": "[Local input omitted]"
+            },
+            {
+              "action": "fill",
+              "selector": "#password",
+              "value": "[Local input omitted]"
+            },
+            {
+              "action": "click",
+              "selector": "#sign-in",
+              "count": 1
+            },
+            {
+              "action": "click",
+              "selector": "#complete-1",
+              "count": 1
+            },
+            {
+              "action": "wait",
+              "ms": 750
+            },
+            {
+              "action": "assert",
+              "assertionId": "viewer-denied"
+            },
+            {
+              "action": "assert",
+              "assertionId": "no-immediate-change"
+            },
+            {
+              "action": "reload"
+            },
+            {
+              "action": "wait",
+              "ms": 750
+            },
+            {
+              "action": "assert",
+              "assertionId": "no-persisted-change"
+            },
+            {
+              "action": "assert",
+              "assertionId": "viewer-session"
+            }
+          ],
+          "expectedBehavior": "Jamie is a read-only viewer. The server must reject the status change with HTTP 403, display the denial, and leave Review access rules in Todo before and after reload.",
+          "assertions": [
+            {
+              "id": "viewer-denied",
+              "kind": "text",
+              "selector": "#action-status",
+              "expected": "Viewers cannot change task status.",
+              "description": "The viewer sees the server's permission denial."
+            },
+            {
+              "id": "no-immediate-change",
+              "kind": "text",
+              "selector": "#state-1",
+              "expected": "Todo",
+              "description": "Denied changes do not update the current board."
+            },
+            {
+              "id": "no-persisted-change",
+              "kind": "text",
+              "selector": "#state-1",
+              "expected": "Todo",
+              "description": "Reloading retrieves the unchanged task from SQLite."
+            },
+            {
+              "id": "viewer-session",
+              "kind": "text",
+              "selector": "#role",
+              "expected": "viewer",
+              "description": "The browser remains signed in as the real viewer account."
+            }
+          ],
+          "safetyPermissions": [
+            "navigation",
+            "form-interaction"
+          ],
+          "budget": {
+            "maxDurationMs": 45000,
+            "maxRequests": 100,
+            "maxConcurrency": 2,
+            "requestsPerSecond": 10,
+            "maxArtifactBytes": 16777216,
+            "maxResponseBytes": 1048576
+          },
+          "cleanup": "close-context",
+          "evidenceRequirements": [
+            "screenshot",
+            "trace",
+            "network",
+            "console"
+          ],
+          "replayable": false
+        }
+      ],
+      "budget": {
+        "maxDurationMs": 120000,
+        "maxRequests": 300,
+        "maxConcurrency": 2,
+        "requestsPerSecond": 10,
+        "maxArtifactBytes": 33554432,
+        "maxResponseBytes": 1048576
+      },
+      "useAi": false
+    },
+    "results": [
+      {
+        "id": "28708cb2-6589-41b3-95e6-7d57453feb03",
+        "runId": "48e24cff-6f8d-46dd-abd3-9c608547cabc",
+        "firstObservedAt": "2026-10-23T07:54:59.267Z",
+        "scenarioId": "reviewboard.viewer-status",
+        "version": 1,
+        "title": "Viewer cannot complete a task or persist an unauthorized change",
+        "level": 1,
+        "category": "authorization",
+        "outcome": "failed",
+        "classification": "suspected",
+        "origin": "application",
+        "severity": "unassigned",
+        "severityRationale": "Custom assertion failure has no independently defined impact policy; severity remains unassigned.",
+        "reproductionSteps": [
+          "navigate",
+          "fill",
+          "fill",
+          "click",
+          "click",
+          "wait",
+          "assert",
+          "assert",
+          "reload",
+          "wait",
+          "assert",
+          "assert"
+        ],
+        "verification": {
+          "retested": false,
+          "reproduced": false,
+          "matchingAssertionIds": []
+        },
+        "attempts": [
+          {
+            "index": 1,
+            "startedAt": "2026-10-23T07:54:59.267Z",
+            "durationMs": 2649.7951000000003,
+            "outcome": "failed",
+            "assertions": [
+              {
+                "id": "viewer-denied",
+                "description": "The viewer sees the server's permission denial.",
+                "expected": "Viewers cannot change task status.",
+                "observed": "Task moved to Done.",
+                "passed": false
+              },
+              {
+                "id": "no-immediate-change",
+                "description": "Denied changes do not update the current board.",
+                "expected": "Todo",
+                "observed": "Done",
+                "passed": false
+              },
+              {
+                "id": "no-persisted-change",
+                "description": "Reloading retrieves the unchanged task from SQLite.",
+                "expected": "Todo",
+                "observed": "Done",
+                "passed": false
+              },
+              {
+                "id": "viewer-session",
+                "description": "The browser remains signed in as the real viewer account.",
+                "expected": "viewer",
+                "observed": "viewer",
+                "passed": true
+              }
+            ],
+            "actions": [
+              {
+                "at": "2026-10-23T07:54:59.341Z",
+                "action": "navigate",
+                "details": {
+                  "action": "navigate",
+                  "path": "/"
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:59.570Z",
+                "action": "fill",
+                "details": {
+                  "selector": "#username",
+                  "value": "[LOCAL INPUT OMITTED]"
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:59.595Z",
+                "action": "fill",
+                "details": {
+                  "selector": "#password",
+                  "value": "[LOCAL INPUT OMITTED]"
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:59.603Z",
+                "action": "click",
+                "details": {
+                  "action": "click",
+                  "selector": "#sign-in",
+                  "count": 1
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:59.642Z",
+                "action": "click",
+                "details": {
+                  "action": "click",
+                  "selector": "#complete-1",
+                  "count": 1
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:59.972Z",
+                "action": "wait",
+                "details": {
+                  "action": "wait",
+                  "ms": 750
+                }
+              },
+              {
+                "at": "2026-10-23T07:55:00.730Z",
+                "action": "assert",
+                "details": {
+                  "action": "assert",
+                  "assertionId": "viewer-denied"
+                }
+              },
+              {
+                "at": "2026-10-23T07:55:00.734Z",
+                "action": "assert",
+                "details": {
+                  "action": "assert",
+                  "assertionId": "no-immediate-change"
+                }
+              },
+              {
+                "at": "2026-10-23T07:55:00.737Z",
+                "action": "reload",
+                "details": {
+                  "action": "reload"
+                }
+              },
+              {
+                "at": "2026-10-23T07:55:00.971Z",
+                "action": "wait",
+                "details": {
+                  "action": "wait",
+                  "ms": 750
+                }
+              },
+              {
+                "at": "2026-10-23T07:55:01.725Z",
+                "action": "assert",
+                "details": {
+                  "action": "assert",
+                  "assertionId": "no-persisted-change"
+                }
+              },
+              {
+                "at": "2026-10-23T07:55:01.742Z",
+                "action": "assert",
+                "details": {
+                  "action": "assert",
+                  "assertionId": "viewer-session"
+                }
+              }
+            ],
+            "evidenceIds": [
+              "e6e9ab6c-a97a-4091-84d3-5f86edc364ee",
+              "ca9cb47c-3e2a-4977-a770-b73432471384",
+              "2962aa0c-abbe-4b95-be43-17e6df97d5a3",
+              "e2316b1a-2d3e-4066-a543-2fb881d1ab08",
+              "c6b6262d-0d0d-419a-8a7c-f8a51d40b74d"
+            ]
+          }
+        ],
+        "evidenceIds": [
+          "e6e9ab6c-a97a-4091-84d3-5f86edc364ee",
+          "ca9cb47c-3e2a-4977-a770-b73432471384",
+          "2962aa0c-abbe-4b95-be43-17e6df97d5a3",
+          "e2316b1a-2d3e-4066-a543-2fb881d1ab08",
+          "c6b6262d-0d0d-419a-8a7c-f8a51d40b74d"
+        ],
+        "expectedBehavior": "Jamie is a read-only viewer. The server must reject the status change with HTTP 403, display the denial, and leave Review access rules in Todo before and after reload.",
+        "observedBehavior": "The viewer sees the server's permission denial.: expected \"Viewers cannot change task status.\", observed \"Task moved to Done.\"; Denied changes do not update the current board.: expected \"Todo\", observed \"Done\"; Reloading retrieves the unchanged task from SQLite.: expected \"Todo\", observed \"Done\"",
+        "limitations": [
+          "Custom assertions reflect the user-supplied contract.",
+          "Automatic reproduction is disabled for user-owned applications to avoid repeating mutations."
+        ],
+        "replayable": false,
+        "remediation": {
+          "hypothesis": "The server may be trusting client identity without applying the declared permission rule.",
+          "suggestion": "Inspect the failed invariant at the server boundary and use validated, atomic state changes with bounded retries where applicable.",
+          "verification": "Replay the failed scenario against the corrected isolated variant and confirm every previously failing assertion passes.",
+          "verified": false
+        }
+      }
+    ],
+    "evidence": [
+      {
+        "id": "e6e9ab6c-a97a-4091-84d3-5f86edc364ee",
+        "runId": "48e24cff-6f8d-46dd-abd3-9c608547cabc",
+        "scenarioId": "reviewboard.viewer-status",
+        "attempt": 1,
+        "kind": "screenshot",
+        "relativePath": "e6e9ab6c-a97a-4091-84d3-5f86edc364ee.png",
+        "mediaType": "image/png",
+        "bytes": 50325,
+        "sha256": "f11d980afa7a33c8f51cfdccf10ff28ecb7eacdcc617d1ca5960f0b0b597f4f4",
+        "sensitive": true,
+        "createdAt": "2026-10-23T07:55:01.809Z"
+      },
+      {
+        "id": "ca9cb47c-3e2a-4977-a770-b73432471384",
+        "runId": "48e24cff-6f8d-46dd-abd3-9c608547cabc",
+        "scenarioId": "reviewboard.viewer-status",
+        "attempt": 1,
+        "kind": "trace",
+        "relativePath": "ca9cb47c-3e2a-4977-a770-b73432471384.zip",
+        "mediaType": "application/zip",
+        "bytes": 373613,
+        "sha256": "5ca5f35135f79fcac761fa18cd06d3c0f00e76422e93533b323dee201405a250",
+        "sensitive": true,
+        "createdAt": "2026-10-23T07:55:01.908Z"
+      },
+      {
+        "id": "2962aa0c-abbe-4b95-be43-17e6df97d5a3",
+        "runId": "48e24cff-6f8d-46dd-abd3-9c608547cabc",
+        "scenarioId": "reviewboard.viewer-status",
+        "attempt": 1,
+        "kind": "actions",
+        "relativePath": "2962aa0c-abbe-4b95-be43-17e6df97d5a3.json",
+        "mediaType": "application/json",
+        "bytes": 2887,
+        "sha256": "f8df9ad65e0ae915518a0adca3d84df1a32e1da94edcfbcfb6db072e603d3159",
+        "sensitive": false,
+        "createdAt": "2026-10-23T07:55:01.910Z"
+      },
+      {
+        "id": "e2316b1a-2d3e-4066-a543-2fb881d1ab08",
+        "runId": "48e24cff-6f8d-46dd-abd3-9c608547cabc",
+        "scenarioId": "reviewboard.viewer-status",
+        "attempt": 1,
+        "kind": "network",
+        "relativePath": "e2316b1a-2d3e-4066-a543-2fb881d1ab08.json",
+        "mediaType": "application/json",
+        "bytes": 1430,
+        "sha256": "2e70f32443ddeec4804e651bc85534173bf6976f9a1ae80f1a60285e412600f5",
+        "sensitive": false,
+        "createdAt": "2026-10-23T07:55:01.911Z"
+      },
+      {
+        "id": "c6b6262d-0d0d-419a-8a7c-f8a51d40b74d",
+        "runId": "48e24cff-6f8d-46dd-abd3-9c608547cabc",
+        "scenarioId": "reviewboard.viewer-status",
+        "attempt": 1,
+        "kind": "console",
+        "relativePath": "c6b6262d-0d0d-419a-8a7c-f8a51d40b74d.json",
+        "mediaType": "application/json",
+        "bytes": 57,
+        "sha256": "8e97efe7f03f3f4eb60c4b216d4767d39e1bc239982ace75b06d521d4d14621c",
+        "sensitive": false,
+        "createdAt": "2026-10-23T07:55:01.911Z"
+      }
+    ],
+    "metrics": {
+      "actualNetworkRequests": 13,
+      "simulatedEvents": 0,
+      "failedRequests": 0,
+      "serverErrors": 0,
+      "rejectedRequests": 0,
+      "blockedRequests": 0,
+      "latencyMs": [
+        14.01380000000006,
+        78.13370000000009,
+        187.2119,
+        104.17639999999994,
+        163.10680000000002,
+        61.34500000000003,
+        3.7707000000000335,
+        93.80939999999987,
+        2.2503999999998996,
+        104.82929999999988,
+        213.67700000000013,
+        88.64210000000003,
+        104.62169999999969
+      ]
+    },
+    "environment": {
+      "engineVersion": "0.1.0",
+      "nodeVersion": "v24.11.1",
+      "platform": "win32",
+      "targetKind": "loopback",
+      "targetOrigin": "http://127.0.0.1:51980",
+      "isolated": false,
+      "browserVersion": "156.0.8078.4"
+    },
+    "error": null,
+    "replayOf": null,
+    "ai": {
+      "status": "disabled",
+      "explanation": "Deterministic execution; AI analysis is disabled.",
+      "suggestions": [],
+      "proposedScenarios": [],
+      "requests": 0
+    },
+    "revision": 14,
+    "progress": {
+      "totalScenarios": 1,
+      "completedScenarios": 1,
+      "currentScenarioId": null,
+      "percent": 100
+    }
+  },
+  "summary": {
+    "tested": 1,
+    "passed": 0,
+    "confirmed": 0,
+    "intermittent": 0,
+    "suspected": 1,
+    "inconclusive": 0,
+    "skipped": 0,
+    "blocked": 0,
+    "infrastructureErrors": 0,
+    "unexecuted": []
+  },
+  "coverage": [
+    {
+      "level": 1,
+      "name": "NORMAL",
+      "scenarioIds": [
+        "reviewboard.viewer-status"
+      ],
+      "mode": "Real Chromium browser execution"
+    }
+  ],
+  "reproduction": [
+    {
+      "scenarioId": "reviewboard.viewer-status",
+      "eligible": false,
+      "instructions": "Use the stored local scenario and explicitly authorize a new run; automatic replay is unavailable for this target."
+    }
+  ],
+  "artifactPrivacy": "Action and metadata JSON are redacted. Screenshots and traces can contain sensitive page data and are local-only, authenticated artifacts; raw traces cannot be reliably redacted automatically.",
+  "regressionComparison": null
+}

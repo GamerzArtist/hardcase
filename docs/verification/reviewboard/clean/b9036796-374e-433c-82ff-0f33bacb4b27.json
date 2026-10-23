@@ -1,0 +1,92 @@
+[
+  {
+    "method": "GET",
+    "path": "/",
+    "status": 200,
+    "durationMs": 2.1458999999999833
+  },
+  {
+    "method": "GET",
+    "path": "/styles.css",
+    "status": 200,
+    "durationMs": 91.70960000000014
+  },
+  {
+    "method": "GET",
+    "path": "/app.js",
+    "status": 200,
+    "durationMs": 199.96169999999984
+  },
+  {
+    "method": "GET",
+    "path": "/api/session",
+    "status": 200,
+    "durationMs": 104.22569999999996
+  },
+  {
+    "method": "POST",
+    "path": "/api/login",
+    "status": 200,
+    "durationMs": 170.18809999999985
+  },
+  {
+    "method": "GET",
+    "path": "/api/tasks",
+    "status": 200,
+    "durationMs": 73.72080000000005
+  },
+  {
+    "method": "POST",
+    "path": "/api/tasks",
+    "status": 201,
+    "durationMs": 37.65129999999999
+  },
+  {
+    "method": "GET",
+    "path": "/api/tasks",
+    "status": 200,
+    "durationMs": 102.41539999999986
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/tasks/3",
+    "status": 200,
+    "durationMs": 13.09860000000026
+  },
+  {
+    "method": "GET",
+    "path": "/api/tasks",
+    "status": 200,
+    "durationMs": 104.51929999999993
+  },
+  {
+    "method": "GET",
+    "path": "/",
+    "status": 200,
+    "durationMs": 2.0182999999997264
+  },
+  {
+    "method": "GET",
+    "path": "/styles.css",
+    "status": 200,
+    "durationMs": 94.76629999999932
+  },
+  {
+    "method": "GET",
+    "path": "/app.js",
+    "status": 200,
+    "durationMs": 203.6908999999996
+  },
+  {
+    "method": "GET",
+    "path": "/api/session",
+    "status": 200,
+    "durationMs": 105.92149999999947
+  },
+  {
+    "method": "GET",
+    "path": "/api/tasks",
+    "status": 200,
+    "durationMs": 91.39099999999962
+  }
+]

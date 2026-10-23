@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Reviewboard — a small team task board</title><link rel="stylesheet" href="/styles.css"><script src="/app.js" defer></script></head>
+<body>
+  <header class="topbar"><a class="brand" href="/" aria-label="Reviewboard home"><span class="brand-mark">R</span> Reviewboard</a><span class="test-badge">Local demo · <span id="mode">loading</span></span></header>
+  <main>
+    <section id="login-panel" aria-labelledby="login-heading" class="login-card">
+      <p class="eyebrow">A little space for the work ahead</p><h1 id="login-heading">Welcome to your board.</h1><p class="muted">Sign in to review the launch checklist and keep the team moving.</p>
+      <form id="login-form"><label for="username">Username</label><input id="username" name="username" autocomplete="username" required maxlength="40"><label for="password">Password</label><input id="password" name="password" type="password" autocomplete="current-password" required maxlength="120"><button id="sign-in" type="submit">Sign in</button></form>
+      <p id="login-error" role="alert"></p>
+      <aside class="demo-accounts"><strong>Synthetic demo accounts</strong><p><code>alex</code> · Editor &nbsp; <code>jamie</code> · Viewer</p><p>Password for both: <code>reviewboard-demo</code></p><p>Editors create and complete tasks. Viewers can read the board.</p></aside>
+    </section>
+    <section id="board-panel" class="hidden" aria-labelledby="board-heading">
+      <div class="board-top"><div><p class="eyebrow">Workspace / Product team</p><h1 id="board-heading">Launch checklist</h1><p class="muted">Small steps. A shared view of what comes next.</p></div><div class="identity"><strong id="person"></strong><span id="role" class="role"></span><button id="sign-out" class="quiet">Sign out</button></div></div>
+      <div class="policy"><span aria-hidden="true">↳</span><p><strong>Board permissions</strong> Editors can create and complete tasks. Viewers have read-only access. The server checks every change.</p></div>
+      <div class="workspace-grid"><section aria-label="Tasks" class="tasks-panel">
+        <div class="task-heading"><h2>Team tasks <span id="task-count" class="count"></span></h2><label class="search-label" for="search">Find a task<input id="search" type="search" placeholder="Search tasks…"></label></div>
+        <form id="create-form"><label class="sr-only" for="new-task">New task title</label><input id="new-task" maxlength="120" required placeholder="What needs to get done?"><button id="add-task" type="submit">Add task</button></form>
+        <p id="action-status" role="status" aria-live="polite">Your board is up to date.</p>
+        <div id="tasks" aria-live="polite"></div><p id="empty" class="hidden muted">No tasks match this search.</p>
+      </section><aside class="activity-panel"><p class="eyebrow">The latest</p><h2>Team activity</h2><ol id="activity"></ol><p class="fineprint">Changes are saved in the local SQLite database. Reloading the page keeps your session and tasks.</p></aside></div>
+    </section>
+    <p id="fatal-error" role="alert"></p>
+  </main><footer>Reviewboard · A standalone MVP for controlled Hardcase evaluation. All identities and data are synthetic.</footer>
+</body></html>

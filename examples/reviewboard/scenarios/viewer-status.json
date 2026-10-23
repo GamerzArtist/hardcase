@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "level": 1,
+  "category": "authorization",
+  "prerequisites": [
+    "Reviewboard is running on an explicitly approved loopback origin with fresh synthetic data."
+  ],
+  "requiredFixtures": [],
+  "safetyPermissions": [
+    "navigation",
+    "form-interaction"
+  ],
+  "budget": {
+    "maxDurationMs": 45000,
+    "maxRequests": 100,
+    "maxConcurrency": 2,
+    "requestsPerSecond": 10,
+    "maxArtifactBytes": 16777216,
+    "maxResponseBytes": 1048576
+  },
+  "cleanup": "close-context",
+  "evidenceRequirements": [
+    "screenshot",
+    "trace",
+    "network",
+    "console"
+  ],
+  "replayable": false,
+  "id": "reviewboard.viewer-status",
+  "title": "Viewer cannot complete a task or persist an unauthorized change",
+  "steps": [
+    {
+      "action": "navigate",
+      "path": "/"
+    },
+    {
+      "action": "fill",
+      "selector": "#username",
+      "value": "jamie"
+    },
+    {
+      "action": "fill",
+      "selector": "#password",
+      "value": "reviewboard-demo"
+    },
+    {
+      "action": "click",
+      "selector": "#sign-in"
+    },
+    {
+      "action": "click",
+      "selector": "#complete-1"
+    },
+    {
+      "action": "wait",
+      "ms": 750
+    },
+    {
+      "action": "assert",
+      "assertionId": "viewer-denied"
+    },
+    {
+      "action": "assert",
+      "assertionId": "no-immediate-change"
+    },
+    {
+      "action": "reload"
+    },
+    {
+      "action": "wait",
+      "ms": 750
+    },
+    {
+      "action": "assert",
+      "assertionId": "no-persisted-change"
+    },
+    {
+      "action": "assert",
+      "assertionId": "viewer-session"
+    }
+  ],
+  "expectedBehavior": "Jamie is a read-only viewer. The server must reject the status change with HTTP 403, display the denial, and leave Review access rules in Todo before and after reload.",
+  "assertions": [
+    {
+      "id": "viewer-denied",
+      "kind": "text",
+      "selector": "#action-status",
+      "expected": "Viewers cannot change task status.",
+      "description": "The viewer sees the server's permission denial."
+    },
+    {
+      "id": "no-immediate-change",
+      "kind": "text",
+      "selector": "#state-1",
+      "expected": "Todo",
+      "description": "Denied changes do not update the current board."
+    },
+    {
+      "id": "no-persisted-change",
+      "kind": "text",
+      "selector": "#state-1",
+      "expected": "Todo",
+      "description": "Reloading retrieves the unchanged task from SQLite."
+    },
+    {
+      "id": "viewer-session",
+      "kind": "text",
+      "selector": "#role",
+      "expected": "viewer",
+      "description": "The browser remains signed in as the real viewer account."
+    }
+  ]
+}

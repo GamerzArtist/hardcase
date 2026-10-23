@@ -1,0 +1,127 @@
+{
+  "version": 1,
+  "level": 1,
+  "category": "workflow",
+  "prerequisites": [
+    "Reviewboard is running on an explicitly approved loopback origin with fresh synthetic data."
+  ],
+  "requiredFixtures": [],
+  "safetyPermissions": [
+    "navigation",
+    "form-interaction"
+  ],
+  "budget": {
+    "maxDurationMs": 45000,
+    "maxRequests": 100,
+    "maxConcurrency": 2,
+    "requestsPerSecond": 10,
+    "maxArtifactBytes": 16777216,
+    "maxResponseBytes": 1048576
+  },
+  "cleanup": "close-context",
+  "evidenceRequirements": [
+    "screenshot",
+    "trace",
+    "network",
+    "console"
+  ],
+  "replayable": false,
+  "id": "reviewboard.editor-persistence",
+  "title": "Editor creates and completes a task that survives reload",
+  "steps": [
+    {
+      "action": "navigate",
+      "path": "/"
+    },
+    {
+      "action": "fill",
+      "selector": "#username",
+      "value": "alex"
+    },
+    {
+      "action": "fill",
+      "selector": "#password",
+      "value": "reviewboard-demo"
+    },
+    {
+      "action": "click",
+      "selector": "#sign-in"
+    },
+    {
+      "action": "fill",
+      "selector": "#new-task",
+      "value": "Write the owner review notes"
+    },
+    {
+      "action": "click",
+      "selector": "#add-task"
+    },
+    {
+      "action": "click",
+      "selector": "#complete-3"
+    },
+    {
+      "action": "wait",
+      "ms": 750
+    },
+    {
+      "action": "reload"
+    },
+    {
+      "action": "wait",
+      "ms": 750
+    },
+    {
+      "action": "assert",
+      "assertionId": "saved-title"
+    },
+    {
+      "action": "assert",
+      "assertionId": "saved-status"
+    },
+    {
+      "action": "assert",
+      "assertionId": "editor-session"
+    },
+    {
+      "action": "fill",
+      "selector": "#search",
+      "value": "owner review"
+    },
+    {
+      "action": "assert",
+      "assertionId": "search-result"
+    }
+  ],
+  "expectedBehavior": "An authenticated editor can create and complete a new task. The title and Done status survive reload, the cookie restores the editor session, and searching returns the saved task.",
+  "assertions": [
+    {
+      "id": "saved-title",
+      "kind": "text",
+      "selector": "#title-3",
+      "expected": "Write the owner review notes",
+      "description": "The newly created task is loaded from the database."
+    },
+    {
+      "id": "saved-status",
+      "kind": "text",
+      "selector": "#state-3",
+      "expected": "Done",
+      "description": "The editor's completed status persists after reload."
+    },
+    {
+      "id": "editor-session",
+      "kind": "text",
+      "selector": "#role",
+      "expected": "editor",
+      "description": "The real authenticated session survives reload."
+    },
+    {
+      "id": "search-result",
+      "kind": "count",
+      "selector": "#tasks article",
+      "expected": 1,
+      "description": "The search filters to the saved task."
+    }
+  ]
+}

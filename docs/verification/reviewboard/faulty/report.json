@@ -1,0 +1,1340 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-23T07:54:58.504Z",
+  "disclaimer": "This report covers only the executed scenarios and declared assertions. Passing does not establish that the application is safe, secure, or bug-free.",
+  "run": {
+    "id": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+    "state": "completed",
+    "createdAt": "2026-10-23T07:54:48.351Z",
+    "updatedAt": "2026-10-23T07:54:58.340Z",
+    "startedAt": "2026-10-23T07:54:48.354Z",
+    "finishedAt": "2026-10-23T07:54:58.340Z",
+    "request": {
+      "target": {
+        "kind": "loopback",
+        "baseUrl": "http://127.0.0.1:51980",
+        "approvedOrigins": [
+          "http://127.0.0.1:51980"
+        ],
+        "acknowledgeOwnership": true
+      },
+      "levels": [
+        1
+      ],
+      "allowFixtureFaults": false,
+      "scenarios": [
+        {
+          "id": "reviewboard.viewer-status",
+          "version": 1,
+          "title": "Viewer cannot complete a task or persist an unauthorized change",
+          "level": 1,
+          "category": "authorization",
+          "prerequisites": [
+            "Reviewboard is running on an explicitly approved loopback origin with fresh synthetic data."
+          ],
+          "requiredFixtures": [],
+          "steps": [
+            {
+              "action": "navigate",
+              "path": "/"
+            },
+            {
+              "action": "fill",
+              "selector": "#username",
+              "value": "[Local input omitted]"
+            },
+            {
+              "action": "fill",
+              "selector": "#password",
+              "value": "[Local input omitted]"
+            },
+            {
+              "action": "click",
+              "selector": "#sign-in",
+              "count": 1
+            },
+            {
+              "action": "click",
+              "selector": "#complete-1",
+              "count": 1
+            },
+            {
+              "action": "wait",
+              "ms": 750
+            },
+            {
+              "action": "assert",
+              "assertionId": "viewer-denied"
+            },
+            {
+              "action": "assert",
+              "assertionId": "no-immediate-change"
+            },
+            {
+              "action": "reload"
+            },
+            {
+              "action": "wait",
+              "ms": 750
+            },
+            {
+              "action": "assert",
+              "assertionId": "no-persisted-change"
+            },
+            {
+              "action": "assert",
+              "assertionId": "viewer-session"
+            }
+          ],
+          "expectedBehavior": "Jamie is a read-only viewer. The server must reject the status change with HTTP 403, display the denial, and leave Review access rules in Todo before and after reload.",
+          "assertions": [
+            {
+              "id": "viewer-denied",
+              "kind": "text",
+              "selector": "#action-status",
+              "expected": "Viewers cannot change task status.",
+              "description": "The viewer sees the server's permission denial."
+            },
+            {
+              "id": "no-immediate-change",
+              "kind": "text",
+              "selector": "#state-1",
+              "expected": "Todo",
+              "description": "Denied changes do not update the current board."
+            },
+            {
+              "id": "no-persisted-change",
+              "kind": "text",
+              "selector": "#state-1",
+              "expected": "Todo",
+              "description": "Reloading retrieves the unchanged task from SQLite."
+            },
+            {
+              "id": "viewer-session",
+              "kind": "text",
+              "selector": "#role",
+              "expected": "viewer",
+              "description": "The browser remains signed in as the real viewer account."
+            }
+          ],
+          "safetyPermissions": [
+            "navigation",
+            "form-interaction"
+          ],
+          "budget": {
+            "maxDurationMs": 45000,
+            "maxRequests": 100,
+            "maxConcurrency": 2,
+            "requestsPerSecond": 10,
+            "maxArtifactBytes": 16777216,
+            "maxResponseBytes": 1048576
+          },
+          "cleanup": "close-context",
+          "evidenceRequirements": [
+            "screenshot",
+            "trace",
+            "network",
+            "console"
+          ],
+          "replayable": false
+        },
+        {
+          "id": "reviewboard.editor-persistence",
+          "version": 1,
+          "title": "Editor creates and completes a task that survives reload",
+          "level": 1,
+          "category": "workflow",
+          "prerequisites": [
+            "Reviewboard is running on an explicitly approved loopback origin with fresh synthetic data."
+          ],
+          "requiredFixtures": [],
+          "steps": [
+            {
+              "action": "navigate",
+              "path": "/"
+            },
+            {
+              "action": "fill",
+              "selector": "#username",
+              "value": "[Local input omitted]"
+            },
+            {
+              "action": "fill",
+              "selector": "#password",
+              "value": "[Local input omitted]"
+            },
+            {
+              "action": "click",
+              "selector": "#sign-in",
+              "count": 1
+            },
+            {
+              "action": "fill",
+              "selector": "#new-task",
+              "value": "[Local input omitted]"
+            },
+            {
+              "action": "click",
+              "selector": "#add-task",
+              "count": 1
+            },
+            {
+              "action": "click",
+              "selector": "#complete-3",
+              "count": 1
+            },
+            {
+              "action": "wait",
+              "ms": 750
+            },
+            {
+              "action": "reload"
+            },
+            {
+              "action": "wait",
+              "ms": 750
+            },
+            {
+              "action": "assert",
+              "assertionId": "saved-title"
+            },
+            {
+              "action": "assert",
+              "assertionId": "saved-status"
+            },
+            {
+              "action": "assert",
+              "assertionId": "editor-session"
+            },
+            {
+              "action": "fill",
+              "selector": "#search",
+              "value": "[Local input omitted]"
+            },
+            {
+              "action": "assert",
+              "assertionId": "search-result"
+            }
+          ],
+          "expectedBehavior": "An authenticated editor can create and complete a new task. The title and Done status survive reload, the cookie restores the editor session, and searching returns the saved task.",
+          "assertions": [
+            {
+              "id": "saved-title",
+              "kind": "text",
+              "selector": "#title-3",
+              "expected": "Write the owner review notes",
+              "description": "The newly created task is loaded from the database."
+            },
+            {
+              "id": "saved-status",
+              "kind": "text",
+              "selector": "#state-3",
+              "expected": "Done",
+              "description": "The editor's completed status persists after reload."
+            },
+            {
+              "id": "editor-session",
+              "kind": "text",
+              "selector": "#role",
+              "expected": "editor",
+              "description": "The real authenticated session survives reload."
+            },
+            {
+              "id": "search-result",
+              "kind": "count",
+              "selector": "#tasks article",
+              "expected": 1,
+              "description": "The search filters to the saved task."
+            }
+          ],
+          "safetyPermissions": [
+            "navigation",
+            "form-interaction"
+          ],
+          "budget": {
+            "maxDurationMs": 45000,
+            "maxRequests": 100,
+            "maxConcurrency": 2,
+            "requestsPerSecond": 10,
+            "maxArtifactBytes": 16777216,
+            "maxResponseBytes": 1048576
+          },
+          "cleanup": "close-context",
+          "evidenceRequirements": [
+            "screenshot",
+            "trace",
+            "network",
+            "console"
+          ],
+          "replayable": false
+        },
+        {
+          "id": "reviewboard.login-recovery",
+          "version": 1,
+          "title": "Invalid login recovers and logout revokes the session",
+          "level": 1,
+          "category": "authentication",
+          "prerequisites": [
+            "Reviewboard is running on an explicitly approved loopback origin with fresh synthetic data."
+          ],
+          "requiredFixtures": [],
+          "steps": [
+            {
+              "action": "navigate",
+              "path": "/"
+            },
+            {
+              "action": "fill",
+              "selector": "#username",
+              "value": "[Local input omitted]"
+            },
+            {
+              "action": "fill",
+              "selector": "#password",
+              "value": "[Local input omitted]"
+            },
+            {
+              "action": "click",
+              "selector": "#sign-in",
+              "count": 1
+            },
+            {
+              "action": "wait",
+              "ms": 750
+            },
+            {
+              "action": "assert",
+              "assertionId": "invalid-login"
+            },
+            {
+              "action": "fill",
+              "selector": "#password",
+              "value": "[Local input omitted]"
+            },
+            {
+              "action": "click",
+              "selector": "#sign-in",
+              "count": 1
+            },
+            {
+              "action": "click",
+              "selector": "#sign-out",
+              "count": 1
+            },
+            {
+              "action": "wait",
+              "ms": 500
+            },
+            {
+              "action": "reload"
+            },
+            {
+              "action": "wait",
+              "ms": 750
+            },
+            {
+              "action": "assert",
+              "assertionId": "login-visible"
+            },
+            {
+              "action": "assert",
+              "assertionId": "board-hidden"
+            }
+          ],
+          "expectedBehavior": "Invalid credentials produce an actionable error. The user can correct them, sign in, sign out, and reload without regaining access to the board.",
+          "assertions": [
+            {
+              "id": "invalid-login",
+              "kind": "text",
+              "selector": "#login-error",
+              "expected": "Username or password is incorrect.",
+              "description": "Invalid credentials are rejected with a clear message."
+            },
+            {
+              "id": "login-visible",
+              "kind": "visible",
+              "selector": "#login-panel",
+              "expected": true,
+              "description": "After logout and reload the login form is visible."
+            },
+            {
+              "id": "board-hidden",
+              "kind": "visible",
+              "selector": "#board-panel",
+              "expected": false,
+              "description": "The board is inaccessible after session revocation."
+            }
+          ],
+          "safetyPermissions": [
+            "navigation",
+            "form-interaction"
+          ],
+          "budget": {
+            "maxDurationMs": 45000,
+            "maxRequests": 100,
+            "maxConcurrency": 2,
+            "requestsPerSecond": 10,
+            "maxArtifactBytes": 16777216,
+            "maxResponseBytes": 1048576
+          },
+          "cleanup": "close-context",
+          "evidenceRequirements": [
+            "screenshot",
+            "trace",
+            "network",
+            "console"
+          ],
+          "replayable": false
+        }
+      ],
+      "budget": {
+        "maxDurationMs": 120000,
+        "maxRequests": 300,
+        "maxConcurrency": 2,
+        "requestsPerSecond": 10,
+        "maxArtifactBytes": 33554432,
+        "maxResponseBytes": 1048576
+      },
+      "useAi": false
+    },
+    "results": [
+      {
+        "id": "5de825c9-454b-4d8e-85f4-6c86def05111",
+        "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+        "firstObservedAt": "2026-10-23T07:54:49.025Z",
+        "scenarioId": "reviewboard.viewer-status",
+        "version": 1,
+        "title": "Viewer cannot complete a task or persist an unauthorized change",
+        "level": 1,
+        "category": "authorization",
+        "outcome": "failed",
+        "classification": "suspected",
+        "origin": "application",
+        "severity": "unassigned",
+        "severityRationale": "Custom assertion failure has no independently defined impact policy; severity remains unassigned.",
+        "reproductionSteps": [
+          "navigate",
+          "fill",
+          "fill",
+          "click",
+          "click",
+          "wait",
+          "assert",
+          "assert",
+          "reload",
+          "wait",
+          "assert",
+          "assert"
+        ],
+        "verification": {
+          "retested": false,
+          "reproduced": false,
+          "matchingAssertionIds": []
+        },
+        "attempts": [
+          {
+            "index": 1,
+            "startedAt": "2026-10-23T07:54:49.025Z",
+            "durationMs": 2690.5906,
+            "outcome": "failed",
+            "assertions": [
+              {
+                "id": "viewer-denied",
+                "description": "The viewer sees the server's permission denial.",
+                "expected": "Viewers cannot change task status.",
+                "observed": "Task moved to Done.",
+                "passed": false
+              },
+              {
+                "id": "no-immediate-change",
+                "description": "Denied changes do not update the current board.",
+                "expected": "Todo",
+                "observed": "Done",
+                "passed": false
+              },
+              {
+                "id": "no-persisted-change",
+                "description": "Reloading retrieves the unchanged task from SQLite.",
+                "expected": "Todo",
+                "observed": "Done",
+                "passed": false
+              },
+              {
+                "id": "viewer-session",
+                "description": "The browser remains signed in as the real viewer account.",
+                "expected": "viewer",
+                "observed": "viewer",
+                "passed": true
+              }
+            ],
+            "actions": [
+              {
+                "at": "2026-10-23T07:54:49.108Z",
+                "action": "navigate",
+                "details": {
+                  "action": "navigate",
+                  "path": "/"
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:49.344Z",
+                "action": "fill",
+                "details": {
+                  "selector": "#username",
+                  "value": "[LOCAL INPUT OMITTED]"
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:49.370Z",
+                "action": "fill",
+                "details": {
+                  "selector": "#password",
+                  "value": "[LOCAL INPUT OMITTED]"
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:49.379Z",
+                "action": "click",
+                "details": {
+                  "action": "click",
+                  "selector": "#sign-in",
+                  "count": 1
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:49.425Z",
+                "action": "click",
+                "details": {
+                  "action": "click",
+                  "selector": "#complete-1",
+                  "count": 1
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:49.739Z",
+                "action": "wait",
+                "details": {
+                  "action": "wait",
+                  "ms": 750
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:50.502Z",
+                "action": "assert",
+                "details": {
+                  "action": "assert",
+                  "assertionId": "viewer-denied"
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:50.507Z",
+                "action": "assert",
+                "details": {
+                  "action": "assert",
+                  "assertionId": "no-immediate-change"
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:50.511Z",
+                "action": "reload",
+                "details": {
+                  "action": "reload"
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:50.746Z",
+                "action": "wait",
+                "details": {
+                  "action": "wait",
+                  "ms": 750
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:51.503Z",
+                "action": "assert",
+                "details": {
+                  "action": "assert",
+                  "assertionId": "no-persisted-change"
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:51.521Z",
+                "action": "assert",
+                "details": {
+                  "action": "assert",
+                  "assertionId": "viewer-session"
+                }
+              }
+            ],
+            "evidenceIds": [
+              "779d9478-e809-45c9-bea3-05798a2cde57",
+              "b941b3ef-3494-4ad8-a393-6fbc627c0d8f",
+              "9745e7e6-8c48-42f5-935f-fdfed6027bfa",
+              "051b1100-9893-4e1d-ad6d-e0925328b526",
+              "66941507-ec54-445e-a45f-c260ca14cf0b"
+            ]
+          }
+        ],
+        "evidenceIds": [
+          "779d9478-e809-45c9-bea3-05798a2cde57",
+          "b941b3ef-3494-4ad8-a393-6fbc627c0d8f",
+          "9745e7e6-8c48-42f5-935f-fdfed6027bfa",
+          "051b1100-9893-4e1d-ad6d-e0925328b526",
+          "66941507-ec54-445e-a45f-c260ca14cf0b"
+        ],
+        "expectedBehavior": "Jamie is a read-only viewer. The server must reject the status change with HTTP 403, display the denial, and leave Review access rules in Todo before and after reload.",
+        "observedBehavior": "The viewer sees the server's permission denial.: expected \"Viewers cannot change task status.\", observed \"Task moved to Done.\"; Denied changes do not update the current board.: expected \"Todo\", observed \"Done\"; Reloading retrieves the unchanged task from SQLite.: expected \"Todo\", observed \"Done\"",
+        "limitations": [
+          "Custom assertions reflect the user-supplied contract.",
+          "Automatic reproduction is disabled for user-owned applications to avoid repeating mutations."
+        ],
+        "replayable": false,
+        "remediation": {
+          "hypothesis": "The server may be trusting client identity without applying the declared permission rule.",
+          "suggestion": "Inspect the failed invariant at the server boundary and use validated, atomic state changes with bounded retries where applicable.",
+          "verification": "Replay the failed scenario against the corrected isolated variant and confirm every previously failing assertion passes.",
+          "verified": false
+        }
+      },
+      {
+        "id": "928b9036-1193-4ebb-8454-a72768f0c0e1",
+        "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+        "firstObservedAt": "2026-10-23T07:54:51.716Z",
+        "scenarioId": "reviewboard.editor-persistence",
+        "version": 1,
+        "title": "Editor creates and completes a task that survives reload",
+        "level": 1,
+        "category": "workflow",
+        "outcome": "passed",
+        "classification": "passed",
+        "origin": "application",
+        "severity": "unassigned",
+        "severityRationale": "No application defect is established by this result.",
+        "reproductionSteps": [
+          "navigate",
+          "fill",
+          "fill",
+          "click",
+          "fill",
+          "click",
+          "click",
+          "wait",
+          "reload",
+          "wait",
+          "assert",
+          "assert",
+          "assert",
+          "fill",
+          "assert"
+        ],
+        "verification": {
+          "retested": false,
+          "reproduced": false,
+          "matchingAssertionIds": []
+        },
+        "attempts": [
+          {
+            "index": 1,
+            "startedAt": "2026-10-23T07:54:51.716Z",
+            "durationMs": 2848.1705,
+            "outcome": "passed",
+            "assertions": [
+              {
+                "id": "saved-title",
+                "description": "The newly created task is loaded from the database.",
+                "expected": "Write the owner review notes",
+                "observed": "Write the owner review notes",
+                "passed": true
+              },
+              {
+                "id": "saved-status",
+                "description": "The editor's completed status persists after reload.",
+                "expected": "Done",
+                "observed": "Done",
+                "passed": true
+              },
+              {
+                "id": "editor-session",
+                "description": "The real authenticated session survives reload.",
+                "expected": "editor",
+                "observed": "editor",
+                "passed": true
+              },
+              {
+                "id": "search-result",
+                "description": "The search filters to the saved task.",
+                "expected": 1,
+                "observed": 1,
+                "passed": true
+              }
+            ],
+            "actions": [
+              {
+                "at": "2026-10-23T07:54:51.770Z",
+                "action": "navigate",
+                "details": {
+                  "action": "navigate",
+                  "path": "/"
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:51.996Z",
+                "action": "fill",
+                "details": {
+                  "selector": "#username",
+                  "value": "[LOCAL INPUT OMITTED]"
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:52.018Z",
+                "action": "fill",
+                "details": {
+                  "selector": "#password",
+                  "value": "[LOCAL INPUT OMITTED]"
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:52.026Z",
+                "action": "click",
+                "details": {
+                  "action": "click",
+                  "selector": "#sign-in",
+                  "count": 1
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:52.072Z",
+                "action": "fill",
+                "details": {
+                  "selector": "#new-task",
+                  "value": "[LOCAL INPUT OMITTED]"
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:52.343Z",
+                "action": "click",
+                "details": {
+                  "action": "click",
+                  "selector": "#add-task",
+                  "count": 1
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:52.371Z",
+                "action": "click",
+                "details": {
+                  "action": "click",
+                  "selector": "#complete-3",
+                  "count": 1
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:52.589Z",
+                "action": "wait",
+                "details": {
+                  "action": "wait",
+                  "ms": 750
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:53.343Z",
+                "action": "reload",
+                "details": {
+                  "action": "reload"
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:53.570Z",
+                "action": "wait",
+                "details": {
+                  "action": "wait",
+                  "ms": 750
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:54.320Z",
+                "action": "assert",
+                "details": {
+                  "action": "assert",
+                  "assertionId": "saved-title"
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:54.336Z",
+                "action": "assert",
+                "details": {
+                  "action": "assert",
+                  "assertionId": "saved-status"
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:54.341Z",
+                "action": "assert",
+                "details": {
+                  "action": "assert",
+                  "assertionId": "editor-session"
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:54.346Z",
+                "action": "fill",
+                "details": {
+                  "selector": "#search",
+                  "value": "[LOCAL INPUT OMITTED]"
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:54.357Z",
+                "action": "assert",
+                "details": {
+                  "action": "assert",
+                  "assertionId": "search-result"
+                }
+              }
+            ],
+            "evidenceIds": [
+              "a6a71c9a-bcf4-43cd-8ce3-1c3de249bb84",
+              "0c61e0e4-f021-4300-8b2f-3018b9e6e4ad",
+              "9b88dcff-b9cb-480b-bddc-806a2fcd4d71",
+              "987d8c1b-d4ce-4a5c-b7b2-4c41aa8d636f",
+              "6cb75b5b-6685-4fad-9774-34f57bbf774e"
+            ]
+          }
+        ],
+        "evidenceIds": [
+          "a6a71c9a-bcf4-43cd-8ce3-1c3de249bb84",
+          "0c61e0e4-f021-4300-8b2f-3018b9e6e4ad",
+          "9b88dcff-b9cb-480b-bddc-806a2fcd4d71",
+          "987d8c1b-d4ce-4a5c-b7b2-4c41aa8d636f",
+          "6cb75b5b-6685-4fad-9774-34f57bbf774e"
+        ],
+        "expectedBehavior": "An authenticated editor can create and complete a new task. The title and Done status survive reload, the cookie restores the editor session, and searching returns the saved task.",
+        "observedBehavior": "4 explicit assertions passed.",
+        "limitations": [
+          "Custom assertions reflect the user-supplied contract.",
+          "Automatic reproduction is disabled for user-owned applications to avoid repeating mutations."
+        ],
+        "replayable": false
+      },
+      {
+        "id": "2f14d080-5b93-4e44-92e8-daf984ada1a1",
+        "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+        "firstObservedAt": "2026-10-23T07:54:54.564Z",
+        "scenarioId": "reviewboard.login-recovery",
+        "version": 1,
+        "title": "Invalid login recovers and logout revokes the session",
+        "level": 1,
+        "category": "authentication",
+        "outcome": "passed",
+        "classification": "passed",
+        "origin": "application",
+        "severity": "unassigned",
+        "severityRationale": "No application defect is established by this result.",
+        "reproductionSteps": [
+          "navigate",
+          "fill",
+          "fill",
+          "click",
+          "wait",
+          "assert",
+          "fill",
+          "click",
+          "click",
+          "wait",
+          "reload",
+          "wait",
+          "assert",
+          "assert"
+        ],
+        "verification": {
+          "retested": false,
+          "reproduced": false,
+          "matchingAssertionIds": []
+        },
+        "attempts": [
+          {
+            "index": 1,
+            "startedAt": "2026-10-23T07:54:54.564Z",
+            "durationMs": 2984.7430000000004,
+            "outcome": "passed",
+            "assertions": [
+              {
+                "id": "invalid-login",
+                "description": "Invalid credentials are rejected with a clear message.",
+                "expected": "Username or password is incorrect.",
+                "observed": "Username or password is incorrect.",
+                "passed": true
+              },
+              {
+                "id": "login-visible",
+                "description": "After logout and reload the login form is visible.",
+                "expected": true,
+                "observed": true,
+                "passed": true
+              },
+              {
+                "id": "board-hidden",
+                "description": "The board is inaccessible after session revocation.",
+                "expected": false,
+                "observed": false,
+                "passed": true
+              }
+            ],
+            "actions": [
+              {
+                "at": "2026-10-23T07:54:54.617Z",
+                "action": "navigate",
+                "details": {
+                  "action": "navigate",
+                  "path": "/"
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:54.847Z",
+                "action": "fill",
+                "details": {
+                  "selector": "#username",
+                  "value": "[LOCAL INPUT OMITTED]"
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:54.867Z",
+                "action": "fill",
+                "details": {
+                  "selector": "#password",
+                  "value": "[LOCAL INPUT OMITTED]"
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:54.875Z",
+                "action": "click",
+                "details": {
+                  "action": "click",
+                  "selector": "#sign-in",
+                  "count": 1
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:54.905Z",
+                "action": "wait",
+                "details": {
+                  "action": "wait",
+                  "ms": 750
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:55.664Z",
+                "action": "assert",
+                "details": {
+                  "action": "assert",
+                  "assertionId": "invalid-login"
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:55.668Z",
+                "action": "fill",
+                "details": {
+                  "selector": "#password",
+                  "value": "[LOCAL INPUT OMITTED]"
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:55.675Z",
+                "action": "click",
+                "details": {
+                  "action": "click",
+                  "selector": "#sign-in",
+                  "count": 1
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:55.703Z",
+                "action": "click",
+                "details": {
+                  "action": "click",
+                  "selector": "#sign-out",
+                  "count": 1
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:55.922Z",
+                "action": "wait",
+                "details": {
+                  "action": "wait",
+                  "ms": 500
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:56.429Z",
+                "action": "reload",
+                "details": {
+                  "action": "reload"
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:56.654Z",
+                "action": "wait",
+                "details": {
+                  "action": "wait",
+                  "ms": 750
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:57.406Z",
+                "action": "assert",
+                "details": {
+                  "action": "assert",
+                  "assertionId": "login-visible"
+                }
+              },
+              {
+                "at": "2026-10-23T07:54:57.422Z",
+                "action": "assert",
+                "details": {
+                  "action": "assert",
+                  "assertionId": "board-hidden"
+                }
+              }
+            ],
+            "evidenceIds": [
+              "d715ac4d-c954-4971-8b9f-4d0be9697b65",
+              "2eabd674-0ff8-4ae2-9f16-17683d314935",
+              "78229966-56aa-45f4-8a01-1f2da761a2f3",
+              "651e555a-6d2c-4cce-97cf-592d1cc2330c",
+              "9550291c-d0ee-4db7-949f-30c32c032990"
+            ]
+          }
+        ],
+        "evidenceIds": [
+          "d715ac4d-c954-4971-8b9f-4d0be9697b65",
+          "2eabd674-0ff8-4ae2-9f16-17683d314935",
+          "78229966-56aa-45f4-8a01-1f2da761a2f3",
+          "651e555a-6d2c-4cce-97cf-592d1cc2330c",
+          "9550291c-d0ee-4db7-949f-30c32c032990"
+        ],
+        "expectedBehavior": "Invalid credentials produce an actionable error. The user can correct them, sign in, sign out, and reload without regaining access to the board.",
+        "observedBehavior": "3 explicit assertions passed.",
+        "limitations": [
+          "Custom assertions reflect the user-supplied contract.",
+          "Automatic reproduction is disabled for user-owned applications to avoid repeating mutations."
+        ],
+        "replayable": false
+      }
+    ],
+    "evidence": [
+      {
+        "id": "779d9478-e809-45c9-bea3-05798a2cde57",
+        "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+        "scenarioId": "reviewboard.viewer-status",
+        "attempt": 1,
+        "kind": "screenshot",
+        "relativePath": "779d9478-e809-45c9-bea3-05798a2cde57.png",
+        "mediaType": "image/png",
+        "bytes": 50325,
+        "sha256": "f11d980afa7a33c8f51cfdccf10ff28ecb7eacdcc617d1ca5960f0b0b597f4f4",
+        "sensitive": true,
+        "createdAt": "2026-10-23T07:54:51.599Z"
+      },
+      {
+        "id": "b941b3ef-3494-4ad8-a393-6fbc627c0d8f",
+        "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+        "scenarioId": "reviewboard.viewer-status",
+        "attempt": 1,
+        "kind": "trace",
+        "relativePath": "b941b3ef-3494-4ad8-a393-6fbc627c0d8f.zip",
+        "mediaType": "application/zip",
+        "bytes": 373267,
+        "sha256": "63e173fe9e055a93c08633518a6fdb19ab8c046cb1039f150c52b31d75710c96",
+        "sensitive": true,
+        "createdAt": "2026-10-23T07:54:51.707Z"
+      },
+      {
+        "id": "9745e7e6-8c48-42f5-935f-fdfed6027bfa",
+        "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+        "scenarioId": "reviewboard.viewer-status",
+        "attempt": 1,
+        "kind": "actions",
+        "relativePath": "9745e7e6-8c48-42f5-935f-fdfed6027bfa.json",
+        "mediaType": "application/json",
+        "bytes": 2887,
+        "sha256": "e3542540f864394d49d8c89b2412dcc0285831f8d78c4b5b75d13a019ebd4b21",
+        "sensitive": false,
+        "createdAt": "2026-10-23T07:54:51.709Z"
+      },
+      {
+        "id": "051b1100-9893-4e1d-ad6d-e0925328b526",
+        "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+        "scenarioId": "reviewboard.viewer-status",
+        "attempt": 1,
+        "kind": "network",
+        "relativePath": "051b1100-9893-4e1d-ad6d-e0925328b526.json",
+        "mediaType": "application/json",
+        "bytes": 1441,
+        "sha256": "f43efe3533698decc6981395de3a0a54fda5b67e57651acc6fe1cea190e14061",
+        "sensitive": false,
+        "createdAt": "2026-10-23T07:54:51.710Z"
+      },
+      {
+        "id": "66941507-ec54-445e-a45f-c260ca14cf0b",
+        "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+        "scenarioId": "reviewboard.viewer-status",
+        "attempt": 1,
+        "kind": "console",
+        "relativePath": "66941507-ec54-445e-a45f-c260ca14cf0b.json",
+        "mediaType": "application/json",
+        "bytes": 57,
+        "sha256": "8e97efe7f03f3f4eb60c4b216d4767d39e1bc239982ace75b06d521d4d14621c",
+        "sensitive": false,
+        "createdAt": "2026-10-23T07:54:51.710Z"
+      },
+      {
+        "id": "a6a71c9a-bcf4-43cd-8ce3-1c3de249bb84",
+        "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+        "scenarioId": "reviewboard.editor-persistence",
+        "attempt": 1,
+        "kind": "screenshot",
+        "relativePath": "a6a71c9a-bcf4-43cd-8ce3-1c3de249bb84.png",
+        "mediaType": "image/png",
+        "bytes": 54267,
+        "sha256": "f8e24bdb19612df5b382050899dee2a6e51621197481c5070424a78b11a35d77",
+        "sensitive": true,
+        "createdAt": "2026-10-23T07:54:54.431Z"
+      },
+      {
+        "id": "0c61e0e4-f021-4300-8b2f-3018b9e6e4ad",
+        "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+        "scenarioId": "reviewboard.editor-persistence",
+        "attempt": 1,
+        "kind": "trace",
+        "relativePath": "0c61e0e4-f021-4300-8b2f-3018b9e6e4ad.zip",
+        "mediaType": "application/zip",
+        "bytes": 592748,
+        "sha256": "af237f0390ff4733b1af986eaf5c036659b53380bebf2ddfd4bd4ffd55676cde",
+        "sensitive": true,
+        "createdAt": "2026-10-23T07:54:54.557Z"
+      },
+      {
+        "id": "9b88dcff-b9cb-480b-bddc-806a2fcd4d71",
+        "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+        "scenarioId": "reviewboard.editor-persistence",
+        "attempt": 1,
+        "kind": "actions",
+        "relativePath": "9b88dcff-b9cb-480b-bddc-806a2fcd4d71.json",
+        "mediaType": "application/json",
+        "bytes": 3370,
+        "sha256": "fb94c60949d4c62b504b299b9d161dfddfc41b97dbe93dd5da957beafdaac0af",
+        "sensitive": false,
+        "createdAt": "2026-10-23T07:54:54.558Z"
+      },
+      {
+        "id": "987d8c1b-d4ce-4a5c-b7b2-4c41aa8d636f",
+        "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+        "scenarioId": "reviewboard.editor-persistence",
+        "attempt": 1,
+        "kind": "network",
+        "relativePath": "987d8c1b-d4ce-4a5c-b7b2-4c41aa8d636f.json",
+        "mediaType": "application/json",
+        "bytes": 1652,
+        "sha256": "493adb9ea71144224a4748c8d833785fd1af1c58271bf6b7388a97bd739b2171",
+        "sensitive": false,
+        "createdAt": "2026-10-23T07:54:54.558Z"
+      },
+      {
+        "id": "6cb75b5b-6685-4fad-9774-34f57bbf774e",
+        "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+        "scenarioId": "reviewboard.editor-persistence",
+        "attempt": 1,
+        "kind": "console",
+        "relativePath": "6cb75b5b-6685-4fad-9774-34f57bbf774e.json",
+        "mediaType": "application/json",
+        "bytes": 57,
+        "sha256": "8e97efe7f03f3f4eb60c4b216d4767d39e1bc239982ace75b06d521d4d14621c",
+        "sensitive": false,
+        "createdAt": "2026-10-23T07:54:54.559Z"
+      },
+      {
+        "id": "d715ac4d-c954-4971-8b9f-4d0be9697b65",
+        "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+        "scenarioId": "reviewboard.login-recovery",
+        "attempt": 1,
+        "kind": "screenshot",
+        "relativePath": "d715ac4d-c954-4971-8b9f-4d0be9697b65.png",
+        "mediaType": "image/png",
+        "bytes": 32502,
+        "sha256": "9570c1deec622b4ee1a2b819aacd77b37c599936fdf5087e2255398f373e987c",
+        "sensitive": true,
+        "createdAt": "2026-10-23T07:54:57.473Z"
+      },
+      {
+        "id": "2eabd674-0ff8-4ae2-9f16-17683d314935",
+        "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+        "scenarioId": "reviewboard.login-recovery",
+        "attempt": 1,
+        "kind": "trace",
+        "relativePath": "2eabd674-0ff8-4ae2-9f16-17683d314935.zip",
+        "mediaType": "application/zip",
+        "bytes": 351305,
+        "sha256": "d64316bb303a693604115ec7841d1cab08c8887bd1f124d487e5cc2ecead9c50",
+        "sensitive": true,
+        "createdAt": "2026-10-23T07:54:57.543Z"
+      },
+      {
+        "id": "78229966-56aa-45f4-8a01-1f2da761a2f3",
+        "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+        "scenarioId": "reviewboard.login-recovery",
+        "attempt": 1,
+        "kind": "actions",
+        "relativePath": "78229966-56aa-45f4-8a01-1f2da761a2f3.json",
+        "mediaType": "application/json",
+        "bytes": 3008,
+        "sha256": "4e2d1a9f5bcdd3847aeef5671bcba2e6ce53ca8cba0217fcc459b2b5c743e843",
+        "sensitive": false,
+        "createdAt": "2026-10-23T07:54:57.544Z"
+      },
+      {
+        "id": "651e555a-6d2c-4cce-97cf-592d1cc2330c",
+        "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+        "scenarioId": "reviewboard.login-recovery",
+        "attempt": 1,
+        "kind": "network",
+        "relativePath": "651e555a-6d2c-4cce-97cf-592d1cc2330c.json",
+        "mediaType": "application/json",
+        "bytes": 1324,
+        "sha256": "a248384021b215f102929ce15d8a3a9d0779bb6ba85ffee39d961684a4e92ba6",
+        "sensitive": false,
+        "createdAt": "2026-10-23T07:54:57.544Z"
+      },
+      {
+        "id": "9550291c-d0ee-4db7-949f-30c32c032990",
+        "runId": "b6ca6c33-2dbe-43e6-8cfb-38f7c3a2a057",
+        "scenarioId": "reviewboard.login-recovery",
+        "attempt": 1,
+        "kind": "console",
+        "relativePath": "9550291c-d0ee-4db7-949f-30c32c032990.json",
+        "mediaType": "application/json",
+        "bytes": 193,
+        "sha256": "ed28901aa978af721b7141b0c397fb4a8400056348a9a51b6b9d4233262a85a2",
+        "sensitive": false,
+        "createdAt": "2026-10-23T07:54:57.545Z"
+      }
+    ],
+    "metrics": {
+      "actualNetworkRequests": 40,
+      "simulatedEvents": 0,
+      "failedRequests": 0,
+      "serverErrors": 0,
+      "rejectedRequests": 0,
+      "blockedRequests": 0,
+      "latencyMs": [
+        15.315799999999967,
+        75.02729999999997,
+        185.82730000000004,
+        102.72429999999986,
+        149.52600000000007,
+        69.47540000000004,
+        3.9514999999998963,
+        98.11860000000001,
+        2.1271999999999025,
+        104.78589999999986,
+        214.44140000000016,
+        87.98230000000012,
+        108.20389999999998,
+        2.0961999999999534,
+        95.14830000000029,
+        204.90470000000005,
+        98.35579999999982,
+        163.48949999999968,
+        64.86729999999989,
+        23.875100000000202,
+        93.96120000000019,
+        4.432699999999386,
+        98.66679999999997,
+        2.1289000000006126,
+        96.45219999999972,
+        204.1313,
+        104.03090000000066,
+        88.63919999999962,
+        2.553399999999783,
+        97.22779999999966,
+        205.89900000000034,
+        103.90800000000036,
+        174.9333999999999,
+        36.21520000000055,
+        65.62840000000051,
+        2.914099999999962,
+        2.2186000000001513,
+        97.17389999999978,
+        205.29539999999906,
+        102.6172000000006
+      ]
+    },
+    "environment": {
+      "engineVersion": "0.1.0",
+      "nodeVersion": "v24.11.1",
+      "platform": "win32",
+      "targetKind": "loopback",
+      "targetOrigin": "http://127.0.0.1:51980",
+      "isolated": false,
+      "browserVersion": "156.0.8078.4"
+    },
+    "error": null,
+    "replayOf": null,
+    "ai": {
+      "status": "disabled",
+      "explanation": "Deterministic execution; AI analysis is disabled.",
+      "suggestions": [],
+      "proposedScenarios": [],
+      "requests": 0
+    },
+    "revision": 30,
+    "progress": {
+      "totalScenarios": 3,
+      "completedScenarios": 3,
+      "currentScenarioId": null,
+      "percent": 100
+    }
+  },
+  "summary": {
+    "tested": 3,
+    "passed": 2,
+    "confirmed": 0,
+    "intermittent": 0,
+    "suspected": 1,
+    "inconclusive": 0,
+    "skipped": 0,
+    "blocked": 0,
+    "infrastructureErrors": 0,
+    "unexecuted": []
+  },
+  "coverage": [
+    {
+      "level": 1,
+      "name": "NORMAL",
+      "scenarioIds": [
+        "reviewboard.viewer-status",
+        "reviewboard.editor-persistence",
+        "reviewboard.login-recovery"
+      ],
+      "mode": "Real Chromium browser execution"
+    }
+  ],
+  "reproduction": [
+    {
+      "scenarioId": "reviewboard.viewer-status",
+      "eligible": false,
+      "instructions": "Use the stored local scenario and explicitly authorize a new run; automatic replay is unavailable for this target."
+    },
+    {
+      "scenarioId": "reviewboard.editor-persistence",
+      "eligible": false,
+      "instructions": "Use the stored local scenario and explicitly authorize a new run; automatic replay is unavailable for this target."
+    },
+    {
+      "scenarioId": "reviewboard.login-recovery",
+      "eligible": false,
+      "instructions": "Use the stored local scenario and explicitly authorize a new run; automatic replay is unavailable for this target."
+    }
+  ],
+  "artifactPrivacy": "Action and metadata JSON are redacted. Screenshots and traces can contain sensitive page data and are local-only, authenticated artifacts; raw traces cannot be reliably redacted automatically.",
+  "regressionComparison": null
+}

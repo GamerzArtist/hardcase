@@ -1,0 +1,156 @@
+{
+  "actions": [
+    {
+      "at": "2026-10-23T07:54:51.770Z",
+      "action": "navigate",
+      "details": {
+        "action": "navigate",
+        "path": "/"
+      }
+    },
+    {
+      "at": "2026-10-23T07:54:51.996Z",
+      "action": "fill",
+      "details": {
+        "selector": "#username",
+        "value": "[LOCAL INPUT OMITTED]"
+      }
+    },
+    {
+      "at": "2026-10-23T07:54:52.018Z",
+      "action": "fill",
+      "details": {
+        "selector": "#password",
+        "value": "[LOCAL INPUT OMITTED]"
+      }
+    },
+    {
+      "at": "2026-10-23T07:54:52.026Z",
+      "action": "click",
+      "details": {
+        "action": "click",
+        "selector": "#sign-in",
+        "count": 1
+      }
+    },
+    {
+      "at": "2026-10-23T07:54:52.072Z",
+      "action": "fill",
+      "details": {
+        "selector": "#new-task",
+        "value": "[LOCAL INPUT OMITTED]"
+      }
+    },
+    {
+      "at": "2026-10-23T07:54:52.343Z",
+      "action": "click",
+      "details": {
+        "action": "click",
+        "selector": "#add-task",
+        "count": 1
+      }
+    },
+    {
+      "at": "2026-10-23T07:54:52.371Z",
+      "action": "click",
+      "details": {
+        "action": "click",
+        "selector": "#complete-3",
+        "count": 1
+      }
+    },
+    {
+      "at": "2026-10-23T07:54:52.589Z",
+      "action": "wait",
+      "details": {
+        "action": "wait",
+        "ms": 750
+      }
+    },
+    {
+      "at": "2026-10-23T07:54:53.343Z",
+      "action": "reload",
+      "details": {
+        "action": "reload"
+      }
+    },
+    {
+      "at": "2026-10-23T07:54:53.570Z",
+      "action": "wait",
+      "details": {
+        "action": "wait",
+        "ms": 750
+      }
+    },
+    {
+      "at": "2026-10-23T07:54:54.320Z",
+      "action": "assert",
+      "details": {
+        "action": "assert",
+        "assertionId": "saved-title"
+      }
+    },
+    {
+      "at": "2026-10-23T07:54:54.336Z",
+      "action": "assert",
+      "details": {
+        "action": "assert",
+        "assertionId": "saved-status"
+      }
+    },
+    {
+      "at": "2026-10-23T07:54:54.341Z",
+      "action": "assert",
+      "details": {
+        "action": "assert",
+        "assertionId": "editor-session"
+      }
+    },
+    {
+      "at": "2026-10-23T07:54:54.346Z",
+      "action": "fill",
+      "details": {
+        "selector": "#search",
+        "value": "[LOCAL INPUT OMITTED]"
+      }
+    },
+    {
+      "at": "2026-10-23T07:54:54.357Z",
+      "action": "assert",
+      "details": {
+        "action": "assert",
+        "assertionId": "search-result"
+      }
+    }
+  ],
+  "assertions": [
+    {
+      "id": "saved-title",
+      "description": "The newly created task is loaded from the database.",
+      "expected": "Write the owner review notes",
+      "observed": "Write the owner review notes",
+      "passed": true
+    },
+    {
+      "id": "saved-status",
+      "description": "The editor's completed status persists after reload.",
+      "expected": "Done",
+      "observed": "Done",
+      "passed": true
+    },
+    {
+      "id": "editor-session",
+      "description": "The real authenticated session survives reload.",
+      "expected": "editor",
+      "observed": "editor",
+      "passed": true
+    },
+    {
+      "id": "search-result",
+      "description": "The search filters to the saved task.",
+      "expected": 1,
+      "observed": 1,
+      "passed": true
+    }
+  ]
+}
