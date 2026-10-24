@@ -1,5 +1,6 @@
 import { spawn } from 'node:child_process';
-import { mkdir, writeFile, cp } from 'node:fs/promises';
+import { mkdir, writeFile, cp, mkdtemp } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { stageRuntime, root } from './package-runtime.mjs';
 
@@ -13,7 +14,11 @@ const stamp = new Date().toISOString().replace(/[:.]/g, '-');
 const output = resolve(root, 'release', `hardcase-windows-x64-${stamp}`);
 await mkdir(output, { recursive: true });
 const runtime = await stageRuntime(join(output, 'hardcase-runtime'));
-const config = { build: { beforeBuildCommand: '' }, bundle: { active: true, targets: ['nsis'], icon: ['icons/32x32.png', 'icons/128x128.png', 'icons/128x128@2x.png', 'icons/icon.ico'], resources: { [runtime.replaceAll('\\', '/') + '/']: 'hardcase-runtime/' }, windows: { nsis: { installMode: 'currentUser' } } } };
+// NSIS cannot open long Chromium resource paths. Bundle from a short temporary prefix.
+const shortRoot = await mkdtemp(join(tmpdir(), 'hc-'));
+const bundleRuntime = join(shortRoot, 'runtime');
+await cp(runtime, bundleRuntime, { recursive: true });
+const config = { build: { beforeBuildCommand: '' }, bundle: { active: true, targets: ['nsis'], icon: ['icons/32x32.png', 'icons/128x128.png', 'icons/128x128@2x.png', 'icons/icon.ico'], resources: { [bundleRuntime.replaceAll('\\', '/') + '/']: 'hardcase-runtime/' }, windows: { nsis: { installMode: 'currentUser' } } } };
 const configFile = join(output, 'tauri-package.json'); await writeFile(configFile, JSON.stringify(config, null, 2));
 if (!process.argv.includes('--web-only')) {
   await run(process.execPath, [join(root, 'node_modules/@tauri-apps/cli/tauri.js'), 'build', '--config', configFile], join(root, 'apps/web'));

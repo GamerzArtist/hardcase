@@ -2,6 +2,10 @@
 
 One local-first application for bounded adversarial application testing. The React/TypeScript workspace, Node testing engine, Chromium runner and durable SQLite history share one repository and one web entry point. No account is required locally.
 
+**[Public recorded demo](https://hardcase.vercel.app) · [Windows downloads](https://hardcase.vercel.app/downloads) · [Release verification](docs/HARDCASE_FINAL_RELEASE.md)**
+
+The public site presents genuine recorded controlled-fixture runs, screenshots and exports. Live tests execute in the local web or Windows application. No hosted scanner or remote mobile controller is included.
+
 ## Run the application
 
 Node 24.11–24.x, npm and Git are required.
@@ -32,7 +36,7 @@ npm run test:web
 npm run test:browser
 ```
 
-Backend verification remains available with `npm run test:api` and `npm run demo`. See `docs/UNIFIED_DEPLOYMENT.md` for the container workflow and authenticated public ingress requirements. A static host cannot run this application. No public deployment has been performed by this sprint.
+Backend verification remains available with `npm run test:api` and `npm run demo`. See `docs/UNIFIED_DEPLOYMENT.md` for the container workflow and authenticated public ingress requirements. Vercel builds the explicitly read-only recorded demonstration with `npm run build:demo`; live execution needs the bundled local engine or an authenticated durable runner.
 
 ## Workflow and boundaries
 

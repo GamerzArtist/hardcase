@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "at": "2026-10-24T04:21:08.102Z",
+  "executable": "D:\\Code stuff\\HACKATHON-PROJECTS\\TEAM\\hackathon-project-02\\apps\\web\\src-tauri\\target\\release\\hardcase.exe",
+  "executableSha256": "fb662dd1643f2624e541ad790a7b1d4be9baf0d5619bfd823fb8be779109fb34",
+  "checks": {
+    "nativeBootstrap": true,
+    "actualFiveTierRun": true,
+    "authenticatedScreenshot": true,
+    "reportExport": true,
+    "replay": true,
+    "reloadHistory": true,
+    "nativeShutdown": true
+  },
+  "screenshots": [
+    "desktop-prepare.png",
+    "desktop-observe.png",
+    "desktop-evidence.png"
+  ],
+  "runIds": [
+    "46157dbe-cd04-45fb-97cd-e33648c98fd9",
+    "3e37bfe9-6061-4159-837f-a976f955741e"
+  ],
+  "pageErrors": [],
+  "webviewVersion": "145.0.3800.97"
+}

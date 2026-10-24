@@ -1,0 +1,24 @@
+{
+  "passed": true,
+  "runtime": "D:\\Code stuff\\HACKATHON-PROJECTS\\TEAM\\hackathon-project-02\\release\\hardcase-windows-x64-2026-10-24T04-14-33-199Z\\hardcase-runtime",
+  "dataDir": "D:\\Code stuff\\HACKATHON-PROJECTS\\TEAM\\hackathon-project-02\\.engine\\package-smoke\\2026-10-24T04-21-16-140Z",
+  "readiness": {
+    "ok": true,
+    "version": "0.1.0",
+    "checks": {
+      "storage": true,
+      "worker": true,
+      "chromium": true
+    },
+    "issues": []
+  },
+  "nodeSource": "bundled node.exe",
+  "browserSource": "bundled browsers directory",
+  "pathLimitedTo": "Windows System32",
+  "runId": "b1935ca6-f3ab-40d5-bdde-a73cf67035b6",
+  "state": "completed",
+  "classification": "passed",
+  "browserVersion": "156.0.8078.4",
+  "evidenceCount": 5,
+  "shutdownExitCode": 0
+}

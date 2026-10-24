@@ -13,6 +13,7 @@ import {
 import { useState } from "react";
 import { RECORDED_DEMO } from "./api/deployment";
 import { Brand } from "./components/Primitives";
+import Downloads from "./Downloads";
 import Landing from "./Landing";
 import { LEVELS } from "./lib/model";
 import { usePreferences } from "./state/preferences";
@@ -82,9 +83,7 @@ export default function Site({ path }: { path: string }) {
 					<a href="/docs" aria-current={documentation ? "page" : undefined}>
 						{landing ? "Understand" : "Documentation"}
 					</a>
-					<a href={landing ? "/docs" : "/#levels"}>
-						{landing ? "Ship" : "Testing levels"}
-					</a>
+					<a href="/downloads">Downloads</a>
 				</nav>
 				<div className="site-header-actions">
 					<button
@@ -118,6 +117,8 @@ export default function Site({ path }: { path: string }) {
 					<Landing preferences={preferences} />
 				) : documentation && known ? (
 					<Docs path={path} />
+				) : path === "/downloads" ? (
+					<Downloads />
 				) : legal && validLegal ? (
 					<Legal name={legalName} />
 				) : (
@@ -142,6 +143,7 @@ export default function Site({ path }: { path: string }) {
 						</a>
 						<a href="/docs">Documentation</a>
 						<a href="/docs/testing-levels">Testing levels</a>
+						<a href="/downloads">Download Hardcase</a>
 					</div>
 					<div>
 						<strong>Good to know</strong>

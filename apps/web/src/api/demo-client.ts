@@ -83,7 +83,8 @@ export function createRecordedDemoClient(): EngineClient {
 		},
 		downloadEvidence: async (runId, artifactId) => {
 			const run = (await report(runId)).run;
-			if (!run.evidence.some((item) => item.id === artifactId))
+			const artifact = run.evidence.find((item) => item.id === artifactId);
+			if (!artifact)
 				throw new EngineError(
 					"rejected",
 					"This artifact is not included in the public demonstration.",
@@ -94,7 +95,9 @@ export function createRecordedDemoClient(): EngineClient {
 			});
 			if (!response.ok)
 				throw new EngineError("offline", "Recorded artifact is unavailable.");
-			return response.blob();
+			return new Blob([await response.arrayBuffer()], {
+				type: artifact.mediaType,
+			});
 		},
 		validateTarget: unavailable,
 		validateScenario: unavailable,
