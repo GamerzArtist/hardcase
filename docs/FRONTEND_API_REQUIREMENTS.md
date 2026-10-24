@@ -1,0 +1,9 @@
+# Frontend/API integration requirements
+
+One canonical repository, root package-lock and apps/web workspace. Node 24.x owns SQLite and Chromium workers. Build with npm run build; start with npm start; development npm run dev. Browser bootstrap supplies its own origin plus /api. All browser API/SSE/evidence/export requests use /api/v1/*; the runner retains its private loopback origin. Native bridge sessions retain direct local-engine transport. No backend domain/testing source was changed.
+
+Typed boundary: src/api/types.ts runtime Zod validation, src/api/client.ts transport, src/api/bootstrap.ts unified session. No browser token persistence. Supported endpoints are health/readiness, catalog/capabilities, validation, runs/progress/events/cancel, findings/evidence/artifact download, report/Markdown, compare and fixture replay. HTTP 202 cancellation waits for terminal state. Lost responses recover using the same idempotency key; actual response-loss browser testing verifies this.
+
+Explicit limits: no cloud project service; overview groups the loaded durable run history. No arbitrary public/LAN targets; owned loopback scenarios support L1–2 and require ownership acknowledgement. Fixture L3–5 require explicit fault consent. Custom JSON shape is validated locally and by engine; runtime policy remains server-owned. Artifact hashes are displayed from engine metadata, not independently certified by UI. Remediation suggestions remain unverified. Tripo model integration is pending; illustrated landing campus is labeled.
+
+Hosted client transport permits only its own /api path (including HTTPS), not arbitrary remote engine origins. Public mode requires the documented authenticated gateway and secret header; do not treat this as an independently configured identity service. See UNIFIED_DEPLOYMENT.md for operator prerequisites and unverified container/public deployment status.

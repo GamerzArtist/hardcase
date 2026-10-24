@@ -1,0 +1,12 @@
+node_modules/
+dist/
+target/
+.env
+.env.local
+.env.*.local
+test-results/
+playwright-report/
+*.log
+*.tsbuildinfo
+.engine/
+.impeccable/

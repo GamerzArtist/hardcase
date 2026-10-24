@@ -1,86 +1,41 @@
-# hardcase backend
+# hardcase
 
-A local adversarial application-testing engine. Real Chromium workflows and bounded HTTP strategies execute declared assertions against disposable fixtures or explicitly configured, user-owned loopback servers. AI is optional. This repository contains no product frontend, Tauri UI, cloud authentication, public-target scanner, or deployment.
+One local-first application for bounded adversarial application testing. The React/TypeScript workspace, Node testing engine, Chromium runner and durable SQLite history share one repository and one web entry point. No account is required locally.
 
-## Start
+## Run the application
 
-Development prerequisites: Node **24.11 or later in the 24.x LTS line**, npm, and Git. Verified on Windows with Node 24.11.1. Node's built-in SQLite emits an experimental-feature warning on this runtime; no separate SQLite installation is needed.
+Node 24.11–24.x, npm and Git are required.
 
 ```powershell
 npm ci
 npx playwright install chromium
+npm run dev
+```
+
+Open http://127.0.0.1:4327/app. The root launcher starts and stops the engine, configures its local origins and supplies a memory-only session automatically. Browser calls use `/api/v1/*` on the same origin. Do not start a separate frontend or manually copy a session token.
+
+For production web execution:
+
+```powershell
 npm run build
 npm start
 ```
 
-The API binds **127.0.0.1:4318**. Health: `GET /v1/health`. Startup writes a newly generated privileged token to `.engine/session.json`; the token is never printed. Keep that file private. Stop with Ctrl+C.
+`HARDCASE_WEB_PORT` changes the entry port. `ENGINE_DATA_DIR` selects the durable database/artifact directory. `/healthz` checks engine storage, worker and Chromium readiness. Stop with Ctrl+C. Native Windows packaging is documented in `docs/WINDOWS_RELEASE.md`; its acceptance is separate from browser verification.
 
-Run the complete judge demo, including clean/faulty five-level runs, SSE progress, reproduction, comparison, cancellation, and restart verification:
-
-```powershell
-npm run demo
-```
-
-This starts its own API on an ephemeral loopback port and shuts it down afterwards. Actual local outputs are saved under `.engine/demo/`; see `verification.json` and `artifacts/<run-id>/report.{json,md}`. No cloud account, API key, external target, or real financial operation is involved.
-
-To manually start the disposable application:
+## Test and deploy
 
 ```powershell
-npm run fixture
-# Or the fixed variant:
-npm run fixture -- --clean
-```
-
-The standalone fixture listens on **127.0.0.1:4319**. Engine fixture runs create their own fresh isolated server and database; they do not reuse the standalone server.
-
-## Verification
-
-```powershell
+npm run lint
 npm run typecheck
-npm test
-npm run test:unit
-npm run test:integration
-npm run test:e2e
-npm run api:spec
-npm audit
+npm run test:web
+npm run test:browser
 ```
 
-`npm test` builds before running the full suite. Browser tests use the compiled worker and real Chromium. `npm run api:spec` regenerates the OpenAPI contract and labeled sample payloads. Tests use bounded synthetic data in `.test-data/`, removed after each test.
+Backend verification remains available with `npm run test:api` and `npm run demo`. See `docs/UNIFIED_DEPLOYMENT.md` for the container workflow and authenticated public ingress requirements. A static host cannot run this application. No public deployment has been performed by this sprint.
 
-## Executable coverage
+## Workflow and boundaries
 
-| Tier | Implementation | What execution proves |
-|---|---|---|
-| 1 — Normal | Real Chromium | Save/load, acknowledged-write persistence, links, refresh, back/forward, basic Tab focus, narrow layout, console/request observations |
-| 2 — Chaos | Real Chromium plus bounded HTTP | Repeated submissions, two tabs, empty/long inputs, delayed pending writes, refresh/retry consistency |
-| 3 — Hostile | Real local HTTP against synthetic policies | Viewer/admin enforcement, idempotent synthetic token charging, simulated quota and cost ceilings |
-| 4 — Siege | Real capped local HTTP | Two request lanes at most, duplicate-event bursts, queue limits, throttling, rejection, measured latency and recovery |
-| 5 — Breakpoint | Real local HTTP with in-process fixture faults | Dependency outages/timeouts, bounded retry exhaustion, failed-write rollback, concurrent recovery and persisted-state invariants |
+Prepare → Run → Observe → Investigate → Reproduce → Export uses real engine records. Included clean/faulty fixtures support all five levels. Owned HTTP loopback apps support levels 1–2 with explicit scenarios and ownership acknowledgment. Higher-level faults remain fixture-only. No public-target scanner, cloud project sync, mobile companion or automatic AI exploration is claimed.
 
-Levels 3–5 require `allowFixtureFaults: true` and an **engine-created fixture**. Default runs select Levels 1–2. Synthetic dependency attempts, billing units and event volume are labeled; they are not real provider traffic or public load testing. The separate `actualNetworkRequests` counter counts actual engine requests.
-
-The faulty fixture has seven failing scenarios; the clean fixture has eight passing scenarios. A failed fixture assertion is rerun once from reset state. Only repeated failure of the same assertion becomes `confirmed`; script failures are infrastructure errors, and policy/budget blocks are inconclusive.
-
-## Repository map
-
-```text
-src/
-  api/             authenticated v1 API, schemas, OpenAPI
-  domain/          strict scenario/run/finding/event contracts
-  orchestration/   FIFO queue, lifecycle, deadlines, crash handling
-  workers/         isolated child process, ownership and cleanup
-  browser/         Chromium context and bounded network proxy
-  strategies/      eight recipes implementing five tiers
-  assertions/      allowlisted assertion evaluation
-  security/        target policy, request budgets, redaction
-  fixtures/        clean/faulty SQLite application and CLI
-  evidence/        local artifacts, hashes and stable IDs
-  persistence/     durable SQLite snapshots and event log
-  reporting/       JSON, Markdown and compatible-run comparisons
-  ai/              optional bounded analysis-gateway adapter
-  cli/             server, demonstration and contract generator
-tests/             unit, API/process integration and real browser E2E
-docs/              architecture, security, fixtures and handoff
-```
-
-Read [FRONTEND_HANDOFF.md](docs/FRONTEND_HANDOFF.md) for client integration, [ARCHITECTURE.md](docs/ARCHITECTURE.md) for process ownership, [SECURITY.md](docs/SECURITY.md) for boundaries, [FIXTURES.md](docs/FIXTURES.md) for independent defect triggers, and [ASTRA_SESSION_REPORT.md](docs/ASTRA_SESSION_REPORT.md) for executed verification and remaining limitations.
+`apps/web` is the frontend workspace; `src` is Astra's testing engine; `examples/reviewboard` is the independently owned controlled test application. The old sibling frontend checkout is preserved but is not the release root. API contracts are in `docs/API_CONTRACT.md`, `docs/FRONTEND_HANDOFF.md` and `apps/web/src/api`. Current delivery evidence and limitations: `docs/SOL_FINAL_HANDOFF.md`.

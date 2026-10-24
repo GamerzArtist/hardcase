@@ -1,0 +1,10 @@
+{
+  "gateRejectsUnauthenticated": true,
+  "spaServed": true,
+  "apiRequiresBearer": true,
+  "sameOriginBootstrap": true,
+  "authenticatedApi": true,
+  "crossOriginRejected": true,
+  "ready": true,
+  "verifiedAt": "2026-10-24T03:41:34.213Z"
+}

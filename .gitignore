@@ -3,6 +3,12 @@ dist/
 .engine/
 .test-data/
 coverage/
+target/
+apps/web/src-tauri/gen/
+apps/web/test-results/
+apps/web/playwright-report/
+release/
+*.tsbuildinfo
 *.log
 .env
 .env.*

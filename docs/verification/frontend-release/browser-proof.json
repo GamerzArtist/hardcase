@@ -1,0 +1,10 @@
+{
+  "runId": "33d6086c-64df-4d0b-987b-5a20838348cf",
+  "target": "controlled Reviewboard faulty variant",
+  "scenarioCount": 3,
+  "oneOriginVerified": true,
+  "apiRequestCount": 33,
+  "expectedClassification": "suspected",
+  "browserErrors": [],
+  "capturedAt": "2026-10-24T03:43:28.970Z"
+}

@@ -1,0 +1,2460 @@
+/* Operate surfaces: solid materials, semantic controls, one focused working document. */
+.app-shell .sidebar {
+	padding: 30px 15px 16px;
+}
+.app-shell .sidebar > .brand-button {
+	margin: 0 12px 36px;
+}
+.app-shell .brand {
+	font-size: 27px;
+}
+.app-shell .workspace-label {
+	padding-bottom: 23px;
+	border-bottom: 1px solid var(--line);
+	margin-bottom: 20px;
+}
+.app-shell .nav-item {
+	min-height: 44px;
+	font-size: 12px;
+	border-radius: 4px;
+}
+.app-shell .nav-item.active {
+	background: var(--green-bg);
+	color: var(--text);
+}
+.app-shell .sidebar-footnote {
+	display: none;
+}
+.app-shell .page-content {
+	max-width: 1320px;
+}
+.app-shell .heading-actions {
+	padding-top: 0;
+}
+.app-shell .local-caption {
+	font-size: 12px;
+}
+.app-shell .prepare-main {
+	padding: 0;
+	min-width: 0;
+}
+.app-shell .section-heading {
+	margin-bottom: 19px;
+	align-items: center;
+}
+.form-step {
+	display: inline-block;
+	font-family: var(--mono);
+	font-size: 12px;
+	color: var(--muted);
+	font-weight: 400;
+	margin-right: 13px;
+}
+.app-shell .target-option > svg {
+	width: 19px;
+}
+.app-shell .local-target-fields {
+	margin-top: 20px;
+}
+.app-shell .depth-configuration {
+	padding-bottom: 25px;
+	margin-bottom: 18px;
+}
+.app-shell .level-option:last-child {
+	border-right: 0;
+}
+.app-shell .level-number {
+	width: 24px;
+	height: 22px;
+	background: none;
+	font-family: var(--mono);
+	font-size: 12px;
+	color: var(--green);
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+}
+.app-shell .level-option > svg {
+	display: none;
+}
+.app-shell .level-option.disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+.app-shell .level-option:focus-within {
+	outline: 2px solid var(--focus);
+	outline-offset: -3px;
+}
+.app-shell .depth-configuration > .check-control {
+	margin-top: 17px;
+	padding: 13px;
+	background: var(--amber-bg);
+	font-size: 12px;
+	border-radius: 4px;
+}
+.app-shell .advanced-section .details-content {
+	padding: 12px 0 20px;
+}
+.app-shell .workflow-guide small {
+	font-size: 12px;
+}
+.app-shell .workflow-guide strong {
+	font-size: 12px;
+}
+.plan-panel {
+	position: sticky;
+	top: 0;
+	min-width: 0;
+	border: 1px solid var(--line-strong);
+	border-radius: 6px;
+	background: var(--surface-raised);
+	overflow: hidden;
+}
+.plan-header {
+	position: relative;
+	padding: 21px 21px 17px;
+	border-bottom: 1px solid var(--line);
+}
+.plan-header h2 {
+	font-size: 17px;
+	font-weight: 600;
+	letter-spacing: -0.025em;
+	margin: 0 0 12px;
+}
+.plan-cross {
+	position: absolute;
+	right: 19px;
+	top: 17px;
+	font-family: var(--mono);
+	font-size: 19px;
+	color: var(--line-strong);
+}
+.plan-connection {
+	display: flex;
+	gap: 7px;
+	align-items: center;
+	font-size: 12px;
+	color: var(--muted);
+}
+.plan-connection i {
+	width: 5px;
+	height: 5px;
+	border-radius: 50%;
+	background: var(--subtle);
+}
+.plan-connection i.ready {
+	background: var(--green);
+}
+.plan-target {
+	display: flex;
+	gap: 12px;
+	padding: 19px 21px;
+	align-items: center;
+	background: var(--surface-subtle);
+	border-bottom: 1px solid var(--line);
+}
+.plan-target > svg {
+	color: var(--green);
+}
+.plan-target strong {
+	font-size: 12px;
+	font-weight: 550;
+	display: block;
+}
+.plan-target span {
+	font-size: 12px;
+	color: var(--muted);
+	display: block;
+	margin-top: 5px;
+	overflow-wrap: anywhere;
+}
+.plan-scenarios {
+	padding: 19px 21px 5px;
+}
+.plan-section-label {
+	display: flex;
+	justify-content: space-between;
+	gap: 10px;
+	font-size: 12px;
+	color: var(--muted);
+	margin-bottom: 12px;
+}
+.plan-recipe {
+	border-bottom: 1px solid var(--line);
+}
+.plan-recipe:last-child {
+	border: 0;
+}
+.plan-recipe summary {
+	display: flex;
+	gap: 9px;
+	align-items: center;
+	padding: 11px 0;
+	font-size: 12px;
+	line-height: 1.5;
+}
+.plan-recipe summary > svg {
+	margin-left: auto;
+	transition: transform 0.18s;
+}
+.plan-recipe[open] summary > svg {
+	transform: rotate(180deg);
+}
+.plan-level {
+	font-family: var(--mono);
+	font-size: 12px;
+	color: var(--green);
+	padding: 3px 4px;
+	background: var(--green-bg);
+	border-radius: 2px;
+}
+.plan-recipe p {
+	font-size: 12px;
+	line-height: 1.7;
+	color: var(--muted);
+	padding: 0 0 10px 29px;
+	margin: 0;
+}
+.plan-limits {
+	padding: 14px 21px 17px;
+	margin: 0;
+}
+.plan-limits div {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin: 11px 0;
+	font-size: 12px;
+}
+.plan-limits dt {
+	color: var(--muted);
+}
+.plan-limits dd {
+	font-family: var(--mono);
+	font-size: 12px;
+	margin: 0;
+}
+.app-shell .run-summary {
+	border: 0;
+	border-top: 1px solid var(--line);
+	border-bottom: 1px solid var(--line);
+	border-radius: 0;
+	padding: 24px 0;
+	margin-bottom: 0;
+	background: none;
+	grid-template-columns: 1fr auto;
+}
+.app-shell .run-progress {
+	grid-column: 1 / -1;
+	margin-top: 20px;
+}
+.app-shell progress {
+	height: 5px;
+	border-radius: 0;
+}
+.app-shell .run-summary-id {
+	font-size: 12px;
+}
+.app-shell .elapsed {
+	font-size: 24px;
+	font-family: var(--mono);
+	font-weight: 400;
+	letter-spacing: -0.03em;
+}
+.execution-counts {
+	display: flex;
+	align-items: center;
+	gap: 35px;
+	border-bottom: 1px solid var(--line);
+	padding: 20px 0;
+	margin-bottom: 12px;
+}
+.execution-counts > span {
+	display: flex;
+	gap: 9px;
+	align-items: baseline;
+	font-size: 12px;
+	color: var(--muted);
+}
+.execution-counts strong {
+	font-size: 19px;
+	font-weight: 500;
+	color: var(--text);
+	font-variant-numeric: tabular-nums;
+}
+.execution-counts .execution-integrity {
+	margin-left: auto;
+	font-size: 12px;
+	color: var(--green);
+}
+.app-shell .view-toolbar {
+	margin: 20px 0;
+}
+.observation-grid {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) 305px;
+	gap: 25px;
+	align-items: start;
+}
+.observation-grid .activity-panel {
+	grid-column: 1 / -1;
+}
+.observation-grid > .scenario-map {
+	grid-column: 1 / -1;
+}
+.app-shell .scenario-detail .expected-observed {
+	grid-template-columns: 1fr;
+	gap: 20px;
+	padding: 0;
+	background: none;
+	border: 0;
+}
+.app-shell .scenario-detail .expected-observed > div {
+	padding: 0;
+	border: 0;
+	background: none;
+}
+.app-shell .scenario-detail > .subtle {
+	font-size: 12px;
+}
+.app-shell .event-row {
+	font-size: 12px;
+	line-height: 1.7;
+}
+.app-shell .event-row code {
+	font-size: 12px;
+	overflow-wrap: anywhere;
+}
+.app-shell .finding-tags {
+	font-size: 12px;
+}
+.app-shell .inspector-content {
+	padding: 24px 30px;
+}
+.app-shell .expected-observed {
+	gap: 24px;
+}
+.app-shell .expected-observed > div {
+	border: 0;
+	border-radius: 0;
+	padding: 0;
+	background: none;
+}
+.app-shell .expected-observed .data-label {
+	font-size: 12px;
+	color: var(--muted);
+	font-weight: 500;
+}
+.app-shell .severity-explanation,
+.app-shell .remediation {
+	border: 0;
+	border-top: 1px solid var(--line);
+	background: none;
+	border-radius: 0;
+	padding: 20px 0;
+	margin-top: 24px;
+}
+.app-shell .severity-explanation h3,
+.app-shell .remediation h3 {
+	font-size: 13px;
+}
+.app-shell .severity-explanation p,
+.app-shell .remediation p {
+	font-size: 12px;
+	line-height: 1.8;
+}
+.app-shell .reproduction-text,
+.app-shell .code-preview {
+	width: 100%;
+	font-family: var(--mono);
+	font-size: 12px;
+	line-height: 1.8;
+	padding: 20px;
+	background: var(--surface-subtle);
+	margin-bottom: 20px;
+	border-color: var(--line);
+	min-height: 240px;
+}
+.app-shell .artifact-list {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 6px;
+}
+.app-shell .artifact-row {
+	margin: 0;
+	border-radius: 4px;
+	min-width: 0;
+}
+.app-shell .artifact-select {
+	min-width: 0;
+}
+.app-shell .artifact-preview {
+	padding: 0;
+	border: 1px solid var(--line);
+	border-radius: 4px;
+	overflow: hidden;
+	background: var(--surface-subtle);
+}
+.app-shell .artifact-preview > .section-heading {
+	padding: 13px 17px;
+	margin: 0;
+	border-bottom: 1px solid var(--line);
+}
+.app-shell .artifact-preview img {
+	display: block;
+	border-radius: 0;
+	max-height: 460px;
+	object-fit: contain;
+	width: 100%;
+	background: #edf1ea;
+}
+.app-shell .artifact-integrity {
+	padding: 14px 17px;
+}
+.app-shell .artifact-integrity code {
+	overflow-wrap: anywhere;
+}
+.app-shell .assertion-values code {
+	overflow-wrap: anywhere;
+}
+@media (max-width: 1250px) {
+	.app-shell .main-content {
+		padding: 29px;
+	}
+	.app-shell .prepare-grid {
+		gap: 28px;
+		grid-template-columns: minmax(0, 1fr) 280px;
+	}
+	.app-shell .topbar {
+		padding: 0 29px;
+	}
+	.observation-grid {
+		grid-template-columns: minmax(0, 1fr) 265px;
+		gap: 18px;
+	}
+	.app-shell .scenario-row {
+		gap: 8px;
+		padding: 13px 11px;
+	}
+	.app-shell .scenario-duration {
+		display: none;
+	}
+	.app-shell .level-option {
+		padding: 14px 8px;
+	}
+	.app-shell .level-option small {
+		font-size: 12px;
+	}
+	.app-shell .investigation-layout {
+		grid-template-columns: 250px minmax(0, 1fr);
+	}
+}
+@media (max-width: 1050px) {
+	.app-shell .prepare-grid {
+		grid-template-columns: minmax(0, 1fr);
+	}
+	.app-shell .plan-panel {
+		position: static;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+	}
+	.plan-header {
+		grid-column: 1 / -1;
+	}
+	.plan-target {
+		grid-column: 1 / -1;
+	}
+	.plan-scenarios {
+		grid-row: 3 / 5;
+		border-right: 1px solid var(--line);
+		padding-bottom: 18px;
+	}
+	.plan-limits {
+		align-self: center;
+	}
+	.app-shell .plan-panel .run-action {
+		grid-column: 2;
+	}
+	.observation-grid {
+		grid-template-columns: minmax(0, 1fr);
+	}
+	.app-shell .scenario-detail {
+		position: static;
+	}
+	.app-shell .scenario-detail .expected-observed {
+		grid-template-columns: 1fr 1fr;
+	}
+	.execution-counts {
+		gap: 25px;
+	}
+	.execution-integrity {
+		display: none !important;
+	}
+	.app-shell .artifact-list {
+		grid-template-columns: 1fr;
+	}
+	.app-shell .inspector-heading {
+		padding: 23px;
+	}
+	.app-shell .inspector-content {
+		padding: 23px;
+	}
+	.app-shell .inspector-heading h2 {
+		font-size: 22px;
+	}
+}
+@media (max-width: 760px) {
+	.app-shell .main-content {
+		padding: 24px 20px 28px;
+	}
+	.app-shell .topbar {
+		height: 54px;
+		padding: 0 18px;
+	}
+	.app-shell .mobile-brand {
+		display: none;
+	}
+	.app-shell .page-heading {
+		margin-bottom: 27px;
+		gap: 15px;
+		align-items: flex-start;
+	}
+	.app-shell .page-heading h1 {
+		font-size: 27px;
+		margin-bottom: 10px;
+	}
+	.app-shell .page-heading p {
+		font-size: 12px;
+		max-width: 40ch;
+	}
+	.app-shell .local-caption {
+		display: none;
+	}
+	.app-shell .heading-actions {
+		gap: 7px;
+	}
+	.app-shell .heading-actions .button {
+		font-size: 12px;
+		padding: 9px 11px;
+		min-height: 35px;
+	}
+	.app-shell .target-options {
+		grid-template-columns: 1fr 1fr;
+		gap: 8px;
+	}
+	.app-shell .target-option {
+		padding: 13px 10px;
+		min-height: 86px;
+		gap: 8px;
+	}
+	.app-shell .target-option strong {
+		font-size: 12px;
+	}
+	.app-shell .target-option small {
+		font-size: 12px;
+		max-width: 13ch;
+	}
+	.app-shell .target-option > .radio-dot {
+		display: none;
+	}
+	.app-shell .section-heading {
+		align-items: flex-start;
+		gap: 8px;
+	}
+	.app-shell .section-heading > .subtle {
+		display: none;
+	}
+	.app-shell .fixture-config {
+		flex-wrap: wrap;
+		align-items: center;
+	}
+	.app-shell .fixture-config select {
+		margin-left: 48px;
+		width: calc(100% - 48px);
+	}
+	.app-shell .fixture-config p {
+		font-size: 12px;
+		max-width: 26ch;
+	}
+	.app-shell .level-options {
+		grid-template-columns: repeat(5, 1fr);
+	}
+	.app-shell .level-option {
+		min-height: 88px;
+		padding: 12px 6px;
+		gap: 14px;
+	}
+	.app-shell .level-option strong {
+		font-size: 12px;
+	}
+	.app-shell .level-option small {
+		display: none;
+	}
+	.app-shell .level-number {
+		font-size: 12px;
+	}
+	.app-shell .level-option > input {
+		right: 5px;
+		top: 10px;
+		width: 10px;
+		height: 10px;
+	}
+	.app-shell .depth-description p {
+		font-size: 12px;
+	}
+	.app-shell .plan-panel {
+		display: block;
+	}
+	.plan-header {
+		padding: 18px;
+	}
+	.plan-target {
+		padding: 16px 18px;
+	}
+	.plan-scenarios {
+		border-right: 0;
+		padding: 18px;
+	}
+	.plan-limits {
+		padding: 0 18px 12px;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 0 20px;
+	}
+	.plan-limits div {
+		display: block;
+	}
+	.plan-limits dd {
+		margin-top: 6px;
+	}
+	.app-shell .workflow-guide {
+		display: none;
+	}
+	.app-shell .run-summary {
+		padding: 19px 0;
+		gap: 16px;
+	}
+	.app-shell .run-summary > div:first-child {
+		align-items: flex-start;
+		gap: 10px;
+	}
+	.app-shell .run-summary-id {
+		font-size: 12px;
+		line-height: 1.5;
+	}
+	.app-shell .elapsed {
+		font-size: 20px;
+		align-self: start;
+	}
+	.app-shell .elapsed svg {
+		display: none;
+	}
+	.app-shell .run-progress {
+		margin-top: 0;
+	}
+	.execution-counts {
+		gap: 20px;
+		padding: 16px 0;
+	}
+	.execution-counts > span {
+		font-size: 12px;
+		gap: 6px;
+	}
+	.execution-counts strong {
+		font-size: 17px;
+	}
+	.app-shell .tabs button {
+		font-size: 12px;
+		padding: 12px 10px;
+	}
+	.app-shell .scenario-row {
+		grid-template-columns: 22px 1fr auto;
+		display: grid;
+		min-height: 75px;
+		padding: 13px 11px;
+		gap: 9px;
+	}
+	.app-shell .scenario-row > svg:last-child {
+		display: none;
+	}
+	.app-shell .scenario-info strong {
+		font-size: 12px;
+	}
+	.app-shell .scenario-info small {
+		font-size: 12px;
+	}
+	.app-shell .scenario-row .status {
+		font-size: 12px;
+		gap: 4px;
+		padding: 4px 5px;
+	}
+	.app-shell .scenario-detail {
+		padding: 20px;
+	}
+	.app-shell .scenario-detail .expected-observed {
+		grid-template-columns: 1fr;
+		gap: 17px;
+	}
+	.app-shell .completion-strip {
+		flex-wrap: wrap;
+		padding: 18px;
+		gap: 12px;
+	}
+	.app-shell .completion-strip > div {
+		flex: 1;
+		min-width: 180px;
+	}
+	.app-shell .completion-strip > .button {
+		width: 100%;
+	}
+	.app-shell .report-overview {
+		gap: 14px;
+		font-size: 12px;
+		padding: 16px 0;
+		margin-bottom: 18px;
+	}
+	.app-shell .investigation-layout {
+		display: block;
+		min-height: 0;
+	}
+	.app-shell .finding-inspector {
+		display: none;
+	}
+	.app-shell .investigation-layout.show-detail .finding-index {
+		display: none;
+	}
+	.app-shell .investigation-layout.show-detail .finding-inspector {
+		display: block;
+	}
+	.app-shell .finding-list {
+		max-height: none;
+	}
+	.app-shell .finding-item {
+		padding: 18px;
+	}
+	.app-shell .finding-item strong {
+		font-size: 12px;
+	}
+	.app-shell .inspector-heading {
+		padding: 20px;
+	}
+	.app-shell .inspector-heading h2 {
+		font-size: 23px;
+		line-height: 1.3;
+	}
+	.app-shell .inspector-content {
+		padding: 20px;
+	}
+	.app-shell .inspector-tabs {
+		padding: 0 8px;
+	}
+	.app-shell .finding-meta {
+		font-size: 12px;
+		gap: 12px;
+	}
+	.app-shell .artifact-list {
+		grid-template-columns: 1fr;
+	}
+	.app-shell .mobile-back {
+		display: flex;
+		padding: 16px 20px;
+		border-bottom: 1px solid var(--line);
+		width: 100%;
+		font-size: 12px;
+	}
+	.app-shell .expected-observed {
+		grid-template-columns: 1fr;
+		gap: 23px;
+	}
+	.app-shell .reproduction-text {
+		font-size: 12px;
+		padding: 14px;
+	}
+	.app-shell .stream-indicator {
+		font-size: 12px;
+	}
+	.app-shell .view-toolbar {
+		gap: 10px;
+		flex-wrap: wrap;
+	}
+	.app-shell .artifact-preview img {
+		max-height: 360px;
+	}
+	.app-shell .plan-recipe summary {
+		font-size: 12px;
+		min-height: 43px;
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.plan-recipe summary > svg {
+		transition: none;
+	}
+}
+/* Fluid sa1FQfCxG4: fixed-open inset shell and functional local run threads. */
+.app-shell .fluid-sidebar {
+	background: transparent;
+	border: 0;
+	padding: 21px 14px 11px 6px;
+	min-width: 0;
+	gap: 0;
+}
+.sidebar-brand-line {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 12px 25px;
+}
+.app-shell .sidebar-brand-line .brand {
+	font-size: 28px;
+	letter-spacing: -0.045em;
+	gap: 9px;
+}
+.sidebar-brand-line .brand-button {
+	color: var(--text);
+	text-decoration: none;
+}
+.workspace-picker {
+	position: relative;
+	margin: 0 2px 19px;
+}
+.workspace-picker > summary {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 10px 9px;
+	min-height: 54px;
+	border-radius: 5px;
+}
+.workspace-picker > summary:hover {
+	background: var(--green-bg);
+}
+.workspace-tile {
+	width: 32px;
+	height: 32px;
+	background: var(--surface-raised);
+	border: 1px solid var(--line-strong);
+	border-radius: 5px;
+	display: grid;
+	place-items: center;
+	color: var(--green);
+}
+.workspace-picker summary > span:nth-child(2) {
+	min-width: 0;
+}
+.workspace-picker strong {
+	font-size: 13px;
+	font-weight: 550;
+	display: block;
+}
+.workspace-picker small {
+	font-size: 12px;
+	color: var(--muted);
+	display: block;
+	margin-top: 4px;
+}
+.workspace-picker summary > svg {
+	margin-left: auto;
+	color: var(--muted);
+}
+.workspace-options,
+.engine-options {
+	position: absolute;
+	left: 4px;
+	right: 4px;
+	background: var(--surface-raised);
+	border: 1px solid var(--line-strong);
+	border-radius: 6px;
+	padding: 7px;
+	z-index: 60;
+	box-shadow: 0 12px 26px -12px #142b274d;
+}
+.workspace-options {
+	top: calc(100% + 5px);
+}
+.workspace-options > span,
+.workspace-options > button,
+.workspace-options > a {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 12px;
+	text-decoration: none;
+	min-height: 38px;
+	padding: 8px;
+	width: 100%;
+	color: var(--text);
+	text-align: left;
+	border-radius: 3px;
+}
+.workspace-options button:hover,
+.workspace-options a:hover {
+	background: var(--green-bg);
+}
+.selected-check {
+	font-size: 10px;
+	color: var(--green);
+	margin-left: auto;
+}
+.sidebar-search {
+	display: flex;
+	align-items: center;
+	gap: 9px;
+	background: var(--surface-raised);
+	border: 1px solid var(--line);
+	border-radius: 5px;
+	padding: 11px 10px;
+	margin: 0 4px 8px;
+	font-size: 12px;
+	color: var(--muted);
+	min-height: 40px;
+}
+.sidebar-search:hover {
+	border-color: var(--line-strong);
+}
+.sidebar-search kbd {
+	margin-left: auto;
+	font-size: 10px;
+}
+.sidebar-new {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 13px;
+	font-weight: 500;
+	padding: 11px 14px;
+	min-height: 42px;
+	text-align: left;
+}
+.sidebar-new:hover {
+	background: var(--green-bg);
+	border-radius: 5px;
+}
+.sidebar-new kbd {
+	margin-left: auto;
+	font-size: 10px;
+	color: var(--muted);
+	opacity: 0;
+}
+.sidebar-new:hover kbd,
+.sidebar-new:focus-visible kbd {
+	opacity: 1;
+}
+.sidebar-scroll {
+	overflow: auto;
+	min-height: 0;
+	flex: 1;
+	padding: 11px 0 20px;
+}
+.sidebar-section {
+	margin: 12px 0 22px;
+}
+.sidebar-section > summary {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 9px 12px;
+	margin-bottom: 4px;
+	font-size: 12px;
+	font-weight: 500;
+	color: var(--muted);
+}
+.sidebar-section > summary:hover {
+	color: var(--text);
+}
+.sidebar-section > summary > svg {
+	transition: transform 0.15s;
+}
+.sidebar-section:not([open]) > summary > svg {
+	transform: rotate(-90deg);
+}
+.fluid-sidebar .sidebar-section nav {
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+}
+.fluid-row {
+	display: flex;
+	position: relative;
+	isolation: isolate;
+	align-items: center;
+	gap: 11px;
+	min-height: 43px;
+	border-radius: 5px;
+	padding: 11px 12px;
+	text-align: left;
+	font-size: 13px;
+	color: var(--muted);
+	width: 100%;
+	line-height: 1.4;
+}
+.fluid-row > svg,
+.fluid-row > span:not(.fluid-hover),
+.fluid-row > kbd {
+	position: relative;
+	z-index: 1;
+}
+.fluid-row.active {
+	color: var(--text);
+	background: var(--green-bg);
+	font-weight: 600;
+}
+.fluid-row kbd {
+	margin-left: auto;
+	font-size: 10px;
+	color: var(--muted);
+	opacity: 0;
+}
+.fluid-row:hover kbd,
+.fluid-row:focus-visible kbd {
+	opacity: 1;
+}
+.fluid-hover {
+	position: absolute;
+	inset: 0;
+	background: color-mix(in srgb, var(--green) 9%, transparent);
+	border-radius: 5px;
+	z-index: 0;
+}
+.recent-run {
+	gap: 10px;
+	padding-top: 12px;
+	padding-bottom: 12px;
+}
+.recent-run > span:nth-child(2) {
+	min-width: 0;
+	flex: 1;
+}
+.recent-run strong {
+	display: block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-weight: 450;
+	font-size: 12px;
+}
+.recent-run small {
+	display: block;
+	font-size: 11px;
+	color: var(--muted);
+	margin-top: 5px;
+}
+.recent-run > svg {
+	margin-left: auto;
+	color: var(--muted);
+}
+.run-dot {
+	width: 6px;
+	height: 6px;
+	flex: 0 0 6px;
+	border-radius: 50%;
+	background: var(--subtle);
+}
+.run-dot.completed {
+	background: var(--green);
+}
+.run-dot.failed,
+.run-dot.timed_out {
+	background: var(--red);
+}
+.run-dot[data-live="true"] {
+	background: var(--amber);
+}
+.sidebar-empty {
+	font-size: 12px;
+	line-height: 1.7;
+	color: var(--muted);
+	padding: 9px 12px;
+	margin: 0;
+}
+.fluid-row.history-link {
+	margin-top: 7px;
+	font-size: 12px;
+}
+.history-link > svg:last-child {
+	margin-left: auto;
+}
+.fluid-sidebar-footer {
+	display: flex;
+	align-items: center;
+	gap: 1px;
+	padding: 15px 5px 0;
+	border-top: 1px solid var(--line);
+}
+.engine-picker {
+	position: relative;
+	min-width: 0;
+	flex: 1;
+}
+.engine-picker > summary {
+	display: flex;
+	align-items: center;
+	gap: 7px;
+	padding: 7px 2px;
+	min-height: 40px;
+}
+.engine-picker summary > span:nth-child(2) {
+	flex: 1;
+	min-width: 0;
+}
+.engine-picker strong {
+	display: block;
+	font-size: 11px;
+	white-space: nowrap;
+	font-weight: 550;
+}
+.engine-picker small {
+	display: block;
+	font-size: 10px;
+	color: var(--muted);
+	margin-top: 5px;
+}
+.engine-picker summary > svg {
+	width: 11px;
+	color: var(--muted);
+}
+.engine-options {
+	bottom: calc(100% + 12px);
+	left: 0;
+	min-width: 220px;
+	right: auto;
+	padding: 13px;
+}
+.engine-options p {
+	font-size: 12px;
+	line-height: 1.7;
+	color: var(--muted);
+	margin-bottom: 12px;
+}
+.engine-options button,
+.engine-options a {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	width: 100%;
+	padding: 9px 0;
+	text-decoration: none;
+	font-size: 12px;
+}
+.fluid-sidebar-footer > .icon-button {
+	width: 28px;
+	height: 36px;
+}
+.app-shell .page-heading p {
+	color: var(--muted);
+	font-size: 13px;
+	line-height: 1.7;
+}
+.app-shell .breadcrumb,
+.app-shell .command-button {
+	font-size: 12px;
+}
+.app-shell label,
+.app-shell .field-hint,
+.app-shell .check-control {
+	font-size: 12px;
+	line-height: 1.7;
+}
+.app-shell input,
+.app-shell select,
+.app-shell textarea {
+	font-size: 13px;
+}
+.app-shell .target-option small {
+	font-size: 12px;
+	line-height: 1.5;
+	margin-top: 6px;
+	max-width: 19ch;
+}
+.app-shell .fixture-config select {
+	min-height: 35px;
+	padding: 7px 12px;
+	font-size: 12px;
+}
+.app-shell .section-heading .subtle {
+	font-size: 12px;
+}
+.app-shell .level-option > span:nth-of-type(2) {
+	flex: 0;
+	gap: 0;
+}
+.app-shell .level-option .level-number svg {
+	width: 15px;
+	height: 15px;
+}
+.app-shell .start-button {
+	width: 100%;
+	border-radius: 4px;
+	min-height: 45px;
+}
+.app-shell .run-estimate,
+.app-shell .shortcut-hint {
+	font-size: 11px;
+}
+.app-shell .workflow-guide {
+	max-width: 680px;
+	margin: 32px 0 0;
+	padding: 21px 0 0;
+	border-top: 1px solid var(--line);
+	background: none;
+	display: none;
+}
+.app-shell .advanced-section > summary {
+	padding: 15px 0;
+	font-size: 13px;
+}
+.scenario-mode {
+	display: flex;
+	gap: 6px;
+	padding: 4px;
+	background: var(--surface-subtle);
+	border: 1px solid var(--line);
+	border-radius: 5px;
+	margin: 22px 0 18px;
+}
+.scenario-mode button {
+	font-size: 12px;
+	min-height: 37px;
+	flex: 1;
+	padding: 9px;
+	border-radius: 3px;
+	color: var(--muted);
+}
+.scenario-mode button[aria-pressed="true"] {
+	background: var(--surface-raised);
+	color: var(--text);
+	box-shadow: 0 2px 4px -2px #142b2740;
+}
+.scenario-editor-toolbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin-bottom: 12px;
+}
+.scenario-editor-toolbar > label:first-child {
+	display: flex;
+	align-items: center;
+	gap: 7px;
+}
+.scenario-import {
+	position: relative;
+	overflow: hidden;
+	padding: 8px 10px !important;
+	min-height: 35px !important;
+	font-size: 12px !important;
+	cursor: pointer;
+}
+.scenario-import input {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	cursor: pointer;
+}
+.scenario-import:focus-within {
+	outline: 2px solid var(--focus);
+	outline-offset: 3px;
+}
+.scenario-json-editor textarea {
+	display: block;
+	width: 100%;
+	font-family: var(--mono);
+	font-size: 12px;
+	line-height: 1.8;
+	padding: 16px;
+	tab-size: 2;
+	min-height: 260px;
+}
+.scenario-validation {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin-top: 12px;
+}
+.scenario-validation > span {
+	font-size: 12px;
+	color: var(--muted);
+	line-height: 1.6;
+}
+.scenario-validation > .button {
+	font-size: 12px;
+}
+.scenario-valid {
+	display: flex;
+	align-items: center;
+	gap: 7px;
+	color: var(--green);
+	font-size: 12px;
+	margin: 16px 0;
+}
+.scenario-json-editor > .field-hint {
+	margin-top: 15px;
+}
+.app-shell .page-observe .scenario-row {
+	min-height: 80px;
+	padding: 17px;
+}
+.app-shell .scenario-info strong {
+	line-height: 1.5;
+	font-size: 13px;
+}
+.app-shell .scenario-info small {
+	margin-top: 6px;
+	font-size: 11px;
+}
+.app-shell .scenario-duration {
+	font-size: 12px;
+}
+.app-shell .scenario-row > .status {
+	white-space: nowrap;
+	font-size: 11px;
+}
+.app-shell .scenario-detail .expected-observed p {
+	line-height: 1.8;
+	font-size: 13px;
+}
+.app-shell .tabs button {
+	padding: 13px 15px;
+	font-size: 12px;
+}
+.app-shell .inspector-heading > p {
+	line-height: 1.8;
+	max-width: 75ch;
+	font-size: 13px;
+}
+.app-shell .finding-item strong {
+	font-weight: 550;
+	line-height: 1.6;
+	font-size: 13px;
+}
+.app-shell .finding-item small {
+	font-size: 11px;
+}
+.app-shell .finding-tags > span {
+	font-size: 10px;
+}
+.app-shell .finding-meta {
+	gap: 18px;
+	font-size: 12px;
+}
+.app-shell .report-overview {
+	background: none;
+	border-radius: 0;
+	padding: 18px 0;
+	border-top: 1px solid var(--line);
+	border-bottom: 1px solid var(--line);
+	margin-bottom: 25px;
+	font-size: 12px;
+}
+.app-shell .finding-filters input {
+	font-size: 12px;
+}
+.app-shell .scope-control button {
+	font-size: 12px;
+}
+.app-shell .expected-observed p {
+	line-height: 1.8;
+	font-size: 13px;
+}
+.app-shell .reproduction-text {
+	font-size: 12px;
+}
+.app-shell .artifact-select strong {
+	font-size: 12px;
+}
+.app-shell .artifact-select small {
+	font-size: 11px;
+}
+.app-shell .privacy-note {
+	line-height: 1.6;
+	font-size: 12px;
+}
+.app-shell .stream-indicator {
+	font-size: 11px;
+}
+.app-shell .completion-strip strong {
+	font-size: 13px;
+}
+.app-shell .completion-strip p {
+	font-size: 12px;
+}
+.app-shell .scenario-detail h2 {
+	line-height: 1.5;
+	font-size: 16px;
+}
+.app-shell .scenario-detail .text-button {
+	margin-top: 11px;
+	font-size: 12px;
+}
+.app-shell .observation-grid .isometric-field {
+	grid-column: 1 / -1;
+}
+.app-shell .history-row strong {
+	font-size: 13px;
+}
+.app-shell .history-row small {
+	font-size: 12px;
+}
+@media (max-width: 1200px) {
+	.app-shell[data-platform] {
+		grid-template-columns: 230px minmax(0, 1fr);
+	}
+	.app-shell .prepare-grid {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 28px;
+	}
+	.app-shell .plan-panel {
+		position: static;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+	}
+	.app-shell .plan-header,
+	.app-shell .plan-target {
+		grid-column: 1 / -1;
+	}
+	.app-shell .plan-scenarios {
+		grid-row: 3 / 5;
+		border-right: 1px solid var(--line);
+	}
+	.app-shell .plan-panel .run-action {
+		grid-column: 2;
+	}
+	.app-shell .main-content {
+		padding: 29px;
+	}
+	.app-shell .plan-limits {
+		display: block;
+	}
+}
+@media (max-width: 760px) {
+	.app-shell[data-platform] {
+		grid-template-columns: minmax(0, 1fr);
+		padding: 0;
+	}
+	.app-shell .workspace {
+		border: 0;
+	}
+	.app-shell .fluid-sidebar {
+		position: fixed;
+		inset: 0 auto 0 0;
+		width: min(300px, 85vw);
+		height: 100dvh;
+		background: var(--sidebar);
+		z-index: 100;
+		visibility: hidden;
+		padding: 24px 14px;
+	}
+	.app-shell.nav-open .fluid-sidebar {
+		visibility: visible;
+	}
+	.app-shell .main-content {
+		padding: 27px 20px;
+	}
+	.app-shell .page-heading h1 {
+		font-size: 30px;
+	}
+	.app-shell .page-heading p {
+		font-size: 13px;
+	}
+	.app-shell .topbar {
+		padding: 0 16px;
+	}
+	.app-shell .target-options {
+		grid-template-columns: 1fr;
+	}
+	.app-shell .target-option {
+		min-height: 82px;
+		padding: 17px;
+		gap: 15px;
+	}
+	.app-shell .target-option small {
+		max-width: none;
+	}
+	.app-shell .target-option > .radio-dot {
+		display: block;
+	}
+	.app-shell .target-option strong {
+		font-size: 14px;
+	}
+	.app-shell .fixture-config {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 11px;
+	}
+	.app-shell .fixture-config p {
+		max-width: 29ch;
+	}
+	.app-shell .fixture-config select {
+		margin-left: 0;
+		width: 100%;
+		min-height: 42px;
+	}
+	.app-shell .level-options {
+		grid-template-columns: 1fr;
+	}
+	.app-shell .level-option {
+		display: grid;
+		grid-template-columns: 25px 1fr 20px;
+		align-items: center;
+		gap: 14px;
+		min-height: 64px;
+		border-right: 0;
+		border-bottom: 1px solid var(--line);
+		padding: 16px;
+	}
+	.app-shell .level-option:last-child {
+		border-bottom: 0;
+	}
+	.app-shell .level-option > input {
+		inset: auto;
+		position: static;
+		grid-column: 3;
+		grid-row: 1;
+		width: 16px;
+		height: 16px;
+		justify-self: end;
+	}
+	.app-shell .level-option .level-number {
+		grid-row: 1;
+		grid-column: 1;
+		font-size: 12px;
+	}
+	.app-shell .level-option > span:nth-of-type(2) {
+		grid-row: 1;
+		grid-column: 2;
+	}
+	.app-shell .level-option strong {
+		font-size: 13px;
+	}
+	.app-shell .level-option small {
+		display: block;
+		font-size: 12px;
+		margin-top: 5px;
+	}
+	.app-shell .level-option > svg {
+		display: none;
+	}
+	.app-shell .depth-description strong,
+	.app-shell .depth-description p {
+		font-size: 13px;
+	}
+	.app-shell .depth-configuration > .check-control {
+		font-size: 12px;
+	}
+	.app-shell .plan-panel {
+		display: block;
+	}
+	.app-shell .plan-scenarios {
+		border: 0;
+	}
+	.app-shell .plan-limits {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+	}
+	.app-shell .plan-limits div {
+		display: block;
+	}
+	.app-shell .plan-limits dd {
+		margin-top: 7px;
+	}
+	.app-shell .plan-recipe summary {
+		font-size: 12px;
+		min-height: 48px;
+	}
+	.app-shell .button {
+		min-height: 42px;
+	}
+	.app-shell .mobile-workflow button {
+		font-size: 12px;
+		min-height: 47px;
+	}
+	.app-shell .page-heading .heading-actions .button {
+		font-size: 12px;
+		padding: 10px 12px;
+	}
+	.scenario-editor-toolbar {
+		align-items: flex-start;
+	}
+	.scenario-validation {
+		flex-wrap: wrap;
+	}
+	.scenario-validation > .button {
+		width: 100%;
+	}
+	.scenario-import {
+		font-size: 11px !important;
+	}
+	.scenario-mode button {
+		font-size: 12px;
+		min-height: 40px;
+	}
+	.app-shell .scenario-info strong {
+		font-size: 13px;
+	}
+	.app-shell .scenario-info small {
+		font-size: 11px;
+	}
+	.app-shell .scenario-row > .status {
+		font-size: 10px;
+		white-space: normal;
+		text-align: left;
+		max-width: 85px;
+		line-height: 1.4;
+	}
+	.app-shell .finding-item strong {
+		font-size: 13px;
+	}
+	.app-shell .inspector-heading h2 {
+		font-size: 25px;
+	}
+	.app-shell .finding-meta {
+		font-size: 12px;
+	}
+	.app-shell .expected-observed p {
+		font-size: 13px;
+	}
+	.app-shell .artifact-select strong {
+		font-size: 12px;
+	}
+	.app-shell .page-observe .scenario-row {
+		padding: 15px 12px;
+	}
+	.app-shell .observation-grid {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+[data-theme="dark"] .app-shell .button.primary {
+	color: #17241b;
+}
+[data-theme="dark"] .app-shell .button.primary:hover:not(:disabled) {
+	background: #c1dcb0;
+	border-color: #c1dcb0;
+}
+.app-shell .button:active:not(:disabled) {
+	transform: translateY(1px);
+}
+.app-shell .fluid-row:active {
+	background: var(--green-bg);
+}
+.app-shell .notice {
+	font-size: 13px;
+	line-height: 1.7;
+}
+.app-shell .empty-state h2 {
+	font-size: 25px;
+}
+.app-shell .empty-copy {
+	font-size: 13px;
+}
+.app-shell .run-progress > div {
+	font-size: 12px;
+}
+@media (prefers-reduced-motion: reduce) {
+	.app-shell .button:active:not(:disabled) {
+		transform: none;
+	}
+	.fluid-hover {
+		transition: none !important;
+	}
+}
+:root[data-motion="reduced"] .app-shell .button:active:not(:disabled) {
+	transform: none;
+}
+
+/* Final workspace palette follows the owner's Fluid/Notion reference. Brand scenery lives on the website. */
+.app-shell {
+	--surface: #ffffff;
+	--surface-raised: #ffffff;
+	--surface-subtle: #f7f7f5;
+	--sidebar: #f7f7f5;
+	--text: #242424;
+	--muted: #666663;
+	--subtle: #747471;
+	--line: #e8e8e5;
+	--line-strong: #d7d7d2;
+	--green: #467043;
+	--green-bg: #eeeeeb;
+	--blue: #486c92;
+	--blue-bg: #edf1f5;
+	--focus: #6b97ff;
+	--red: #ac453f;
+	--red-bg: #fcf0ee;
+	--amber: #8a692f;
+	--amber-bg: #faf5e9;
+	font-size: 14px;
+}
+[data-theme="dark"] .app-shell {
+	--surface: #202020;
+	--surface-raised: #272727;
+	--surface-subtle: #292928;
+	--sidebar: #191919;
+	--text: #eeeeeb;
+	--muted: #b2b2ac;
+	--subtle: #a1a19b;
+	--line: #353534;
+	--line-strong: #4e4e4b;
+	--green: #a6c89d;
+	--green-bg: #32322f;
+	--blue: #b5cbdf;
+	--blue-bg: #2d3942;
+	--red: #f1aaa4;
+	--red-bg: #452c2a;
+	--amber: #d8bc83;
+	--amber-bg: #3e3629;
+	--focus: #8fafff;
+}
+.app-shell[data-platform] {
+	color: var(--text);
+	gap: 0;
+	grid-template-columns: 250px minmax(0, 1fr);
+	padding: 8px;
+	background: var(--sidebar);
+}
+.app-shell .workspace {
+	overflow: hidden;
+	background: var(--surface);
+	border: 1px solid var(--line);
+}
+.app-shell .topbar {
+	padding: 0 30px;
+	background: var(--surface);
+	height: 56px;
+}
+.app-shell .button.primary {
+	background: var(--text);
+	border-color: var(--text);
+	color: var(--surface);
+}
+.app-shell .button.primary:hover:not(:disabled) {
+	background: color-mix(in srgb, var(--text) 82%, var(--surface));
+	border-color: transparent;
+}
+.app-shell .brand-button {
+	color: var(--text);
+	text-decoration: none;
+}
+.app-shell .fluid-row.active,
+.app-shell .fluid-row:active {
+	background: var(--green-bg);
+	color: var(--text);
+}
+.app-shell .fluid-hover {
+	background: color-mix(in srgb, var(--text) 6%, transparent);
+}
+.app-shell .workspace-tile {
+	color: var(--text);
+	border-color: var(--line);
+}
+.app-shell .sidebar-search {
+	background: transparent;
+	border-color: var(--line-strong);
+	border-radius: 7px;
+}
+.app-shell .target-option.selected .radio-dot {
+	border-color: var(--text);
+	background: var(--text);
+}
+.app-shell .level-option > input {
+	padding: 0;
+	inset: auto 10px auto auto;
+	top: 14px;
+	position: absolute;
+	width: 14px;
+	height: 14px;
+	opacity: 1;
+	min-height: 0;
+	margin: 0;
+	transform: none;
+	flex: none;
+	accent-color: var(--text);
+}
+.app-shell .plan-header,
+.app-shell .plan-target,
+.app-shell .plan-panel .run-action {
+	background: var(--surface);
+}
+.app-shell .plan-cross {
+	display: none;
+}
+.app-shell .button,
+.app-shell input,
+.app-shell select,
+.app-shell textarea {
+	border-radius: 6px;
+}
+.app-shell .button {
+	font-size: 13px;
+	min-height: 40px;
+	transition:
+		background-color var(--duration-quick),
+		border-color var(--duration-quick),
+		box-shadow var(--duration-quick);
+}
+.app-shell .page-heading h1 {
+	margin-bottom: 10px;
+	font-size: 32px;
+	font-weight: 650;
+	letter-spacing: -0.035em;
+	line-height: 1.2;
+}
+.app-shell .page-heading p,
+.app-shell .field-hint,
+.app-shell .panel-intro {
+	font-size: 13px;
+	line-height: 1.7;
+}
+.app-shell .section-heading h2 {
+	font-weight: 600;
+	font-size: 15px;
+}
+.app-shell .finding-item:hover {
+	background: var(--surface-subtle);
+}
+.app-shell .status.good {
+	color: var(--green);
+	background: color-mix(in srgb, var(--green) 10%, var(--surface));
+}
+.app-shell .scope-control .active,
+.app-shell .tabs .active {
+	color: var(--text);
+}
+.app-shell .inspector-tabs {
+	padding: 0 15px;
+	border-top: 1px solid var(--line);
+	background: var(--surface);
+}
+.app-shell .inspector-heading h2 {
+	letter-spacing: -0.03em;
+	font-size: 26px;
+	line-height: 1.3;
+}
+.app-shell .main-content {
+	background: var(--surface);
+	padding: 36px 40px;
+}
+.app-shell .timeline,
+.app-shell .investigation-layout,
+.app-shell .scenario-detail {
+	border-radius: 8px;
+}
+.app-shell .completion-strip {
+	margin-top: 25px;
+	padding: 20px;
+	gap: 16px;
+	background: var(--surface-subtle);
+	border-color: var(--line);
+	border-radius: 8px;
+}
+.app-shell .completion-strip > svg {
+	color: var(--green);
+}
+.app-shell .empty-state {
+	border: 1px dashed var(--line-strong);
+	border-radius: 9px;
+	background: var(--surface);
+	padding: 65px 25px;
+}
+@media (max-width: 1200px) {
+	.app-shell[data-platform] {
+		grid-template-columns: 230px minmax(0, 1fr);
+	}
+	.app-shell .prepare-grid {
+		grid-template-columns: minmax(0, 1fr);
+	}
+	.app-shell .main-content {
+		padding: 30px;
+	}
+	.app-shell .plan-panel {
+		position: static;
+	}
+}
+@media (max-width: 760px) {
+	.app-shell[data-platform] {
+		display: flex;
+		padding: 0;
+	}
+	.app-shell .workspace {
+		border: 0;
+	}
+	.app-shell .main-content {
+		padding: 26px 20px;
+	}
+	.app-shell .page-heading h1 {
+		font-size: 28px;
+	}
+	.app-shell .level-option.selected {
+		box-shadow: inset 2px 0 var(--text);
+	}
+	.app-shell .plan-panel {
+		display: block;
+	}
+	.app-shell .plan-scenarios {
+		border: 0;
+	}
+	.app-shell .level-options {
+		overflow: hidden;
+	}
+	.app-shell .brand.compact svg {
+		width: 25px;
+	}
+	.app-shell .page-heading {
+		margin-bottom: 26px;
+	}
+}
+[data-motion="reduced"] .app-shell *,
+[data-motion="reduced"] .app-shell *::before,
+[data-motion="reduced"] .app-shell *::after {
+	animation: none !important;
+	transition: none !important;
+	scroll-behavior: auto !important;
+}
+@media (prefers-reduced-motion: reduce) {
+	.app-shell *,
+	.app-shell *::before,
+	.app-shell *::after {
+		animation: none !important;
+		transition: none !important;
+		scroll-behavior: auto !important;
+	}
+}
+
+/* Working-document composition: quiet controls, no repeated configuration cards. */
+.app-shell .target-options {
+	grid-template-columns: 1fr 1fr;
+	display: flex;
+	gap: 6px;
+	border: 0;
+	background: var(--surface-subtle);
+	padding: 4px;
+	border-radius: 8px;
+}
+.app-shell .target-option {
+	text-align: left;
+	flex: 1;
+	min-height: 48px;
+	padding: 12px 15px;
+	border: 0;
+	border-radius: 6px;
+	gap: 10px;
+	box-shadow: none;
+	background: transparent;
+}
+.app-shell .target-option.selected {
+	border-color: var(--text);
+	color: var(--text);
+	background: var(--surface);
+	box-shadow: 0 2px 5px -3px #16161640;
+}
+.app-shell .target-option strong {
+	font-size: 13px;
+	font-weight: 550;
+}
+.app-shell .target-option small,
+.app-shell .target-option > .radio-dot {
+	display: none;
+}
+.app-shell .target-option > svg {
+	width: 17px;
+	height: 17px;
+}
+.app-shell .fixture-config {
+	margin: 19px 0 0;
+	gap: 12px;
+	margin-top: 22px;
+	padding: 0;
+	border: 0;
+	background: none;
+	align-items: center;
+}
+.app-shell .fixture-icon {
+	background: none;
+	width: 26px;
+	height: 32px;
+}
+.app-shell .fixture-config strong {
+	font-size: 13px;
+}
+.app-shell .fixture-config p {
+	font-size: 12px;
+	line-height: 1.6;
+	max-width: 40ch;
+}
+.app-shell .level-options {
+	grid-template-columns: repeat(5, 1fr);
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	border: 0;
+	border-radius: 0;
+	overflow: visible;
+}
+.app-shell .level-option {
+	position: relative;
+	flex-direction: column;
+	justify-content: flex-start;
+	margin: 0;
+	display: grid;
+	grid-template-columns: 26px minmax(0, 1fr) 20px;
+	align-items: center;
+	gap: 12px;
+	min-height: 56px;
+	border: 0;
+	border-radius: 7px;
+	padding: 12px 14px;
+	background: none;
+	box-shadow: none;
+}
+.app-shell .level-option.selected {
+	color: var(--text);
+	background: var(--surface-subtle);
+	box-shadow: none;
+}
+.app-shell .level-option.included {
+	background: none;
+}
+.app-shell .level-option:hover:not(.disabled) {
+	background: var(--surface-subtle);
+}
+.app-shell .level-option > input {
+	position: static;
+	inset: auto;
+	grid-column: 3;
+	grid-row: 1;
+	width: 15px;
+	height: 15px;
+	justify-self: end;
+}
+.app-shell .level-option .level-number {
+	padding: 0;
+	border-radius: 0;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	line-height: 1;
+	grid-column: 1;
+	grid-row: 1;
+	font-size: 11px;
+	color: var(--muted);
+	width: 20px;
+	height: 20px;
+	background: none;
+}
+.app-shell .level-option > span:nth-of-type(2) {
+	grid-column: 2;
+	grid-row: 1;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 20px;
+	min-width: 0;
+}
+.app-shell .level-option strong {
+	white-space: nowrap;
+	font-size: 13px;
+	min-width: 90px;
+	font-weight: 500;
+}
+.app-shell .level-option small {
+	display: block;
+	font-size: 12px;
+	margin: 0;
+	line-height: 1.6;
+	color: var(--muted);
+}
+.app-shell .depth-description {
+	border: 0;
+	font-size: 12px;
+	min-height: 0;
+	padding: 14px 14px 0;
+	margin: 0;
+}
+.app-shell .depth-description strong {
+	font-size: 12px;
+	font-weight: 500;
+}
+.app-shell .depth-description p {
+	line-height: 1.7;
+	margin: 7px 0 0;
+	margin-top: 5px;
+	font-size: 12px;
+}
+.app-shell .prepare-grid {
+	align-items: start;
+	grid-template-columns: minmax(0, 1fr) 290px;
+	gap: 45px;
+}
+.app-shell .plan-panel {
+	display: flex;
+	flex-direction: column;
+	position: sticky;
+	top: 0;
+	border: 0;
+	border-left: 1px solid var(--line);
+	border-radius: 0;
+	background: none;
+	padding: 0 0 0 27px;
+	overflow: visible;
+	max-height: calc(100dvh -220px);
+	min-height: 450px;
+}
+.app-shell .plan-header {
+	padding: 0 0 17px;
+	border: 0;
+	background: none;
+}
+.app-shell .plan-header h2 {
+	font-size: 16px;
+	margin-bottom: 10px;
+}
+.app-shell .plan-target {
+	padding: 14px 0;
+	border: 0;
+	border-top: 1px solid var(--line);
+	background: none;
+	gap: 10px;
+}
+.app-shell .plan-target > svg {
+	width: 17px;
+}
+.app-shell .plan-target strong {
+	font-size: 12px;
+}
+.app-shell .plan-target span {
+	font-size: 12px;
+}
+.app-shell .plan-panel .run-action {
+	order: 0;
+	padding: 12px 0 20px;
+	margin: 0;
+	border: 0;
+	background: none;
+}
+.app-shell .plan-scenarios {
+	order: 1;
+	padding: 18px 0 8px;
+	border-top: 1px solid var(--line);
+	overflow: auto;
+	min-height: 80px;
+	flex: 1;
+}
+.app-shell .plan-limits {
+	order: 2;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 8px 14px;
+	padding: 12px 0 0;
+	margin: 0;
+	border-top: 1px solid var(--line);
+}
+.app-shell .plan-limits div {
+	display: block;
+	font-size: 12px;
+	margin: 0 0 7px;
+}
+.app-shell .plan-limits dd {
+	font-size: 11px;
+	margin-top: 5px;
+}
+.app-shell .plan-section-label {
+	font-size: 12px;
+	margin-bottom: 6px;
+}
+.app-shell .plan-recipe {
+	border: 0;
+}
+.app-shell .plan-recipe summary {
+	font-size: 12px;
+	padding: 10px 0;
+	line-height: 1.6;
+}
+.app-shell .plan-level {
+	color: var(--muted);
+	border: 0;
+	background: none;
+	padding: 0;
+	font-size: 10px;
+}
+.app-shell .plan-recipe p {
+	font-size: 12px;
+	padding-left: 22px;
+}
+.app-shell .plan-panel .run-estimate {
+	font-size: 12px;
+	margin-bottom: 13px;
+	display: none;
+}
+.app-shell .shortcut-hint {
+	margin-top: 10px;
+	font-size: 10px;
+}
+.app-shell .plan-panel .start-button {
+	border-radius: 6px;
+	min-height: 42px;
+}
+.app-shell .form-section {
+	padding: 0 0 29px;
+	margin: 0 0 27px;
+	border: 0;
+	border-bottom: 1px solid var(--line);
+	border-radius: 0;
+	background: none;
+	padding-bottom: 25px;
+	margin-bottom: 25px;
+}
+.app-shell .advanced-section {
+	border: 0;
+	border-radius: 0;
+	background: none;
+	border-bottom: 0;
+}
+.app-shell .page-heading {
+	align-items: center;
+	margin-bottom: 35px;
+}
+.app-shell .investigation-layout {
+	grid-template-columns: 285px minmax(0, 1fr);
+	min-height: 590px;
+	border: 0;
+	border-top: 1px solid var(--line);
+	border-bottom: 1px solid var(--line);
+	border-radius: 0;
+}
+.app-shell .finding-index {
+	background: none;
+}
+.app-shell .finding-filters {
+	padding: 18px;
+	padding-left: 12px;
+	padding-right: 18px;
+}
+.app-shell .finding-item {
+	padding: 18px;
+	gap: 11px;
+	border: 0;
+	border-radius: 6px;
+	margin: 3px 6px;
+	width: calc(100% - 12px);
+}
+.app-shell .finding-item.selected {
+	box-shadow: none;
+	background: var(--surface-subtle);
+}
+.app-shell .inspector-heading {
+	padding: 27px 30px 22px;
+	padding-top: 27px;
+}
+.app-shell .timeline {
+	border: 0;
+	border-radius: 0;
+}
+.app-shell .table-heading {
+	background: none;
+	border-bottom: 1px solid var(--line);
+}
+.app-shell .scenario-row {
+	min-height: 74px;
+	padding: 14px 16px;
+	gap: 12px;
+	border: 0;
+	border-bottom: 1px solid var(--line);
+	border-radius: 0;
+	background: none;
+}
+.app-shell .scenario-row.selected {
+	background: var(--surface-subtle);
+}
+.app-shell .scenario-detail {
+	position: sticky;
+	top: 15px;
+	margin: 0;
+	border: 0;
+	border-left: 1px solid var(--line);
+	border-radius: 0;
+	background: none;
+	padding: 0 0 0 24px;
+}
+.app-shell .scenario-detail .section-heading {
+	display: block;
+	margin-top: 6px;
+}
+@media (max-width: 1200px) {
+	.app-shell .prepare-grid {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 28px;
+	}
+	.app-shell .plan-panel {
+		position: static;
+		border-left: 0;
+		border-top: 1px solid var(--line);
+		padding: 24px 0 0;
+		max-height: none;
+		min-height: 0;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 0 28px;
+	}
+	.app-shell .plan-header,
+	.app-shell .plan-target {
+		grid-column: 1;
+	}
+	.app-shell .plan-panel .run-action {
+		grid-column: 2;
+		grid-row: 1 / 3;
+		align-self: center;
+	}
+	.app-shell .plan-scenarios {
+		grid-column: 1;
+		grid-row: auto;
+		overflow: visible;
+		border-right: 0;
+	}
+	.app-shell .plan-limits {
+		grid-column: 2;
+		grid-row: auto;
+		align-self: start;
+	}
+}
+@media (max-width: 760px) {
+	.app-shell .prepare-grid {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 22px;
+	}
+	.app-shell .target-options {
+		width: 100%;
+	}
+	.app-shell .target-option {
+		padding: 12px 10px;
+		min-height: 46px;
+	}
+	.app-shell .target-option strong {
+		font-size: 12px;
+	}
+	.app-shell .fixture-config {
+		margin-top: 20px;
+	}
+	.app-shell .fixture-config select {
+		width: 100%;
+		margin-left: 0;
+	}
+	.app-shell .level-option {
+		min-height: 68px;
+		padding: 12px 10px;
+		gap: 10px;
+	}
+	.app-shell .level-option > span:nth-of-type(2) {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 4px;
+	}
+	.app-shell .level-option strong {
+		font-size: 13px;
+		min-width: 0;
+	}
+	.app-shell .level-option small {
+		font-size: 12px;
+	}
+	.app-shell .plan-panel {
+		display: flex;
+		gap: 0;
+		padding-top: 24px;
+	}
+	.app-shell .plan-panel .run-action {
+		width: 100%;
+	}
+	.app-shell .plan-scenarios {
+		overflow: visible;
+		flex: none;
+	}
+	.app-shell .plan-limits {
+		display: grid;
+		width: 100%;
+	}
+	.app-shell .scenario-detail {
+		padding: 20px 0 0;
+		border: 0;
+		border-top: 1px solid var(--line);
+	}
+	.app-shell .finding-item {
+		margin: 4px 0;
+		width: 100%;
+	}
+}
+/* Customizable native select keeps keyboard/typeahead semantics with our own popup. */
+@supports (appearance: base-select) {
+	.app-shell select,
+	.app-shell select::picker(select) {
+		appearance: base-select;
+	}
+	.app-shell select {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 12px;
+		background: var(--surface-raised);
+		border: 1px solid var(--line-strong);
+		border-radius: 7px;
+		padding: 10px 12px;
+		font-size: 13px;
+		line-height: 1.4;
+		cursor: pointer;
+	}
+	.app-shell select::picker(select) {
+		background: var(--surface-raised);
+		color: var(--text);
+		border: 1px solid var(--line);
+		border-radius: 9px;
+		padding: 5px;
+		box-shadow: 0 10px 30px -10px #16161636;
+		max-height: 320px;
+		margin: 5px 0;
+	}
+	.app-shell select::picker-icon {
+		color: var(--muted);
+		font-size: 11px;
+		transition: rotate var(--duration-quick);
+	}
+	.app-shell select:open::picker-icon {
+		rotate: 180deg;
+	}
+	.app-shell select option {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		padding: 10px 11px;
+		min-height: 38px;
+		border-radius: 5px;
+		font-size: 13px;
+		line-height: 1.5;
+		cursor: pointer;
+	}
+	.app-shell select option:hover,
+	.app-shell select option:focus-visible {
+		background: var(--surface-subtle);
+		outline: none;
+	}
+	.app-shell select option:checked {
+		background: var(--surface-subtle);
+		font-weight: 550;
+	}
+	.app-shell select option::checkmark {
+		color: var(--text);
+		order: 1;
+		margin-left: auto;
+	}
+	.app-shell select:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+}
+.app-shell input:hover:not(:disabled),
+.app-shell select:hover:not(:disabled) {
+	border-color: color-mix(in srgb, var(--text) 35%, var(--line));
+}
+.app-shell input:disabled,
+.app-shell textarea:disabled {
+	opacity: 0.55;
+	cursor: not-allowed;
+}

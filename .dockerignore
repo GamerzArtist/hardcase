@@ -1,0 +1,12 @@
+.git
+**/node_modules
+**/dist
+**/target
+.engine
+.test-data
+.env
+.env.*
+!.env.example
+release
+**/test-results
+**/playwright-report
