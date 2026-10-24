@@ -1,0 +1,18 @@
+{
+  "hackathon": "neighborhood-hacks-2026",
+  "project_slug": "hardcase",
+  "rules_acknowledged": true,
+  "submission": {
+    "status": "submitted",
+    "id": 1253569,
+    "submitted_at": "2026-10-24T00:42:32.562-04:00",
+    "url": "https://devpost.com/software/hardcase",
+    "video_url": "https://www.youtube.com/watch?v=Ao5c50UgmzU"
+  },
+  "current_stage": "submit-project",
+  "completed_stages": [
+    "prepare-submission",
+    "submit-project"
+  ],
+  "next_command": "hackathon-map"
+}

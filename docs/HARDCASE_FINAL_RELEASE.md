@@ -38,3 +38,15 @@ iOS/Android native applications, remote mobile controlling/sign-in, cloud projec
 5. Upload the 2m19s functional MP4 to an accessible video platform, then paste that video URL, the public repository, public site and `devpost-submission.md` copy into Devpost. Final submission belongs to the owner. Official event deadline: 24 October, 10:30 AM IST. No user interviews or adoption metrics are claimed.
 
 Usage checkpoint before release media: 80% primary used, 20% remaining; one banked reset preserved. No paid infrastructure or credits purchased. See media rendering report for final usage and video status.
+
+## Final verified publishing checkpoint
+
+Devpost submission **1253569**, status **Submitted**, confirmed independently by get_project with submitted_at `2026-10-24T00:42:32.562-04:00` (10:12:32 IST). Public project: https://devpost.com/software/hardcase. Owner explicitly authorized submission and confirmed rule/eligibility agreement.
+
+Video: https://www.youtube.com/watch?v=Ao5c50UgmzU — Unlisted on GamerzArtist Shorts. Anonymous playback verified. FFprobe: H.264, 1600×900, 25fps, 139.12 seconds; visual frames at 8, 40, 80 and 100 seconds inspected. Two real workspace screenshots uploaded to Devpost.
+
+Windows release: https://github.com/GamerzArtist/hardcase/releases/tag/v0.1.0 — installer, SHA256SUMS and functional MP4 publicly downloadable. Installer SHA256: `bfb1b40ad28c86eac76a878d6ec8872e32f5ddd8f8d2f66da3b33d75e274f9b0`. Silent install followed by the full native acceptance journey passed; see installed-native-proof.json.
+
+Vercel deployment dpl_7sudD66BicwkQhtWo7hPs6bXfUTs, source commit 3e1fc23f9a10e6c7a03df9f4698d1ade6f6a55ac. Anonymous public evidence, actual PNG preview, export and cached offline report verified. Downloads page inspected at desktop/mobile with no horizontal overflow.
+
+Final regular-usage checkpoint: 96% used, 4% remains. Banked reset untouched. Standalone launch film and custom generated thumbnail are subsequent media work, not required evidence of submission.

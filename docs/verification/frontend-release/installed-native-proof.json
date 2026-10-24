@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "at": "2026-10-24T04:27:58.356Z",
+  "executable": "D:\\hc-test-install-20261024\\hardcase.exe",
+  "executableSha256": "fb662dd1643f2624e541ad790a7b1d4be9baf0d5619bfd823fb8be779109fb34",
+  "checks": {
+    "nativeBootstrap": true,
+    "actualFiveTierRun": true,
+    "authenticatedScreenshot": true,
+    "reportExport": true,
+    "replay": true,
+    "reloadHistory": true,
+    "nativeShutdown": true
+  },
+  "screenshots": [
+    "desktop-prepare.png",
+    "desktop-observe.png",
+    "desktop-evidence.png"
+  ],
+  "runIds": [
+    "daeefdd1-633e-42f8-8c60-563850d79a99",
+    "39a4ed81-34a9-4eb8-a4fc-a662f1c9eafe"
+  ],
+  "pageErrors": [],
+  "webviewVersion": "145.0.3800.97"
+}
