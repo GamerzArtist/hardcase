@@ -1,0 +1,86 @@
+[
+  {
+    "method": "GET",
+    "path": "/",
+    "status": 200,
+    "durationMs": 1.614900000000489
+  },
+  {
+    "method": "GET",
+    "path": "/api/notes",
+    "status": 200,
+    "durationMs": 95.66979999999967
+  },
+  {
+    "method": "GET",
+    "path": "/api/draft",
+    "status": 200,
+    "durationMs": 205.77160000000003
+  },
+  {
+    "method": "GET",
+    "path": "/",
+    "status": 200,
+    "durationMs": 188.28260000000046
+  },
+  {
+    "method": "GET",
+    "path": "/api/notes",
+    "status": 200,
+    "durationMs": 94.72450000000026
+  },
+  {
+    "method": "GET",
+    "path": "/api/draft",
+    "status": 200,
+    "durationMs": 202.3780999999999
+  },
+  {
+    "method": "GET",
+    "path": "/",
+    "status": 200,
+    "durationMs": 104.73840000000018
+  },
+  {
+    "method": "GET",
+    "path": "/api/notes",
+    "status": 200,
+    "durationMs": 84.11380000000099
+  },
+  {
+    "method": "GET",
+    "path": "/api/draft",
+    "status": 200,
+    "durationMs": 194.9987000000001
+  },
+  {
+    "method": "POST",
+    "path": "/api/notes",
+    "status": 400,
+    "durationMs": 2.076499999999214
+  },
+  {
+    "method": "POST",
+    "path": "/api/notes",
+    "status": 400,
+    "durationMs": 2.556799999998475
+  },
+  {
+    "method": "POST",
+    "path": "/api/notes",
+    "status": 201,
+    "durationMs": 390.7471000000005
+  },
+  {
+    "method": "POST",
+    "path": "/api/notes",
+    "status": 201,
+    "durationMs": 382.47780000000057
+  },
+  {
+    "method": "GET",
+    "path": "/api/state",
+    "status": 200,
+    "durationMs": 0.6715999999996711
+  }
+]

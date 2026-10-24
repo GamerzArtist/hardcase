@@ -1,0 +1,66 @@
+{
+  "actions": [
+    {
+      "at": "2026-10-24T03:44:05.267Z",
+      "action": "simulated-cost-policy",
+      "details": {
+        "ceiling": 100,
+        "realProviderCalls": 0
+      }
+    },
+    {
+      "at": "2026-10-24T03:44:05.267Z",
+      "action": "simulated-ai-request",
+      "details": {
+        "operationId": "cost-a",
+        "tokens": "[REDACTED]"
+      }
+    },
+    {
+      "at": "2026-10-24T03:44:05.362Z",
+      "action": "simulated-ai-request",
+      "details": {
+        "operationId": "cost-a",
+        "tokens": "[REDACTED]"
+      }
+    },
+    {
+      "at": "2026-10-24T03:44:05.564Z",
+      "action": "simulated-ai-request",
+      "details": {
+        "operationId": "cost-b",
+        "tokens": "[REDACTED]"
+      }
+    }
+  ],
+  "assertions": [
+    {
+      "id": "idempotent-charge",
+      "description": "Duplicate operation charges only once",
+      "expected": 60,
+      "observed": 120,
+      "passed": false
+    },
+    {
+      "id": "ceiling-rejection",
+      "description": "Over-ceiling request is rejected",
+      "expected": 402,
+      "observed": 200,
+      "passed": false
+    },
+    {
+      "id": "ceiling-enforced",
+      "description": "Synthetic cost never exceeds the configured ceiling",
+      "expected": true,
+      "observed": false,
+      "passed": false
+    },
+    {
+      "id": "quota-counter",
+      "description": "Accepted billable operation counter remains one",
+      "expected": 1,
+      "observed": 3,
+      "passed": false
+    }
+  ]
+}

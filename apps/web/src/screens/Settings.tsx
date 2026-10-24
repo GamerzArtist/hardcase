@@ -12,6 +12,7 @@ import {
 	Unplug,
 } from "lucide-react";
 import { useState } from "react";
+import { RECORDED_DEMO } from "../api/deployment";
 import type { Capabilities } from "../api/types";
 import {
 	CheckControl,
@@ -55,144 +56,156 @@ export function Settings({
 				description="Make yourself at home. Keep your testing local."
 			/>
 			<div className="settings-layout">
-				<section className="settings-section">
-					<div className="settings-section-heading">
-						<Plug size={21} />
-						<div>
-							<h2>Local engine</h2>
-							<p>
-								No sign-in is required. A local session authorizes access to
-								your engine.
-							</p>
-						</div>
-						<Status
-							value={
-								connection === "ready"
-									? "ready"
-									: connection === "connecting"
-										? "connecting"
-										: "disconnected"
-							}
-						/>
-					</div>
-					{error && (
-						<Notice
-							tone={
-								connection === "offline" || connection === "error"
-									? "error"
-									: "info"
-							}
-						>
-							{error}
-						</Notice>
-					)}
-					<form
-						onSubmit={(event) => {
-							event.preventDefault();
-							onConnect({
-								baseUrl: origin.trim(),
-								token: token.trim() || session.token,
-							});
-							setToken("");
-							setVisible(false);
-						}}
-						className="connection-form"
-					>
-						<label htmlFor="engine-origin">Engine address</label>
-						<input
-							type="url"
-							id="engine-origin"
-							required
-							value={origin}
-							onChange={(event) => setOrigin(event.target.value)}
-							spellCheck={false}
-						/>
-						<label htmlFor="engine-token">Local session token</label>
-						<div className="token-input">
-							<input
-								id="engine-token"
-								type={visible ? "text" : "password"}
-								autoComplete="off"
-								spellCheck={false}
-								value={token}
-								onChange={(event) => setToken(event.target.value)}
-								placeholder={
-									session.token
-										? "Session token is held in memory"
-										: "Paste your engine’s local session token"
+				{RECORDED_DEMO && (
+					<Notice>
+						Public recorded demonstration. Appearance preferences work here;
+						live engine connections are configured in the local application.
+					</Notice>
+				)}
+				{!RECORDED_DEMO && (
+					<section className="settings-section">
+						<div className="settings-section-heading">
+							<Plug size={21} />
+							<div>
+								<h2>Local engine</h2>
+								<p>
+									No sign-in is required. A local session authorizes access to
+									your engine.
+								</p>
+							</div>
+							<Status
+								value={
+									connection === "ready"
+										? "ready"
+										: connection === "connecting"
+											? "connecting"
+											: "disconnected"
 								}
-								maxLength={256}
 							/>
-							<button
-								type="button"
-								className="icon-button"
-								aria-label={
-									visible ? "Hide session token" : "Show session token"
-								}
-								onClick={() => setVisible((value) => !value)}
-							>
-								{visible ? <EyeOff size={17} /> : <Eye size={17} />}
-							</button>
 						</div>
-						<p className="field-hint">
-							The token stays in memory. It is never saved in browser storage,
-							exported reports, or a URL. Reloading the browser clears it.
-						</p>
-						<div className="connection-actions">
-							<button
-								type="submit"
-								className="button primary"
-								disabled={connection === "connecting"}
+						{error && (
+							<Notice
+								tone={
+									connection === "offline" || connection === "error"
+										? "error"
+										: "info"
+								}
 							>
-								{connection === "connecting"
-									? "Connecting…"
-									: connection === "ready"
-										? "Reconnect engine"
-										: "Connect engine"}
-								<ArrowRight size={16} />
-							</button>
-							{connection === "ready" && (
-								<button type="button" className="button" onClick={onDisconnect}>
-									<Unplug size={15} />
-									Disconnect
-								</button>
-							)}
-							{native && (
+								{error}
+							</Notice>
+						)}
+						<form
+							onSubmit={(event) => {
+								event.preventDefault();
+								onConnect({
+									baseUrl: origin.trim(),
+									token: token.trim() || session.token,
+								});
+								setToken("");
+								setVisible(false);
+							}}
+							className="connection-form"
+						>
+							<label htmlFor="engine-origin">Engine address</label>
+							<input
+								type="url"
+								id="engine-origin"
+								required
+								value={origin}
+								onChange={(event) => setOrigin(event.target.value)}
+								spellCheck={false}
+							/>
+							<label htmlFor="engine-token">Local session token</label>
+							<div className="token-input">
+								<input
+									id="engine-token"
+									type={visible ? "text" : "password"}
+									autoComplete="off"
+									spellCheck={false}
+									value={token}
+									onChange={(event) => setToken(event.target.value)}
+									placeholder={
+										session.token
+											? "Session token is held in memory"
+											: "Paste your engine’s local session token"
+									}
+									maxLength={256}
+								/>
 								<button
 									type="button"
-									className="button"
-									onClick={onNativeSession}
+									className="icon-button"
+									aria-label={
+										visible ? "Hide session token" : "Show session token"
+									}
+									onClick={() => setVisible((value) => !value)}
 								>
-									<Laptop size={16} />
-									Use desktop session
+									{visible ? <EyeOff size={17} /> : <Eye size={17} />}
 								</button>
-							)}
-						</div>
-					</form>
-					<details className="connection-help">
-						<summary>Connection setup</summary>
-						<div>
-							<p>
-								The unified launcher starts the engine and connects the
-								workspace automatically. Run <code>npm run dev</code> from the
-								repository root for development, or <code>npm start</code> after
-								building.
+							</div>
+							<p className="field-hint">
+								The token stays in memory. It is never saved in browser storage,
+								exported reports, or a URL. Reloading the browser clears it.
 							</p>
-							<p>
-								The backend must explicitly allow this origin:{" "}
-								<code>{window.location.origin}</code>. Its configuration uses{" "}
-								<code>ENGINE_ALLOWED_ORIGINS</code>. CORS failures can look like
-								an offline engine.
-							</p>
-							<p>
-								The desktop launcher supplies its local session through the
-								Tauri bridge. The manual address and token fields are recovery
-								controls for a separately started engine. Session tokens stay in
-								memory.
-							</p>
-						</div>
-					</details>
-				</section>
+							<div className="connection-actions">
+								<button
+									type="submit"
+									className="button primary"
+									disabled={connection === "connecting"}
+								>
+									{connection === "connecting"
+										? "Connecting…"
+										: connection === "ready"
+											? "Reconnect engine"
+											: "Connect engine"}
+									<ArrowRight size={16} />
+								</button>
+								{connection === "ready" && (
+									<button
+										type="button"
+										className="button"
+										onClick={onDisconnect}
+									>
+										<Unplug size={15} />
+										Disconnect
+									</button>
+								)}
+								{native && (
+									<button
+										type="button"
+										className="button"
+										onClick={onNativeSession}
+									>
+										<Laptop size={16} />
+										Use desktop session
+									</button>
+								)}
+							</div>
+						</form>
+						<details className="connection-help">
+							<summary>Connection setup</summary>
+							<div>
+								<p>
+									The unified launcher starts the engine and connects the
+									workspace automatically. Run <code>npm run dev</code> from the
+									repository root for development, or <code>npm start</code>{" "}
+									after building.
+								</p>
+								<p>
+									The backend must explicitly allow this origin:{" "}
+									<code>{window.location.origin}</code>. Its configuration uses{" "}
+									<code>ENGINE_ALLOWED_ORIGINS</code>. CORS failures can look
+									like an offline engine.
+								</p>
+								<p>
+									The desktop launcher supplies its local session through the
+									Tauri bridge. The manual address and token fields are recovery
+									controls for a separately started engine. Session tokens stay
+									in memory.
+								</p>
+							</div>
+						</details>
+					</section>
+				)}
 				<section className="settings-section">
 					<div className="settings-section-heading">
 						<Monitor size={21} />

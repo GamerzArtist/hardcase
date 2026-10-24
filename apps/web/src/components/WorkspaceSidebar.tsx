@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import * as m from "motion/react-m";
 import { useRef, useState } from "react";
+import { RECORDED_DEMO } from "../api/deployment";
 import type { Run } from "../api/types";
 import { isTerminal } from "../api/types";
 import { targetLabel } from "../lib/model";
@@ -98,8 +99,14 @@ export function WorkspaceSidebar({
 						<ShieldCheck size={18} />
 					</span>
 					<span>
-						<strong>Local workspace</strong>
-						<small>On this machine</small>
+						<strong>
+							{RECORDED_DEMO ? "Recorded workspace" : "Local workspace"}
+						</strong>
+						<small>
+							{RECORDED_DEMO
+								? "Controlled fixture evidence"
+								: "On this machine"}
+						</small>
 					</span>
 					<ChevronDown size={15} />
 				</summary>
@@ -237,14 +244,18 @@ export function WorkspaceSidebar({
 						<span>
 							<strong>
 								{connected
-									? "Engine connected"
+									? RECORDED_DEMO
+										? "Recorded examples loaded"
+										: "Engine connected"
 									: connection === "connecting"
 										? "Checking engine"
 										: "Engine not connected"}
 							</strong>
 							<small>
 								{connected
-									? "Local session active"
+									? RECORDED_DEMO
+										? "Read-only public demonstration"
+										: "Local session active"
 									: "Open connection settings"}
 							</small>
 						</span>

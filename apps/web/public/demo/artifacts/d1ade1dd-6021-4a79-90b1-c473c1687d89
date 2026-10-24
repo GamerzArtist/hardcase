@@ -1,0 +1,56 @@
+[
+  {
+    "method": "POST",
+    "path": "/api/transfer",
+    "status": 503,
+    "durationMs": 94.30949999999939
+  },
+  {
+    "method": "GET",
+    "path": "/api/state",
+    "status": 200,
+    "durationMs": 0.7102000000013504
+  },
+  {
+    "method": "POST",
+    "path": "/api/transfer",
+    "status": 504,
+    "durationMs": 140.38129999999728
+  },
+  {
+    "method": "GET",
+    "path": "/api/state",
+    "status": 200,
+    "durationMs": 0.7615000000005239
+  },
+  {
+    "method": "POST",
+    "path": "/api/transfer",
+    "status": 503,
+    "durationMs": 2.402699999998731
+  },
+  {
+    "method": "GET",
+    "path": "/api/state",
+    "status": 200,
+    "durationMs": 1.023299999997107
+  },
+  {
+    "method": "POST",
+    "path": "/api/transfer",
+    "status": 200,
+    "durationMs": 2.7497000000003027
+  },
+  {
+    "method": "POST",
+    "path": "/api/transfer",
+    "status": 200,
+    "durationMs": 1.3456000000005588
+  },
+  {
+    "method": "GET",
+    "path": "/api/state",
+    "status": 200,
+    "durationMs": 1.1514999999999418
+  }
+]

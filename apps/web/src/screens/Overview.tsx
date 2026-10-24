@@ -17,6 +17,7 @@ import {
 	XAxis,
 	YAxis,
 } from "recharts";
+import { RECORDED_DEMO } from "../api/deployment";
 import type { Run } from "../api/types";
 import {
 	Empty,
@@ -68,14 +69,14 @@ export function Overview({
 		<>
 			<PageHeader
 				title="All projects"
-				description="Your applications, their test runs, and the evidence. One local workspace."
+				description="Your applications, their test runs, and the evidence. One workspace."
 				action={
 					<button
 						type="button"
 						className="button primary"
 						onClick={() => onPrepare()}
 					>
-						<Plus size={16} /> New test
+						<Plus size={16} /> {RECORDED_DEMO ? "Explore examples" : "New test"}
 					</button>
 				}
 			/>

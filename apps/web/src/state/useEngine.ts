@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { EngineClient } from "../api/client";
 import { createEngineClient, EngineError } from "../api/client";
+import { createRecordedDemoClient } from "../api/demo-client";
+import { RECORDED_DEMO } from "../api/deployment";
 import type { Capabilities, Recipe, Run, RunEvent } from "../api/types";
 import { isTerminal } from "../api/types";
 import { messageOf } from "../lib/model";
@@ -28,7 +30,12 @@ export function useEngine() {
 	const epoch = useRef(0);
 	const clientResult = useMemo(() => {
 		try {
-			return { client: createEngineClient(session), error: "" };
+			return {
+				client: RECORDED_DEMO
+					? createRecordedDemoClient()
+					: createEngineClient(session),
+				error: "",
+			};
 		} catch (error) {
 			return { client: null, error: messageOf(error) };
 		}
@@ -55,7 +62,7 @@ export function useEngine() {
 			try {
 				const health = await client.health();
 				if (!health.ok) throw new Error("The local engine is not ready.");
-				if (!session.token) {
+				if (!session.token && !RECORDED_DEMO) {
 					if (!disposed) {
 						setConnection("auth");
 						setConnectionError(

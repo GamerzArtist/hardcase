@@ -1,0 +1,127 @@
+{
+  "actions": [
+    {
+      "at": "2026-10-24T03:43:48.340Z",
+      "action": "inject-outage",
+      "details": {
+        "fixtureOnly": true
+      }
+    },
+    {
+      "at": "2026-10-24T03:43:48.444Z",
+      "action": "inject-dependency-timeout",
+      "details": {
+        "fixtureOnly": true,
+        "timeoutPerAttemptMs": 60
+      }
+    },
+    {
+      "at": "2026-10-24T03:43:48.679Z",
+      "action": "restore-dependency-and-fail-write",
+      "details": {
+        "fixtureOnly": true
+      }
+    },
+    {
+      "at": "2026-10-24T03:43:48.881Z",
+      "action": "restore-write-and-concurrent-retry",
+      "details": {
+        "concurrentOperations": 2,
+        "operationId": "recovery-op"
+      }
+    }
+  ],
+  "assertions": [
+    {
+      "id": "outage-rejected",
+      "description": "Dependency outage produces an explicit failure",
+      "expected": 503,
+      "observed": 503,
+      "passed": true
+    },
+    {
+      "id": "retry-exhaustion",
+      "description": "Dependency retries stop at policy limit",
+      "expected": 2,
+      "observed": 2,
+      "passed": true
+    },
+    {
+      "id": "outage-no-partial-write",
+      "description": "Rejected operation leaves balance unchanged",
+      "expected": 100,
+      "observed": 100,
+      "passed": true
+    },
+    {
+      "id": "retry-counter",
+      "description": "Actual simulated dependency attempts are bounded",
+      "expected": 2,
+      "observed": 2,
+      "passed": true
+    },
+    {
+      "id": "dependency-timeout",
+      "description": "Dependency timeout is reported distinctly",
+      "expected": 504,
+      "observed": 504,
+      "passed": true
+    },
+    {
+      "id": "timeout-attempts",
+      "description": "Dependency timeout retries remain bounded",
+      "expected": 2,
+      "observed": 2,
+      "passed": true
+    },
+    {
+      "id": "timeout-integrity",
+      "description": "Timed-out operation leaves balance unchanged",
+      "expected": 100,
+      "observed": 100,
+      "passed": true
+    },
+    {
+      "id": "write-failure",
+      "description": "Failed write is reported",
+      "expected": 503,
+      "observed": 503,
+      "passed": true
+    },
+    {
+      "id": "write-rollback",
+      "description": "Failed write leaves balance unchanged",
+      "expected": 100,
+      "observed": 100,
+      "passed": true
+    },
+    {
+      "id": "ledger-rollback",
+      "description": "Failed write leaves ledger unchanged",
+      "expected": 0,
+      "observed": 0,
+      "passed": true
+    },
+    {
+      "id": "recovered-status",
+      "description": "Recovered requests succeed",
+      "expected": true,
+      "observed": true,
+      "passed": true
+    },
+    {
+      "id": "single-commit",
+      "description": "Recovered logical operation commits exactly once",
+      "expected": 10,
+      "observed": 10,
+      "passed": true
+    },
+    {
+      "id": "conservation",
+      "description": "Balance plus ledger preserves initial value",
+      "expected": 100,
+      "observed": 100,
+      "passed": true
+    }
+  ]
+}

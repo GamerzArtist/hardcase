@@ -1,0 +1,44 @@
+[
+  {
+    "method": "GET",
+    "path": "/",
+    "status": 200,
+    "durationMs": 1.7231000000001586
+  },
+  {
+    "method": "GET",
+    "path": "/api/notes",
+    "status": 200,
+    "durationMs": 101.94619999999986
+  },
+  {
+    "method": "GET",
+    "path": "/api/draft",
+    "status": 200,
+    "durationMs": 195.91899999999987
+  },
+  {
+    "method": "PUT",
+    "path": "/api/draft",
+    "status": 200,
+    "durationMs": 42.63979999999992
+  },
+  {
+    "method": "GET",
+    "path": "/",
+    "status": 200,
+    "durationMs": 55.01899999999978
+  },
+  {
+    "method": "GET",
+    "path": "/api/notes",
+    "status": 200,
+    "durationMs": 84.97499999999991
+  },
+  {
+    "method": "GET",
+    "path": "/api/draft",
+    "status": 200,
+    "durationMs": 194.7831000000001
+  }
+]

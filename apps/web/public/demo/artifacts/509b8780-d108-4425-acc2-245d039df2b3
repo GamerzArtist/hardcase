@@ -1,0 +1,100 @@
+{
+  "actions": [
+    {
+      "at": "2026-10-24T03:43:42.573Z",
+      "action": "navigate",
+      "details": {
+        "path": "/"
+      }
+    },
+    {
+      "at": "2026-10-24T03:43:42.826Z",
+      "action": "submit-empty",
+      "details": {}
+    },
+    {
+      "at": "2026-10-24T03:43:42.885Z",
+      "action": "invalid-request",
+      "details": {
+        "titleLength": 0
+      }
+    },
+    {
+      "at": "2026-10-24T03:43:42.887Z",
+      "action": "invalid-request",
+      "details": {
+        "titleLength": 81
+      }
+    },
+    {
+      "at": "2026-10-24T03:43:42.986Z",
+      "action": "inject-delay",
+      "details": {
+        "delayMs": 300,
+        "fixtureOnly": true
+      }
+    },
+    {
+      "at": "2026-10-24T03:43:42.986Z",
+      "action": "pending-write",
+      "details": {
+        "title": "Interrupted operation",
+        "operationId": "retry-known-operation"
+      }
+    },
+    {
+      "at": "2026-10-24T03:43:42.986Z",
+      "action": "reload",
+      "details": {}
+    },
+    {
+      "at": "2026-10-24T03:43:43.482Z",
+      "action": "retry",
+      "details": {
+        "operationId": "retry-known-operation"
+      }
+    },
+    {
+      "at": "2026-10-24T03:43:43.891Z",
+      "action": "reload",
+      "details": {}
+    }
+  ],
+  "assertions": [
+    {
+      "id": "native-validation",
+      "description": "Required input rejects empty submission",
+      "expected": false,
+      "observed": false,
+      "passed": true
+    },
+    {
+      "id": "boundary-0",
+      "description": "Server rejects invalid boundary input",
+      "expected": 400,
+      "observed": 400,
+      "passed": true
+    },
+    {
+      "id": "boundary-81",
+      "description": "Server rejects invalid boundary input",
+      "expected": 400,
+      "observed": 400,
+      "passed": true
+    },
+    {
+      "id": "retry-idempotency",
+      "description": "Retry creates one logical record",
+      "expected": 1,
+      "observed": 1,
+      "passed": true
+    },
+    {
+      "id": "ui-consistency",
+      "description": "UI matches authoritative persisted state",
+      "expected": 1,
+      "observed": 1,
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "method": "GET",
+    "path": "/api/policy",
+    "status": 200,
+    "durationMs": 1.4358000000001994
+  },
+  {
+    "method": "POST",
+    "path": "/api/ai",
+    "status": 200,
+    "durationMs": 2.3933999999999287
+  },
+  {
+    "method": "POST",
+    "path": "/api/ai",
+    "status": 200,
+    "durationMs": 1.8380000000006476
+  },
+  {
+    "method": "GET",
+    "path": "/api/state",
+    "status": 200,
+    "durationMs": 0.9429000000000087
+  },
+  {
+    "method": "POST",
+    "path": "/api/ai",
+    "status": 402,
+    "durationMs": 1.5878999999986263
+  },
+  {
+    "method": "GET",
+    "path": "/api/state",
+    "status": 200,
+    "durationMs": 0.6952999999994063
+  }
+]

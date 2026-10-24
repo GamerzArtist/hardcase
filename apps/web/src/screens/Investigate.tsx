@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { EngineClient } from "../api/client";
+import { RECORDED_DEMO } from "../api/deployment";
 import type { Run, ScenarioResult } from "../api/types";
 import { isTerminal } from "../api/types";
 import { EvidenceViewer } from "../components/EvidenceViewer";
@@ -538,6 +539,7 @@ export function Investigate({
 											type="button"
 											className="button primary"
 											disabled={
+												RECORDED_DEMO ||
 												!connected ||
 												replaying ||
 												!terminal ||
@@ -549,7 +551,9 @@ export function Investigate({
 											<RefreshCw size={15} />
 											{replaying
 												? "Creating replay…"
-												: "Replay in a fresh fixture"}
+												: RECORDED_DEMO
+													? "Replay requires the local application"
+													: "Replay in a fresh fixture"}
 										</button>
 										{(!selected.replayable ||
 											run.request.target.kind !== "fixture") && (

@@ -60,3 +60,13 @@ import "./styles/anchors.css";
 
 import "./styles/privacy.css";
 import "./styles/workspace-polish.css";
+
+// Only the public, read-only build caches public assets. Private engine requests never enter this worker.
+if (
+	import.meta.env.VITE_HARDCASE_MODE === "recorded-demo" &&
+	"serviceWorker" in navigator
+) {
+	window.addEventListener("load", () => {
+		void navigator.serviceWorker.register("/sw.js").catch(() => {});
+	});
+}

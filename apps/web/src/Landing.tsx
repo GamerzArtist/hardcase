@@ -11,46 +11,105 @@ import {
 	Play,
 	ShieldCheck,
 } from "lucide-react";
-import { useReducedMotion } from "motion/react";
+
+import { motion, useReducedMotion } from "motion/react";
+
 import { lazy, Suspense, useState } from "react";
+
+import { RECORDED_DEMO } from "./api/deployment";
+
 import { LEVELS } from "./lib/model";
+
 import type { Preferences } from "./state/preferences";
+
 import "./landing.css";
 
 const AsciiVeil = lazy(() => import("./components/effects/AsciiVeil"));
+
 const stations = [
 	{
 		name: "Application",
+
 		icon: Monitor,
+
 		title: "A real browser. Your actual interface.",
+
 		body: "Navigate, type, submit and reload. Explicit scenarios exercise the application through Chromium.",
+
 		position: "application",
 	},
+
 	{
 		name: "Test engine",
+
 		icon: GitBranch,
+
 		title: "Deliberate pressure. Defined boundaries.",
+
 		body: "Five progressive levels, explicit assertions and bounded execution. Every test stays inside its authorized target.",
+
 		position: "engine",
 	},
+
 	{
 		name: "Evidence",
+
 		icon: FileSearch,
+
 		title: "A finding you can follow all the way back.",
+
 		body: "Recorded assertions, screenshots and reproduction steps connect a result to what actually happened.",
+
 		position: "evidence",
 	},
 ];
+
 export default function Landing({ preferences }: { preferences: Preferences }) {
 	const reduced = useReducedMotion();
+
 	const [paused, setPaused] = useState(false);
+
 	const [station, setStation] = useState<number | null>(null);
+
 	const [level, setLevel] = useState(1);
+
 	const [view, setView] = useState("prepare");
+
 	const [faulty, setFaulty] = useState(false);
+	const [evidenceStep, setEvidenceStep] = useState(0);
+	const evidenceStory = [
+		[
+			"Assertion",
+			"The promise",
+			"A saved note must survive a reload.",
+			"Define an observable condition before execution. A successful click alone does not establish persistence.",
+		],
+		[
+			"Observation",
+			"The check",
+			"Reload the page. Read the saved value.",
+			"The browser repeats the action and checks the resulting state. A failure stays connected to the assertion that produced it.",
+		],
+		[
+			"Artifact",
+			"The record",
+			"Keep what the browser actually saw.",
+			"Screenshots and structured evidence preserve context. Authenticated artifact access in the local application protects the full record.",
+		],
+		[
+			"Reproduction",
+			"The next step",
+			"Follow the same path. Examine it again.",
+			"Inspect reproduction steps, export the report, or replay an eligible finding in a fresh disposable fixture.",
+		],
+	];
+
 	const still = reduced || preferences.motion === "reduced" || paused;
+
 	const image = `/images/meadow-${preferences.theme}.webp`;
+
 	const chosen = LEVELS[level - 1];
+
 	return (
 		<div className="landing-v3">
 			<section
@@ -85,14 +144,18 @@ export default function Landing({ preferences }: { preferences: Preferences }) {
 					</p>
 					<div className="cinema-actions">
 						<a href="/app" className="button primary">
-							Open your workspace <ArrowUpRight size={17} />
+							{RECORDED_DEMO ? "Explore recorded tests" : "Open your workspace"}{" "}
+							<ArrowUpRight size={17} />
 						</a>
 						<a href="#how" className="button cinema-secondary">
 							<Play size={14} /> See the workflow
 						</a>
 					</div>
 					<span className="cinema-assurance">
-						<ShieldCheck size={13} /> Local-first. No account required.
+						<ShieldCheck size={13} />{" "}
+						{RECORDED_DEMO
+							? "Recorded controlled runs · live testing in the local app"
+							: "Local-first. No account required."}
 					</span>
 				</div>
 				<fieldset
@@ -227,7 +290,14 @@ export default function Landing({ preferences }: { preferences: Preferences }) {
 					</div>
 				</div>
 			</section>
-			<section id="how" className="landing-section workflow-section">
+			<motion.section
+				id="how"
+				className="landing-section workflow-section"
+				initial={still ? false : { opacity: 0.65, y: 22 }}
+				whileInView={{ opacity: 1, y: 0 }}
+				viewport={{ once: true, amount: 0.15 }}
+				transition={{ duration: 0.55 }}
+			>
 				<div className="section-lead">
 					<h2>
 						From uncertainty
@@ -243,17 +313,25 @@ export default function Landing({ preferences }: { preferences: Preferences }) {
 					{[
 						{
 							title: "Prepare",
+
 							body: "Choose a local target, a testing level and the limits of execution.",
+
 							icon: Monitor,
 						},
+
 						{
 							title: "Observe",
+
 							body: "Follow actual scenarios, recorded events and progress as the engine works.",
+
 							icon: GitBranch,
 						},
+
 						{
 							title: "Investigate",
+
 							body: "Inspect assertions and artifacts. Reproduce the finding and export its record.",
+
 							icon: FileSearch,
 						},
 					].map((item, i) => (
@@ -265,7 +343,7 @@ export default function Landing({ preferences }: { preferences: Preferences }) {
 						</li>
 					))}
 				</ol>
-			</section>
+			</motion.section>
 			<section id="levels" className="level-section">
 				<div className="landing-section">
 					<div className="section-lead">
@@ -322,10 +400,15 @@ export default function Landing({ preferences }: { preferences: Preferences }) {
 				<ol>
 					{[
 						"Choose an owned target",
+
 						"Define scenarios and depth",
+
 						"Set execution limits",
+
 						"Observe the real run",
+
 						"Inspect and reproduce",
+
 						"Export the evidence",
 					].map((text, i) => (
 						<li key={text}>
@@ -380,24 +463,45 @@ export default function Landing({ preferences }: { preferences: Preferences }) {
 						How evidence works <ArrowUpRight size={16} />
 					</a>
 				</div>
-				<dl className="evidence-chain">
-					<div>
-						<dt>Assertion</dt>
-						<dd>The explicit condition being checked.</dd>
-					</div>
-					<div>
-						<dt>Observation</dt>
-						<dd>What the browser or request actually returned.</dd>
-					</div>
-					<div>
-						<dt>Artifact</dt>
-						<dd>Recorded screenshot, trace or structured evidence.</dd>
-					</div>
-					<div>
-						<dt>Reproduction</dt>
-						<dd>The actions and context needed to investigate again.</dd>
-					</div>
-				</dl>
+				<div className="evidence-storyboard">
+					<span className="storyboard-label">
+						Anatomy of a persistence check · workflow illustration
+					</span>
+					<fieldset
+						className="evidence-tabs"
+						aria-label="Explore the evidence chain"
+					>
+						{evidenceStory.map((item, i) => (
+							<button
+								type="button"
+								key={item[0]}
+								aria-pressed={evidenceStep === i}
+								onClick={() => setEvidenceStep(i)}
+							>
+								<span>0{i + 1}</span>
+								{item[0]}
+							</button>
+						))}
+					</fieldset>
+					<motion.div
+						className="evidence-detail"
+						key={evidenceStep}
+						initial={still ? false : { opacity: 0, y: 8 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.2 }}
+						aria-live="polite"
+					>
+						<span>{evidenceStory[evidenceStep][1]}</span>
+						<h3>{evidenceStory[evidenceStep][2]}</h3>
+						<p>{evidenceStory[evidenceStep][3]}</p>
+						<a href="/app?view=prepare" className="editorial-link">
+							{RECORDED_DEMO
+								? "Inspect genuine recorded evidence"
+								: "Collect your own evidence"}
+							<ArrowUpRight size={16} />
+						</a>
+					</motion.div>
+				</div>
 			</section>
 			<section className="landing-section local-story">
 				<div
@@ -472,7 +576,7 @@ export default function Landing({ preferences }: { preferences: Preferences }) {
 			</section>
 			<section
 				className="landing-finale"
-				style={{ backgroundImage: `url(${image})` }}
+				style={{ backgroundImage: "url(/images/meadow-dark.webp)" }}
 			>
 				<div>
 					<h2>
@@ -481,7 +585,10 @@ export default function Landing({ preferences }: { preferences: Preferences }) {
 						<em>harder to break.</em>
 					</h2>
 					<a href="/app" className="button primary">
-						Start a local test <ArrowUpRight size={17} />
+						{RECORDED_DEMO
+							? "Explore the recorded workspace"
+							: "Start a local test"}{" "}
+						<ArrowUpRight size={17} />
 					</a>
 					<a href="/docs" className="finale-docs">
 						<BookOpen size={16} /> Read the documentation

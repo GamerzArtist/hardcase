@@ -1,0 +1,135 @@
+{
+  "actions": [
+    {
+      "at": "2026-10-24T03:43:52.310Z",
+      "action": "navigate",
+      "details": {
+        "path": "/"
+      }
+    },
+    {
+      "at": "2026-10-24T03:43:52.578Z",
+      "action": "fill",
+      "details": {
+        "selector": "#note-title",
+        "value": "Ordinary note"
+      }
+    },
+    {
+      "at": "2026-10-24T03:43:52.588Z",
+      "action": "click",
+      "details": {
+        "selector": "#save-note"
+      }
+    },
+    {
+      "at": "2026-10-24T03:43:52.846Z",
+      "action": "reload",
+      "details": {}
+    },
+    {
+      "at": "2026-10-24T03:43:53.076Z",
+      "action": "click",
+      "details": {
+        "selector": "a[href=\"/about\"]"
+      }
+    },
+    {
+      "at": "2026-10-24T03:43:53.171Z",
+      "action": "back",
+      "details": {}
+    },
+    {
+      "at": "2026-10-24T03:43:53.576Z",
+      "action": "forward",
+      "details": {}
+    },
+    {
+      "at": "2026-10-24T03:43:53.590Z",
+      "action": "navigate",
+      "details": {
+        "path": "/"
+      }
+    },
+    {
+      "at": "2026-10-24T03:43:53.897Z",
+      "action": "keyboard",
+      "details": {
+        "key": "Tab"
+      }
+    },
+    {
+      "at": "2026-10-24T03:43:53.904Z",
+      "action": "viewport",
+      "details": {
+        "width": 360,
+        "height": 740
+      }
+    }
+  ],
+  "assertions": [
+    {
+      "id": "saved",
+      "description": "A valid note is rendered",
+      "expected": "Ordinary note",
+      "observed": "Ordinary note",
+      "passed": true
+    },
+    {
+      "id": "reload",
+      "description": "Saved note persists after reload",
+      "expected": 1,
+      "observed": 1,
+      "passed": true
+    },
+    {
+      "id": "link",
+      "description": "About link navigates",
+      "expected": "/about",
+      "observed": "/about",
+      "passed": true
+    },
+    {
+      "id": "back",
+      "description": "Back returns to notes",
+      "expected": "/",
+      "observed": "/",
+      "passed": true
+    },
+    {
+      "id": "forward",
+      "description": "Forward returns to about",
+      "expected": "/about",
+      "observed": "/about",
+      "passed": true
+    },
+    {
+      "id": "keyboard",
+      "description": "Tab reaches a focusable element",
+      "expected": true,
+      "observed": true,
+      "passed": true
+    },
+    {
+      "id": "responsive",
+      "description": "Narrow page has no horizontal overflow",
+      "expected": true,
+      "observed": true,
+      "passed": true
+    },
+    {
+      "id": "browser-errors",
+      "description": "No uncaught page errors",
+      "expected": 0,
+      "observed": 0,
+      "passed": true
+    },
+    {
+      "id": "failed-http",
+      "description": "No unexpected HTTP errors in ordinary workflow",
+      "expected": 0,
+      "observed": 0,
+      "passed": true
+    }
+  ]
+}

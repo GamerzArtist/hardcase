@@ -28,6 +28,7 @@ import {
 } from "react";
 import { localApplicationSession } from "./api/bootstrap";
 import { EngineError } from "./api/client";
+import { RECORDED_DEMO } from "./api/deployment";
 import type { CreateRun, Run } from "./api/types";
 import { isTerminal } from "./api/types";
 import { Brand, Loading, Notice } from "./components/Primitives";
@@ -42,6 +43,7 @@ import { History } from "./screens/History";
 import { Investigate } from "./screens/Investigate";
 import { Observe } from "./screens/Observe";
 import { Prepare } from "./screens/Prepare";
+import { RecordedExamples } from "./screens/RecordedExamples";
 import { Settings } from "./screens/Settings";
 import { usePreferences } from "./state/preferences";
 import { useEngine, useRun } from "./state/useEngine";
@@ -180,6 +182,7 @@ export default function App() {
 		}
 	}, [engine.connect]);
 	useEffect(() => {
+		if (RECORDED_DEMO) return;
 		void isDesktop().then((value) => {
 			setNative(value);
 			void (value ? desktopSession() : localApplicationSession())
@@ -481,7 +484,9 @@ export default function App() {
 											: page === "settings"
 												? "Settings"
 												: page === "prepare"
-													? "New test"
+													? RECORDED_DEMO
+														? "Recorded examples"
+														: "New test"
 													: page === "observe"
 														? "Observe"
 														: "Investigate"}
@@ -637,7 +642,26 @@ export default function App() {
 										/>
 									</Suspense>
 								)}
-								{page === "prepare" && (
+								{RECORDED_DEMO && page !== "prepare" && (
+									<Notice>
+										Recorded demonstration · genuine controlled fixture
+										evidence. Live testing, cancellation and replay require the
+										local application.
+									</Notice>
+								)}
+								{page === "prepare" && RECORDED_DEMO && (
+									<RecordedExamples
+										runs={engine.history}
+										loading={engine.historyLoading}
+										error={engine.historyError}
+										onRetry={() => void engine.refreshHistory().catch(() => {})}
+										onOpen={(id) => {
+											setRunId(id);
+											navigate("observe");
+										}}
+									/>
+								)}
+								{page === "prepare" && !RECORDED_DEMO && (
 									<Prepare
 										client={engine.client}
 										draft={draft}
@@ -734,14 +758,17 @@ export default function App() {
 							<span>
 								<span className={`connection-light ${engine.connection}`} />
 								{connected
-									? "Connected to local engine"
+									? RECORDED_DEMO
+										? "Recorded examples loaded"
+										: "Connected to local engine"
 									: engine.connection === "connecting"
 										? "Checking connection…"
 										: "Local workspace · engine disconnected"}
 							</span>
 							<span>
 								<ShieldCheck size={12} />
-								Local data<span className="statusbar-separator">/</span>
+								{RECORDED_DEMO ? "Public controlled records" : "Local data"}
+								<span className="statusbar-separator">/</span>
 								{preferences.graphics === "standard"
 									? "Standard graphics"
 									: "Enhanced graphics"}

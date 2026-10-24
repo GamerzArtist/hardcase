@@ -1,0 +1,492 @@
+{
+  "mode": "recorded-demo",
+  "capturedAt": "2026-10-24T03:56:03.226Z",
+  "description": "Actual controlled fixture runs. Read-only records; no live hosted test execution. Raw traces are excluded.",
+  "runs": [
+    {
+      "id": "3f3dcf3a-34b6-48e1-bcd2-9cdabe665a16",
+      "variant": "clean"
+    },
+    {
+      "id": "309fdae2-6fdb-4d3b-9482-47dd97070ca6",
+      "variant": "faulty"
+    }
+  ],
+  "capabilities": {
+    "version": "0.1.0",
+    "apiVersion": "v1",
+    "levels": [
+      {
+        "level": 1,
+        "name": "NORMAL",
+        "targetKinds": [
+          "fixture",
+          "loopback"
+        ]
+      },
+      {
+        "level": 2,
+        "name": "CHAOS",
+        "targetKinds": [
+          "fixture",
+          "loopback"
+        ]
+      },
+      {
+        "level": 3,
+        "name": "HOSTILE",
+        "targetKinds": [
+          "fixture"
+        ]
+      },
+      {
+        "level": 4,
+        "name": "SIEGE",
+        "targetKinds": [
+          "fixture"
+        ]
+      },
+      {
+        "level": 5,
+        "name": "BREAKPOINT",
+        "targetKinds": [
+          "fixture"
+        ]
+      }
+    ],
+    "targetKinds": [
+      "fixture",
+      "loopback"
+    ],
+    "aiOptional": true,
+    "aiConfigured": false,
+    "limits": {
+      "maxConcurrentJobs": 1,
+      "maxQueuedJobs": 20,
+      "maxRequests": 400,
+      "maxDurationMs": 180000,
+      "maxConcurrency": 4,
+      "requestsPerSecond": 20,
+      "maxArtifactBytes": 67108864
+    },
+    "restrictions": [
+      "Public, private-LAN and cloud targets are unsupported.",
+      "Levels 3–5 only operate on engine-created disposable fixtures.",
+      "AI suggestions are never executed automatically.",
+      "Browser redirects, downloads, service workers and WebSockets are disabled."
+    ]
+  },
+  "recipes": [
+    {
+      "id": "normal.workflow",
+      "version": 1,
+      "title": "Save, reload, navigate, keyboard and narrow viewport",
+      "level": 1,
+      "category": "functional",
+      "targetKinds": [
+        "fixture"
+      ],
+      "prerequisites": [
+        "Disposable engine-owned fixture with explicit policy"
+      ],
+      "requiredFixtures": [
+        "notes-v1"
+      ],
+      "steps": [
+        "Navigate",
+        "Save a note",
+        "Reload",
+        "Back/forward",
+        "Tab navigation",
+        "Narrow viewport"
+      ],
+      "expectedBehavior": "A valid note survives refresh and basic navigation remains usable.",
+      "assertions": [
+        "one saved note",
+        "persisted after reload",
+        "keyboard focus",
+        "no horizontal overflow",
+        "no browser errors"
+      ],
+      "safetyPermissions": [
+        "navigation",
+        "form-interaction"
+      ],
+      "budget": {
+        "maxConcurrency": 1,
+        "maxRequests": 40
+      },
+      "cleanup": [
+        "Reset fixture between independent attempts",
+        "Close browser context"
+      ],
+      "evidenceRequirements": [
+        "actions",
+        "network",
+        "screenshot",
+        "trace",
+        "console"
+      ],
+      "replayable": true,
+      "limitations": [
+        "Assertions apply to the declared fixture contract, not arbitrary application semantics."
+      ]
+    },
+    {
+      "id": "normal.persistence",
+      "version": 1,
+      "title": "Acknowledged draft survives reload",
+      "level": 1,
+      "category": "persistence",
+      "targetKinds": [
+        "fixture"
+      ],
+      "prerequisites": [
+        "Disposable engine-owned fixture with explicit policy"
+      ],
+      "requiredFixtures": [
+        "notes-v1"
+      ],
+      "steps": [
+        "Enter a draft",
+        "Save",
+        "Reload",
+        "Read persisted draft"
+      ],
+      "expectedBehavior": "A successful save acknowledgement corresponds to durable draft data.",
+      "assertions": [
+        "saved acknowledgement",
+        "draft matches after reload"
+      ],
+      "safetyPermissions": [
+        "navigation",
+        "form-interaction"
+      ],
+      "budget": {
+        "maxConcurrency": 1,
+        "maxRequests": 40
+      },
+      "cleanup": [
+        "Reset fixture between independent attempts",
+        "Close browser context"
+      ],
+      "evidenceRequirements": [
+        "actions",
+        "network",
+        "screenshot",
+        "trace",
+        "console"
+      ],
+      "replayable": true,
+      "limitations": [
+        "Assertions apply to the declared fixture contract, not arbitrary application semantics."
+      ]
+    },
+    {
+      "id": "chaos.duplicates",
+      "version": 1,
+      "title": "Repeated submissions and shared-tab state",
+      "level": 2,
+      "category": "idempotency",
+      "targetKinds": [
+        "fixture"
+      ],
+      "prerequisites": [
+        "Disposable engine-owned fixture with explicit policy"
+      ],
+      "requiredFixtures": [
+        "notes-v1"
+      ],
+      "steps": [
+        "Double click save",
+        "Wait for completion",
+        "Open second tab",
+        "Check authoritative records"
+      ],
+      "expectedBehavior": "One logical submission creates exactly one record, visible in both tabs.",
+      "assertions": [
+        "one record for one operation",
+        "shared state"
+      ],
+      "safetyPermissions": [
+        "navigation",
+        "form-interaction"
+      ],
+      "budget": {
+        "maxConcurrency": 1,
+        "maxRequests": 40
+      },
+      "cleanup": [
+        "Reset fixture between independent attempts",
+        "Close browser context"
+      ],
+      "evidenceRequirements": [
+        "actions",
+        "network",
+        "screenshot",
+        "trace",
+        "console"
+      ],
+      "replayable": true,
+      "limitations": [
+        "Assertions apply to the declared fixture contract, not arbitrary application semantics."
+      ]
+    },
+    {
+      "id": "chaos.boundaries",
+      "version": 1,
+      "title": "Invalid input, delay, interruption and retry",
+      "level": 2,
+      "category": "validation",
+      "targetKinds": [
+        "fixture"
+      ],
+      "prerequisites": [
+        "Disposable engine-owned fixture with explicit policy"
+      ],
+      "requiredFixtures": [
+        "notes-v1"
+      ],
+      "steps": [
+        "Submit empty and overlong values",
+        "Delay a valid write",
+        "Reload during pending operation",
+        "Retry with same operation ID"
+      ],
+      "expectedBehavior": "Invalid values are rejected; interrupted retries persist exactly one operation.",
+      "assertions": [
+        "400 on invalid values",
+        "one record after retry",
+        "UI matches server"
+      ],
+      "safetyPermissions": [
+        "navigation",
+        "form-interaction"
+      ],
+      "budget": {
+        "maxConcurrency": 1,
+        "maxRequests": 40
+      },
+      "cleanup": [
+        "Reset fixture between independent attempts",
+        "Close browser context"
+      ],
+      "evidenceRequirements": [
+        "actions",
+        "network",
+        "screenshot",
+        "trace",
+        "console"
+      ],
+      "replayable": true,
+      "limitations": [
+        "Assertions apply to the declared fixture contract, not arbitrary application semantics."
+      ]
+    },
+    {
+      "id": "hostile.authorization",
+      "version": 2,
+      "title": "Server permission enforcement",
+      "level": 3,
+      "category": "authorization",
+      "targetKinds": [
+        "fixture"
+      ],
+      "prerequisites": [
+        "Disposable engine-owned fixture with explicit policy"
+      ],
+      "requiredFixtures": [
+        "notes-v1"
+      ],
+      "steps": [
+        "Open /permissions in the engine-owned fixture",
+        "Read the explicit viewer/admin policy",
+        "Click Attempt protected action as viewer",
+        "Observe the HTTP status and protected action count; expected 403 and zero changes",
+        "Click Perform allowed admin action; expected HTTP 200"
+      ],
+      "expectedBehavior": "Viewer is denied with no side effects; admin succeeds under the explicit fixture policy.",
+      "assertions": [
+        "viewer 403",
+        "no unauthorized mutation",
+        "admin 200"
+      ],
+      "safetyPermissions": [
+        "isolated-fixture-only",
+        "synthetic-identities-and-counters"
+      ],
+      "budget": {
+        "maxConcurrency": 1,
+        "maxRequests": 40
+      },
+      "cleanup": [
+        "Reset fixture between independent attempts",
+        "Close browser context"
+      ],
+      "evidenceRequirements": [
+        "actions",
+        "network",
+        "screenshot",
+        "trace",
+        "console"
+      ],
+      "replayable": true,
+      "limitations": [
+        "Assertions apply to the declared fixture contract, not arbitrary application semantics."
+      ]
+    },
+    {
+      "id": "hostile.cost",
+      "version": 1,
+      "title": "Simulated token ceiling and idempotent billing",
+      "level": 3,
+      "category": "cost-control",
+      "targetKinds": [
+        "fixture"
+      ],
+      "prerequisites": [
+        "Disposable engine-owned fixture with explicit policy"
+      ],
+      "requiredFixtures": [
+        "notes-v1"
+      ],
+      "steps": [
+        "Read ceiling",
+        "Submit 60 synthetic tokens",
+        "Duplicate request",
+        "Attempt another 60 tokens"
+      ],
+      "expectedBehavior": "Duplicate operations are not charged twice and simulated spend never exceeds 100 units.",
+      "assertions": [
+        "idempotent cost",
+        "budget rejection",
+        "spend <= ceiling"
+      ],
+      "safetyPermissions": [
+        "isolated-fixture-only",
+        "synthetic-identities-and-counters"
+      ],
+      "budget": {
+        "maxConcurrency": 1,
+        "maxRequests": 40
+      },
+      "cleanup": [
+        "Reset fixture between independent attempts",
+        "Close browser context"
+      ],
+      "evidenceRequirements": [
+        "actions",
+        "network"
+      ],
+      "replayable": true,
+      "limitations": [
+        "Assertions apply to the declared fixture contract, not arbitrary application semantics."
+      ]
+    },
+    {
+      "id": "siege.bounded",
+      "version": 1,
+      "title": "Bounded event traffic, throttling, queue and recovery",
+      "level": 4,
+      "category": "resilience",
+      "targetKinds": [
+        "fixture"
+      ],
+      "prerequisites": [
+        "Disposable engine-owned fixture with explicit policy"
+      ],
+      "requiredFixtures": [
+        "notes-v1"
+      ],
+      "steps": [
+        "Two concurrent request lanes",
+        "Eight duplicate event requests",
+        "Measure rejections and queue",
+        "Wait for recovery",
+        "Submit a new event"
+      ],
+      "expectedBehavior": "A bounded queue rejects overload, deduplicates accepted events, drains, and recovers.",
+      "assertions": [
+        "at least one 429",
+        "queue peak <= 1",
+        "no server errors",
+        "deduplicated event",
+        "successful recovery"
+      ],
+      "safetyPermissions": [
+        "isolated-fixture-only",
+        "synthetic-identities-and-counters"
+      ],
+      "budget": {
+        "maxConcurrency": 2,
+        "maxRequests": 30
+      },
+      "cleanup": [
+        "Reset fixture between independent attempts",
+        "Close browser context"
+      ],
+      "evidenceRequirements": [
+        "actions",
+        "network"
+      ],
+      "replayable": true,
+      "limitations": [
+        "Assertions apply to the declared fixture contract, not arbitrary application semantics."
+      ]
+    },
+    {
+      "id": "breakpoint.recovery",
+      "version": 1,
+      "title": "Dependency outage, failed writes and integrity",
+      "level": 5,
+      "category": "recovery",
+      "targetKinds": [
+        "fixture"
+      ],
+      "prerequisites": [
+        "Disposable engine-owned fixture with explicit policy"
+      ],
+      "requiredFixtures": [
+        "notes-v1"
+      ],
+      "steps": [
+        "Inject local dependency outage",
+        "Observe retry exhaustion",
+        "Inject dependency timeout",
+        "Restore dependency",
+        "Inject failed write",
+        "Verify no partial state",
+        "Concurrent idempotent recovery"
+      ],
+      "expectedBehavior": "Failed operations leave state unchanged; recovered duplicate operations commit once and conserve value.",
+      "assertions": [
+        "bounded retry exhaustion",
+        "outage integrity",
+        "timeout integrity",
+        "write rollback",
+        "one recovery commit",
+        "balance + ledger = 100"
+      ],
+      "safetyPermissions": [
+        "isolated-fixture-only",
+        "synthetic-identities-and-counters"
+      ],
+      "budget": {
+        "maxConcurrency": 1,
+        "maxRequests": 40
+      },
+      "cleanup": [
+        "Reset fixture between independent attempts",
+        "Close browser context"
+      ],
+      "evidenceRequirements": [
+        "actions",
+        "network"
+      ],
+      "replayable": true,
+      "limitations": [
+        "Assertions apply to the declared fixture contract, not arbitrary application semantics."
+      ]
+    }
+  ]
+}

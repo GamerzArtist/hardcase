@@ -1154,3 +1154,313 @@
 		border-radius: 9px;
 	}
 }
+
+/* Release composition: the meadow opens the story; the archive and night scene close it. */
+.landing-v3 .landing-section {
+	padding-top: 88px;
+	padding-bottom: 88px;
+}
+.landing-v3 .workflow-section {
+	padding-top: 38px;
+}
+.landing-v3 .workflow-detail {
+	padding-top: 64px;
+	padding-bottom: 64px;
+	align-items: center;
+}
+.landing-v3 .workflow-detail h2 {
+	font-size: clamp(32px, 3.6vw, 52px);
+}
+.workflow-detail ol {
+	counter-reset: steps;
+	position: relative;
+}
+.workflow-detail li {
+	padding: 14px 0;
+	transition:
+		padding-left 180ms ease,
+		color 180ms ease;
+}
+.workflow-detail li:hover {
+	padding-left: 8px;
+	color: var(--green);
+}
+.level-section {
+	background: linear-gradient(135deg, var(--surface-subtle), var(--surface));
+}
+.level-explorer fieldset button {
+	border-radius: 10px;
+	padding-left: 18px;
+	transition:
+		background-color 180ms ease,
+		color 180ms ease;
+}
+.level-explanation {
+	padding-left: 36px;
+	border-left: 1px solid var(--line);
+}
+.level-large {
+	font-size: clamp(95px, 11vw, 160px);
+	letter-spacing: -0.04em;
+}
+.workspace-showcase {
+	padding-top: 68px;
+	padding-bottom: 64px;
+	background: #dce5da;
+}
+.showcase-heading button {
+	border-radius: 9px;
+	min-height: 44px;
+}
+.landing-v3 .evidence-story {
+	max-width: none;
+	padding: 96px max(6%, calc((100vw - 1174px) / 2));
+	background: #172821;
+	color: #eef3e9;
+	gap: 70px;
+	border: 0;
+	--text: #eef3e9;
+	--muted: #b8c8be;
+	--line: #ffffff24;
+	--line-strong: #ffffff55;
+	--green: #bdcea6;
+}
+.evidence-story h2 {
+	font-size: clamp(34px, 4vw, 56px);
+}
+.evidence-storyboard {
+	min-width: 0;
+	border-top: 1px solid #ffffff42;
+	padding-top: 20px;
+}
+.storyboard-label {
+	font: 10px var(--mono);
+	color: #b8c8be;
+	line-height: 1.7;
+}
+.evidence-tabs {
+	display: flex;
+	margin: 28px 0 38px;
+	border-bottom: 1px solid #ffffff30;
+	gap: 18px;
+}
+.evidence-tabs button {
+	padding: 0 0 15px;
+	font-size: 11px;
+	color: #aebfb4;
+	border-bottom: 2px solid transparent;
+	min-height: 44px;
+}
+.evidence-tabs button span {
+	display: block;
+	font: 10px var(--mono);
+	margin-bottom: 9px;
+}
+.evidence-tabs button[aria-pressed="true"] {
+	color: #e1edcd;
+	border-color: #c4d2ae;
+}
+.evidence-detail {
+	min-height: 215px;
+}
+.evidence-detail > span {
+	font: 11px var(--mono);
+	color: #c2d3b0;
+}
+.evidence-detail h3 {
+	font:
+		400 clamp(24px, 2.7vw, 35px) / 1.2 Fraunces,
+		serif;
+	max-width: 24ch;
+	margin: 18px 0;
+}
+.evidence-detail p {
+	font-size: 13px;
+	line-height: 1.8;
+	color: #b8c8be;
+	max-width: 46ch;
+}
+.evidence-detail a {
+	margin-top: 12px;
+}
+.local-diagram {
+	display: grid;
+	grid-template-columns: 38px 1fr;
+	align-items: center;
+	gap: 12px 20px;
+	border-radius: 0;
+	background: transparent;
+	padding: 36px 28px;
+	border-top: 1px solid var(--line);
+	border-bottom: 1px solid var(--line);
+}
+.local-diagram > svg {
+	width: 24px;
+	height: 24px;
+	color: var(--green);
+}
+.local-diagram > strong {
+	font-size: 16px;
+	font-weight: 500;
+}
+.local-diagram .diagram-connector {
+	height: 48px;
+	width: 1px;
+	margin-left: 12px;
+	grid-column: 1;
+	background: var(--line-strong);
+}
+.scope-section details {
+	padding: 8px 0;
+}
+.scope-section summary {
+	padding: 18px 0;
+	min-height: 48px;
+	font-size: 15px;
+}
+.landing-finale {
+	min-height: 620px;
+	background-position: center 54%;
+	color: #fff;
+	isolation: isolate;
+	position: relative;
+	padding: 100px 30px 130px;
+}
+.landing-finale::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background: linear-gradient(180deg, #071a3070, #071a3045 55%, #0c1923);
+}
+.landing-finale h2 {
+	color: #fff;
+	font-size: clamp(42px, 5.5vw, 78px);
+	text-shadow: 0 2px 30px #06172a45;
+}
+.landing-finale .finale-docs {
+	color: #e1eaf2;
+}
+.site-landing .site-footer {
+	max-width: none;
+	background: #0c1923;
+	color: #e7edf0;
+	border: 0;
+	padding: 50px max(6%, calc((100vw - 1174px) / 2)) 0;
+	gap: 50px;
+	--text: #e7edf0;
+	--muted: #aebfc9;
+	--line: #ffffff24;
+	--green: #c6d7b5;
+}
+.site-landing .site-footer p {
+	font-size: 13px;
+}
+.site-landing .footer-links a,
+.site-landing .footer-links button {
+	font-size: 12px;
+	min-height: 24px;
+}
+.footer-signature {
+	grid-column: 1 / -1;
+	border-top: 1px solid #ffffff24;
+	padding-top: 40px;
+	overflow: hidden;
+}
+.site-landing .footer-signature .brand {
+	font-size: clamp(60px, 14vw, 210px);
+	line-height: 1;
+	letter-spacing: -0.035em;
+	gap: 3vw;
+	color: #e7edf0;
+}
+.site-landing .footer-signature .brand svg {
+	width: 12vw;
+	height: 12vw;
+	max-width: 170px;
+	max-height: 170px;
+}
+@media (max-width: 760px) {
+	.landing-v3 .landing-section {
+		padding-top: 52px;
+		padding-bottom: 52px;
+	}
+	.landing-v3 .workflow-section {
+		padding-top: 12px;
+	}
+	.landing-v3 .evidence-story {
+		padding: 54px 24px;
+		gap: 34px;
+	}
+	.evidence-tabs {
+		gap: 12px;
+		margin-bottom: 25px;
+	}
+	.evidence-tabs button {
+		font-size: 10px;
+	}
+	.evidence-detail {
+		min-height: 220px;
+	}
+	.level-explanation {
+		padding-left: 0;
+		border-left: 0;
+	}
+	.landing-finale {
+		min-height: 460px;
+		padding: 60px 22px 95px;
+	}
+	.landing-finale h2 {
+		font-size: 39px;
+	}
+	.site-landing .site-footer {
+		padding: 32px 24px 0;
+	}
+	.site-landing .footer-links {
+		margin-top: 30px;
+		justify-content: flex-start;
+		gap: 48px;
+	}
+	.footer-signature {
+		margin-top: 30px;
+		padding-top: 28px;
+	}
+	.site-landing .footer-signature .brand {
+		font-size: 15vw;
+	}
+	.site-landing .footer-signature .brand svg {
+		width: 13vw;
+		height: 13vw;
+	}
+	.site-landing .footer-baseline {
+		font-size: 9px;
+		line-height: 1.7;
+		gap: 20px;
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.workflow-detail li,
+	.level-explorer fieldset button {
+		transition: none;
+	}
+}
+
+.local-diagram > svg:nth-child(4) {
+	grid-column: 1;
+	grid-row: 3;
+}
+.local-diagram > strong:nth-child(5) {
+	grid-column: 2;
+	grid-row: 3;
+}
+.local-diagram > .diagram-connector:nth-child(6) {
+	grid-row: 4;
+}
+.local-diagram > svg:nth-child(7) {
+	grid-column: 1;
+	grid-row: 5;
+}
+.local-diagram > strong:nth-child(8) {
+	grid-column: 2;
+	grid-row: 5;
+}

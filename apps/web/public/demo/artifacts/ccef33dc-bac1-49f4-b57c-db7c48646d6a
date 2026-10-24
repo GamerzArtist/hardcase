@@ -1,0 +1,82 @@
+{
+  "actions": [
+    {
+      "at": "2026-10-24T03:44:02.568Z",
+      "action": "permission-policy",
+      "details": {
+        "permission": "viewer may read notes but must receive 403 for POST /api/admin/reset; admin may perform it",
+        "costCeiling": 100,
+        "maxTokensPerRequest": "[REDACTED]",
+        "queueCapacity": 1,
+        "eventWindowLimit": 4,
+        "maxDependencyAttempts": 2,
+        "initialBalance": 100
+      }
+    },
+    {
+      "at": "2026-10-24T03:44:02.568Z",
+      "action": "fixture-source",
+      "details": {
+        "file": "src/fixtures/app.ts",
+        "handler": "POST /api/admin/reset",
+        "policy": "FIXTURE_POLICY.permission",
+        "driver": "src/strategies/execute.ts#hostile.authorization"
+      }
+    },
+    {
+      "at": "2026-10-24T03:44:02.568Z",
+      "action": "navigate",
+      "details": {
+        "path": "/permissions"
+      }
+    },
+    {
+      "at": "2026-10-24T03:44:02.918Z",
+      "action": "click",
+      "details": {
+        "selector": "#viewer-reset",
+        "identity": "viewer",
+        "operation": "POST /api/admin/reset"
+      }
+    },
+    {
+      "at": "2026-10-24T03:44:03.169Z",
+      "action": "click",
+      "details": {
+        "selector": "#admin-reset",
+        "identity": "admin",
+        "operation": "POST /api/admin/reset"
+      }
+    }
+  ],
+  "assertions": [
+    {
+      "id": "declared-policy",
+      "description": "A verifiable permission policy is present",
+      "expected": "viewer may read notes but must receive 403 for POST /api/admin/reset; admin may perform it",
+      "observed": "viewer may read notes but must receive 403 for POST /api/admin/reset; admin may perform it",
+      "passed": true
+    },
+    {
+      "id": "viewer-denied",
+      "description": "Viewer must be denied server-side",
+      "expected": 403,
+      "observed": 200,
+      "passed": false
+    },
+    {
+      "id": "no-unauthorized-effect",
+      "description": "Denied identity must not mutate protected state",
+      "expected": 0,
+      "observed": 1,
+      "passed": false
+    },
+    {
+      "id": "admin-allowed",
+      "description": "Admin operation is permitted",
+      "expected": 200,
+      "observed": 200,
+      "passed": true
+    }
+  ]
+}

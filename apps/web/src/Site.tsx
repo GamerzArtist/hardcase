@@ -11,6 +11,7 @@ import {
 	X,
 } from "lucide-react";
 import { useState } from "react";
+import { RECORDED_DEMO } from "./api/deployment";
 import { Brand } from "./components/Primitives";
 import Landing from "./Landing";
 import { LEVELS } from "./lib/model";
@@ -99,7 +100,7 @@ export default function Site({ path }: { path: string }) {
 						)}
 					</button>
 					<a href="/app" className="button primary">
-						Open workspace
+						{RECORDED_DEMO ? "Recorded demo" : "Open workspace"}
 						<ArrowUpRight size={15} />
 					</a>
 					<button
@@ -136,7 +137,9 @@ export default function Site({ path }: { path: string }) {
 				<div className="footer-links">
 					<div>
 						<strong>Product</strong>
-						<a href="/app">Local workspace</a>
+						<a href="/app">
+							{RECORDED_DEMO ? "Recorded workspace" : "Local workspace"}
+						</a>
 						<a href="/docs">Documentation</a>
 						<a href="/docs/testing-levels">Testing levels</a>
 					</div>
@@ -151,6 +154,11 @@ export default function Site({ path }: { path: string }) {
 						<a href="/legal/contact">Contact</a>
 					</div>
 				</div>
+				{path === "/" && (
+					<div className="footer-signature" aria-hidden="true">
+						<Brand />
+					</div>
+				)}
 				<div className="footer-baseline">
 					<span>hardcase · Local engineering software · 2026</span>
 					<span>

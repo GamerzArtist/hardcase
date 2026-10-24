@@ -1,0 +1,65 @@
+{
+  "actions": [
+    {
+      "at": "2026-10-24T03:44:05.775Z",
+      "action": "bounded-burst",
+      "details": {
+        "actualRequestsPlanned": 8,
+        "simulatedEventsPerRequest": 10,
+        "concurrency": 2,
+        "rateCap": 10
+      }
+    },
+    {
+      "at": "2026-10-24T03:44:08.112Z",
+      "action": "recovery-request",
+      "details": {
+        "afterQuietPeriodMs": 1100
+      }
+    }
+  ],
+  "assertions": [
+    {
+      "id": "server-errors",
+      "description": "Bounded event traffic does not cause server errors",
+      "expected": 0,
+      "observed": 0,
+      "passed": true
+    },
+    {
+      "id": "throttling",
+      "description": "Over-capacity fixture rejects some requests",
+      "expected": true,
+      "observed": false,
+      "passed": false
+    },
+    {
+      "id": "bounded-queue",
+      "description": "Queue peak does not exceed declared capacity",
+      "expected": true,
+      "observed": false,
+      "passed": false
+    },
+    {
+      "id": "deduplicated-events",
+      "description": "Duplicate accepted events are applied once",
+      "expected": 1,
+      "observed": 8,
+      "passed": false
+    },
+    {
+      "id": "drained-queue",
+      "description": "Queue drains after load",
+      "expected": 0,
+      "observed": 0,
+      "passed": true
+    },
+    {
+      "id": "recovery",
+      "description": "New work succeeds after quiet period",
+      "expected": 200,
+      "observed": 200,
+      "passed": true
+    }
+  ]
+}

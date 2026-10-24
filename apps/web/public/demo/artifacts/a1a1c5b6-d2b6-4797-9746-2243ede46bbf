@@ -1,0 +1,47 @@
+{
+  "actions": [
+    {
+      "at": "2026-10-24T03:43:54.083Z",
+      "action": "navigate",
+      "details": {
+        "path": "/"
+      }
+    },
+    {
+      "at": "2026-10-24T03:43:54.309Z",
+      "action": "fill",
+      "details": {
+        "selector": "#draft",
+        "value": "Durable synthetic draft"
+      }
+    },
+    {
+      "at": "2026-10-24T03:43:54.317Z",
+      "action": "click",
+      "details": {
+        "selector": "#save-draft"
+      }
+    },
+    {
+      "at": "2026-10-24T03:43:54.443Z",
+      "action": "reload",
+      "details": {}
+    }
+  ],
+  "assertions": [
+    {
+      "id": "acknowledged",
+      "description": "The app acknowledges the write",
+      "expected": "Saved",
+      "observed": "Saved",
+      "passed": true
+    },
+    {
+      "id": "durable-draft",
+      "description": "Acknowledged draft survives refresh",
+      "expected": "Durable synthetic draft",
+      "observed": "",
+      "passed": false
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "actions": [
+    {
+      "at": "2026-10-24T03:43:41.179Z",
+      "action": "navigate",
+      "details": {
+        "path": "/"
+      }
+    },
+    {
+      "at": "2026-10-24T03:43:41.422Z",
+      "action": "fill",
+      "details": {
+        "selector": "#note-title",
+        "value": "Single logical note"
+      }
+    },
+    {
+      "at": "2026-10-24T03:43:41.422Z",
+      "action": "double-click",
+      "details": {
+        "selector": "#save-note"
+      }
+    },
+    {
+      "at": "2026-10-24T03:43:42.037Z",
+      "action": "new-tab",
+      "details": {}
+    }
+  ],
+  "assertions": [
+    {
+      "id": "one-record",
+      "description": "Repeated submission creates exactly one record",
+      "expected": 1,
+      "observed": 1,
+      "passed": true
+    },
+    {
+      "id": "shared-tab",
+      "description": "Second tab shows authoritative record count",
+      "expected": 1,
+      "observed": 1,
+      "passed": true
+    }
+  ]
+}
